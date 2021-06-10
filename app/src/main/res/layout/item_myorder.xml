@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+android:layout_margin="@dimen/five"
+    app:contentPadding="@dimen/five"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/ten"
+    android:backgroundTint="@color/white"
+    android:id="@+id/card_view">
+
+
+   <androidx.appcompat.widget.LinearLayoutCompat
+       android:layout_width="match_parent"
+       android:weightSum="5"
+       android:orientation="horizontal"
+       android:layout_gravity="center"
+       android:gravity="center"
+       android:layout_height="wrap_content">
+
+       <ImageView
+           android:layout_width="match_parent"
+ android:layout_margin="@dimen/ten"
+           android:layout_weight="4"
+           android:background="@drawable/logo"
+           android:layout_height="50dp"/>
+
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_weight="1"
+    android:weightSum="2"
+    android:padding="@dimen/five"
+    android:layout_height="wrap_content">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:text="Organic Milk"
+            android:layout_gravity="start"
+            android:gravity="start"
+            android:textColor="@color/g_black"
+
+            android:layout_height="wrap_content"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:text="Organic Milk"
+            android:textColor="@color/g_black"
+            android:textSize="@dimen/ten"
+            android:layout_gravity="start"
+            android:gravity="start"
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_gravity="end"
+        android:gravity="end"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:text="Organic Milk"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:layout_height="wrap_content"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:text="Organic Milk"
+            android:textColor="@color/green"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:textSize="@dimen/ten"
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+   </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</com.google.android.material.card.MaterialCardView>

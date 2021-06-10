@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dbcorp.apkaaada">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.auth.fragments.product.ProductSingleDetails"></activity>
+        <activity android:name=".ui.auth.fragments.account.UserAccount" />
+        <activity android:name=".ui.auth.fragments.order.myorder.SingleProductActivity" />
+        <activity android:name=".TestDemo" />
+        <activity android:name=".ui.auth.fragments.AutoCompleteDemo" />
+        <activity
+            android:name=".ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.auth.fragments.shop.CustomActivity" />
+        <activity android:name=".ui.auth.Home.NotificationActivity" />
+        <activity android:name=".ui.auth.ForgetActivity" />
+        <activity android:name=".ui.auth.searchbyslider.SliderSearchKeyWord" />
+        <activity android:name=".ui.auth.searchbyslider.SliderByWeb" />
+        <activity android:name=".ui.auth.searchbyslider.SliderProduct" />
+        <activity android:name=".ui.auth.searchbyslider.SliderByCategory" />
+        <activity android:name=".ui.auth.WebUi.PrivacyPolicy" />
+        <activity android:name=".ui.auth.WebUi.TermsCondition" />
+        <activity android:name=".ui.auth.Home.HelpActivity" />
+        <activity android:name=".ui.auth.Offer.OfferShopDetails" />
+        <activity android:name=".ui.auth.wishlist.WishlistShopDetails" />
+        <activity android:name=".ui.auth.searchbyslider.MyhelpList" />
+        <activity android:name=".ui.auth.userservice.ChatBookingList" />
+        <activity android:name=".ui.auth.userservice.ChatActivity" />
+        <activity android:name=".ui.auth.wishlist.WishList" />
+        <activity android:name=".ui.auth.Order.OrderStatus" />
+        <activity android:name=".ui.auth.fragments.shop.SingleShopDetails" />
+        <activity android:name=".ui.auth.Order.OrderList" />
+        <activity android:name=".ui.auth.Order.OrderDashBoard" />
+        <activity android:name=".ui.auth.Offer.ViewOffer" />
+        <activity android:name=".ui.auth.PasswordChange" />
+        <activity android:name=".ui.auth.fragments.shop.NearestShop" />
+        <activity android:name=".ui.auth.userservice.Services" />
+        <activity android:name=".ui.auth.fragments.order.myorder.ActivityOrderList" />
+        <activity android:name=".ui.auth.fragments.order.ActivityOrder" />
+        <activity android:name=".ui.auth.fragments.product.UserSearchActivity" />
+        <activity android:name=".ui.auth.fragments.order.PickAddress" />
+        <activity android:name=".ui.auth.fragments.product.VarriantActivity" />
+        <activity android:name=".ui.auth.fragments.ShopDetails" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/api_key" />
+
+        <activity android:name=".ui.auth.fragments.order.myorder.MyOrder" />
+        <activity android:name=".ui.auth.Home.HomeActivity" />
+        <activity android:name=".ui.auth.Login" />
+        <activity android:name=".ui.auth.fragments.order.PaymentMode" />
+        <activity android:name=".ui.auth.fragments.order.InvoiceActivityOrder" />
+        <activity android:name=".ui.auth.fragments.ServiceShop" />
+        <activity android:name=".ui.auth.fragments.SetAddressActivity" />
+        <activity android:name=".ui.auth.fragments.order.SuccessActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.auth.Register" />
+        <activity android:name=".SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".fcm.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/logo" />
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+
+        <service
+            android:name=".fcm.BackgroundSoundService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+
+        <receiver
+            android:name=".fcm.NotificationReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.dbcorp" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

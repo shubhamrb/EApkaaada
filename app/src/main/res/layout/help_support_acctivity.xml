@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="top"
+    android:gravity="top"
+    android:background="@color/gray"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_gredient_bg"
+        app:titleTextColor="@color/white"
+        android:padding="@dimen/Margin5dp"
+
+
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/white_gredient_bg"
+            app:contentInsetStart="0dp"
+            app:titleTextColor="@color/black"
+
+            app:contentInsetStartWithNavigation="0dp"
+            app:elevation="0dp"
+            >
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:textSize="16dp"
+        android:layout_margin="@dimen/ten"
+        android:fontFamily="@font/open_sans_b"
+        android:text="Fill the form below and we will reach you"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvDrop"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:drawableStart="@drawable/ic_arrow_drop_down_black_24dp"
+        android:layout_gravity="center|start"
+        android:background="@drawable/border"
+        android:drawablePadding="2sp"
+        android:gravity="center|start"
+
+
+        android:hint="Select Help Type"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:maxLines="1"
+
+        android:padding="12sp"
+        android:layout_margin="@dimen/Margin10dp"
+        android:textColorHint="@color/black"
+        android:textSize="@dimen/text_size_edit"
+        android:fontFamily="@font/montserrat"
+        android:textStyle="normal"
+        tools:ignore="HardcodedText,TextFields" />
+    <EditText
+        android:id="@+id/tvEmail"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:visibility="gone"
+        android:layout_gravity="center|start"
+        android:background="@drawable/border"
+        android:drawablePadding="2sp"
+        android:gravity="center|start"
+        android:hint=" Email ID"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:maxLines="1"
+
+        android:padding="12sp"
+        android:layout_margin="@dimen/Margin10dp"
+        android:textColorHint="@color/black"
+        android:textSize="@dimen/text_size_edit"
+        android:fontFamily="@font/montserrat"
+        android:textStyle="normal"
+        tools:ignore="HardcodedText,TextFields" />
+    <EditText
+        android:id="@+id/tvMobile"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:visibility="gone"
+        android:layout_gravity="center|start"
+        android:background="@drawable/border"
+        android:drawablePadding="2sp"
+        android:gravity="center|start"
+        android:hint=" Mobile No."
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:maxLines="1"
+
+        android:padding="12sp"
+        android:layout_margin="@dimen/Margin10dp"
+        android:textColorHint="@color/black"
+        android:textSize="@dimen/text_size_edit"
+        android:fontFamily="@font/montserrat"
+        android:textStyle="normal"
+        tools:ignore="HardcodedText,TextFields" />
+
+    <EditText
+        android:id="@+id/tvMessage"
+        android:layout_width="match_parent"
+        android:layout_height="150sp"
+        android:layout_gravity="top|start"
+        android:background="@drawable/border"
+        android:drawablePadding="2sp"
+        android:gravity="top|start"
+        android:hint=" Your Message or Complaint"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLines="6"
+
+        android:padding="12sp"
+        android:layout_margin="@dimen/Margin10dp"
+        android:textColorHint="@color/black"
+        android:textSize="@dimen/text_size_edit"
+        android:fontFamily="@font/montserrat"
+        android:textStyle="normal"
+        tools:ignore="HardcodedText,TextFields" />
+    <FrameLayout
+        android:id="@+id/frameId"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+         android:layout_marginStart="@dimen/Margin10dp"
+        android:layout_marginEnd="@dimen/Margin10dp"
+        android:layout_marginTop="0sp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageView"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:background="@drawable/f"
+            android:contentDescription=""
+            android:scaleType="fitXY"
+            app:shapeAppearanceOverlay="@style/OneSideRoundedImageRect" />
+
+    </FrameLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/attached_btn"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/ten"
+        android:text="Attached File"
+
+
+        android:background="@drawable/btn_green_bg"
+
+        android:gravity="center"
+
+        android:textAllCaps="false"
+     app:backgroundTint="@color/green"
+        android:textColor="@color/white"
+         android:textSize="@dimen/text_size_edit"
+        app:layout_constraintTop_toTopOf="@id/edit_password"
+        app:layout_constraintBottom_toBottomOf="@id/edit_password"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submit_btn"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/ten"
+        android:text="Submit"
+
+
+        android:background="@drawable/btn_bg"
+
+        android:gravity="center"
+
+        android:textAllCaps="false"
+        app:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="@color/white"
+         android:textSize="@dimen/text_size_edit"
+        app:layout_constraintTop_toTopOf="@id/edit_password"
+        app:layout_constraintBottom_toBottomOf="@id/edit_password"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

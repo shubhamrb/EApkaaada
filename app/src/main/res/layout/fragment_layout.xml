@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/llRoot"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+  <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:orientation="vertical"
+      android:layout_gravity="top"
+      android:gravity="top"
+      android:layout_marginBottom="55sp"
+      android:layout_height="wrap_content">
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:orientation="vertical"
+          android:background="@drawable/white_gredient_bg"
+          android:padding="@dimen/Margin5dp"
+          android:layout_height="wrap_content">
+
+          <com.google.android.material.appbar.AppBarLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/white_gredient_bg"
+              app:titleTextColor="@color/white"
+              android:padding="@dimen/Margin5dp"
+
+
+              app:elevation="0dp">
+
+              <androidx.appcompat.widget.Toolbar
+                  android:id="@+id/toolbar"
+
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+
+                  android:background="@drawable/white_gredient_bg"
+                  app:contentInsetStart="0dp"
+
+                  app:titleTextColor="@color/white"
+
+
+                  app:contentInsetStartWithNavigation="0dp"
+                  app:elevation="0dp"
+                  >
+
+
+                  <androidx.appcompat.widget.LinearLayoutCompat
+                      android:layout_width="match_parent"
+                      android:weightSum="5"
+                      android:gravity="center"
+
+                      android:orientation="horizontal"
+                      android:layout_height="wrap_content">
+                      <androidx.appcompat.widget.LinearLayoutCompat
+                          android:layout_width="match_parent"
+                          android:layout_weight="2"
+                          android:orientation="horizontal"
+                          android:weightSum="5"
+                          android:layout_gravity="center|start"
+                          android:gravity="center|start"
+
+                          android:layout_height="wrap_content">
+
+                          <com.google.android.material.imageview.ShapeableImageView
+                              android:layout_width="25sp"
+                              android:id="@+id/locred"
+                              android:background="@drawable/locred"
+                              android:layout_height="25sp"/>
+                          <androidx.appcompat.widget.LinearLayoutCompat
+                              android:layout_width="match_parent"
+                              android:orientation="vertical"
+                              android:layout_gravity="top"
+                              android:gravity="top"
+                              android:layout_marginStart="@dimen/Margin5dp"
+                              android:layout_height="wrap_content">
+                              <com.google.android.material.textview.MaterialTextView
+                                  android:layout_width="wrap_content"
+                                  android:fontFamily="@font/poppins_bold"
+                                  android:text="Bhopal"
+                                  android:id="@+id/tvCityName"
+android:visibility="gone"
+                                  android:textColor="@color/black"
+                                  android:layout_gravity="start|center"
+                                  android:gravity="start|center"
+                                  android:textSize="12sp"
+
+                                  android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                                  android:drawableTint="@color/colorPrimary"
+                                  android:layout_height="wrap_content"/>
+                              <com.google.android.material.textview.MaterialTextView
+                                  android:layout_width="wrap_content"
+                                  android:fontFamily="@font/montserrat"
+                                  android:text="mp nagar zone II ,Hp show room"
+                                  android:textColor="@color/black"
+                                  android:layout_gravity="center|top"
+                             android:id="@+id/tvAddress"
+
+                                  android:gravity="center|left"
+                                  android:maxLines="2"
+                                  android:textSize="12sp"
+                                  android:layout_height="wrap_content"/>
+                          </androidx.appcompat.widget.LinearLayoutCompat>
+                      </androidx.appcompat.widget.LinearLayoutCompat>
+                      <androidx.appcompat.widget.LinearLayoutCompat
+                          android:layout_width="match_parent"
+                          android:layout_weight="3"
+                          android:orientation="horizontal"
+                          android:layout_height="wrap_content">
+
+                          <androidx.appcompat.widget.LinearLayoutCompat
+                              android:layout_width="match_parent"
+                              android:layout_gravity="end"
+                              android:gravity="end"
+                              android:weightSum="3"
+                              android:orientation="horizontal"
+                              android:layout_height="wrap_content">
+                              <androidx.appcompat.widget.LinearLayoutCompat
+                                  android:layout_width="match_parent"
+                                  android:layout_weight="1"
+                                  android:layout_gravity="center"
+                                  android:gravity="center"
+                                  android:layout_height="wrap_content">
+                                  <androidx.appcompat.widget.AppCompatImageView
+                                      android:layout_width="wrap_content"
+                                      android:id="@+id/offerClick"
+
+                                      android:background="@drawable/check"
+                                      android:backgroundTint="@color/colorPrimary"
+
+                                      android:layout_height="wrap_content"/>
+                              </androidx.appcompat.widget.LinearLayoutCompat>
+
+                              <androidx.appcompat.widget.LinearLayoutCompat
+                                  android:layout_width="match_parent"
+                                  android:layout_weight="1"
+                                  android:layout_gravity="center"
+                                  android:gravity="center"
+                                  android:layout_height="wrap_content">
+                                  <androidx.appcompat.widget.AppCompatImageView
+                                      android:layout_width="20sp"
+
+                                      android:id="@+id/tvWishList"
+                                      android:background="@drawable/heart"
+                                      android:backgroundTint="@color/colorPrimary"
+
+                                      android:layout_height="20sp"/>
+                              </androidx.appcompat.widget.LinearLayoutCompat>
+
+                              <androidx.appcompat.widget.LinearLayoutCompat
+                                  android:layout_width="match_parent"
+                                  android:layout_weight="1"
+                                  android:layout_gravity="center"
+                                  android:gravity="center"
+                                  android:layout_height="wrap_content">
+                                  <androidx.appcompat.widget.AppCompatImageView
+                                      android:layout_width="wrap_content"
+android:id="@+id/tvNoti"
+                                      android:background="@drawable/ic_notifications_black_24dp"
+                                      android:backgroundTint="@color/colorPrimary"
+
+                                      android:layout_height="wrap_content"/>
+                              </androidx.appcompat.widget.LinearLayoutCompat>
+
+                          </androidx.appcompat.widget.LinearLayoutCompat>
+                      </androidx.appcompat.widget.LinearLayoutCompat>
+
+                  </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+              </androidx.appcompat.widget.Toolbar>
+
+          </com.google.android.material.appbar.AppBarLayout>
+
+          <com.google.android.material.textview.MaterialTextView
+              android:id="@+id/tvSearch"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:gravity="center|left"
+              android:inputType="text"
+              android:layout_marginEnd="@dimen/Margin10dp"
+              android:layout_marginStart="@dimen/Margin5dp"
+              android:layout_marginBottom="@dimen/Margin5dp"
+
+              android:textSize="12sp"
+              android:background="@drawable/form_edit_text_background"
+              android:hint="Search E.g Shop,Category,Service,Product"
+
+              android:fontFamily="@font/montserrat"
+              android:drawablePadding="@dimen/Margin5dp"
+              android:drawableEnd="@drawable/setting"
+              android:drawableTint="@color/grayColor"
+              android:textColorHint="@color/grayColor"
+              android:drawableStart="@drawable/searchicon"
+
+              android:padding="@dimen/Margin15dp"
+
+              />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+      <FrameLayout
+          android:id="@+id/frameLayout"
+
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/bg_color"/>
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="end|bottom"
+        android:gravity="end|bottom"
+        android:layout_height="wrap_content">
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        app:labelVisibilityMode="labeled"
+        android:background="?android:attr/windowBackground"
+
+        app:menu="@menu/bottom_nav_menu" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

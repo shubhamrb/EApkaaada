@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_horizontal"
+    android:padding="@dimen/Margin5dp"
+    android:orientation="vertical"
+    android:background="@color/white">
+<com.google.android.material.textview.MaterialTextView
+    android:layout_width="match_parent"
+    android:id="@+id/tvVendorName"
+    android:text="@string/vendor_name"
+    android:fontFamily="@font/montserrat_b"
+    android:textColor="@color/black"
+    android:padding="@dimen/Margin5dp"
+    android:textSize="@dimen/text_size_edit"
+    android:layout_height="wrap_content"/>
+
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+
+    android:weightSum="5"
+    android:layout_height="wrap_content">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/itemList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        tools:listitem="@layout/item_final_oder_product_varriant"
+
+
+        android:orientation="vertical"
+        app:reverseLayout="true"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+        android:divider="@null"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

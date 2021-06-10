@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+android:layout_marginEnd="@dimen/Margin5dp"
+    android:layout_height="wrap_content"
+    app:cardElevation="0dp"
+    android:backgroundTint="@color/white"
+    android:id="@+id/card_view">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/Margin5dp"
+        android:background="@drawable/gray_rounded_bg"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:padding="@dimen/Margin5dp"
+            android:text="Organic Milk"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat_b"
+            android:alpha="0.5"
+            android:textSize="13dp"
+
+
+            android:textColor="@color/g_black"
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</com.google.android.material.card.MaterialCardView>

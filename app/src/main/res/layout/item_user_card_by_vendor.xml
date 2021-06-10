@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center|top"
+    android:gravity="center|top"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:padding="@dimen/Margin10dp"
+        android:layout_gravity="center"
+
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/tvVendorName"
+            android:fontFamily="@font/montserrat_b"
+            android:padding="@dimen/Margin5dp"
+            android:text="Best Offer" />
+
+        <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/productCount"
+                android:elevation="5dp"
+
+ android:layout_margin="1sp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="5"
+                android:padding="@dimen/Margin5dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:fontFamily="@font/montserrat_b"
+
+                android:textAllCaps="false"
+                android:background="@drawable/red_gredient_cirl_bg"
+                android:textColor="@color/white"
+
+                android:textSize="@dimen/text_size_edit"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/itemList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        tools:listitem="@layout/item_product"
+
+
+        android:orientation="vertical"
+        app:reverseLayout="true"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+        android:divider="@null"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

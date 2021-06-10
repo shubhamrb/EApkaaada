@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/Margin5dp"
+    android:layout_margin="@dimen/Margin5dp"
+    android:layout_height="wrap_content"
+    android:elevation="2sp"
+    android:background="@drawable/gray_rounded_bg"
+    android:id="@+id/cardView">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:padding="@dimen/Margin5dp"
+            android:text="Organic Milk"
+            android:layout_gravity="start"
+            android:gravity="start"
+android:alpha=".9"
+            android:textSize="@dimen/text_size_edit"
+            android:fontFamily="@font/montserrat_b"
+            android:textColor="@color/g_black"
+            android:layout_height="wrap_content"/>
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

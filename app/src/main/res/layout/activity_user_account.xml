@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical"
+    tools:context=".ui.auth.fragments.account.UserAccount">
+<androidx.appcompat.widget.LinearLayoutCompat
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical"
+    tools:context=".ui.auth.fragments.account.UserAccount">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_gredient_bg"
+        app:titleTextColor="@color/white"
+        android:padding="@dimen/Margin5dp"
+
+
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/white_gredient_bg"
+            app:contentInsetStart="0dp"
+            app:titleTextColor="@color/black"
+
+            app:contentInsetStartWithNavigation="0dp"
+            app:elevation="0dp"
+            >
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:background="@drawable/white_top_round_gredient_circle"
+android:orientation="vertical"
+
+    android:layout_marginTop="@dimen/Margin30dp"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/Margin15dp"
+
+        android:layout_height="match_parent">
+<androidx.appcompat.widget.AppCompatImageView
+    android:layout_width="25sp"
+    android:id="@+id/tvEdit"
+    android:backgroundTint="@color/red"
+    android:layout_gravity="end"
+
+    android:background="@drawable/ic_baseline_edit_24"
+    android:layout_height="25sp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:text=" "
+            android:layout_gravity="center"
+            android:gravity="center|start"
+            android:drawablePadding="@dimen/Margin10dp"
+            android:id="@+id/tvName"
+android:drawableStart="@drawable/contactus"
+            android:textSize="18sp"
+            android:layout_margin="@dimen/Margin10dp"
+            android:layout_marginTop="@dimen/Margin10dp"
+            app:fontFamily="@font/montserrat_b"
+
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:text="  "
+            android:layout_gravity="center"
+            android:gravity="center|start"
+            android:drawablePadding="@dimen/Margin10dp"
+            android:drawableStart="@drawable/calluser"
+            android:id="@+id/tvMobile"
+            android:layout_margin="@dimen/Margin10dp"
+            android:textSize="18sp"
+            android:layout_marginTop="@dimen/Margin10dp"
+            app:fontFamily="@font/montserrat_b"
+
+            android:layout_height="wrap_content"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:text="Bhupesh Sen"
+            android:id="@+id/tvEmail"
+            android:layout_gravity="center"
+            android:gravity="center|start"
+            android:drawablePadding="@dimen/Margin10dp"
+            android:drawableStart="@drawable/mailuser"
+            android:layout_margin="@dimen/Margin10dp"
+            android:textSize="18sp"
+            android:layout_marginTop="@dimen/Margin10dp"
+            app:fontFamily="@font/montserrat_b"
+
+            android:layout_height="wrap_content"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:text="Address"
+            android:layout_margin="@dimen/Margin10dp"
+            android:textSize="18sp"
+
+            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_circle_24"
+
+            android:layout_gravity="center|start"
+            android:gravity="center|start"
+            android:drawablePadding="@dimen/Margin10dp"
+            android:drawableStart="@drawable/locred"
+
+            android:layout_marginTop="@dimen/Margin10dp"
+            app:fontFamily="@font/montserrat_b"
+
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:text="Home"
+            android:textColor="@color/green"
+            android:textSize="20dp"
+            android:layout_marginStart="@dimen/Margin10dp"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listGreen"
+            android:layout_marginTop="@dimen/Margin10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+
+            tools:listitem="@layout/layout_item_address"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/Margin10dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:divider="@null"
+            />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:text="Work"
+            android:textColor="@color/red"
+            android:textSize="20dp"
+            android:layout_marginStart="@dimen/Margin15dp"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listRed"
+            android:layout_marginTop="@dimen/Margin10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            tools:listitem="@layout/layout_item_address"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/Margin15dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:divider="@null"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_gravity="end|bottom"
+        android:gravity="end|bottom"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:background="@drawable/red_gredient_bg"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:id="@+id/tvLogout"
+            android:text="LOGOUT"
+
+
+            android:textSize="18sp"
+            android:layout_margin="@dimen/Margin10dp"
+            android:layout_marginTop="@dimen/Margin10dp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:gravity="center"
+            app:fontFamily="@font/montserrat_b"
+
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

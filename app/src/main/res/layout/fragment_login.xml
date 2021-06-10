@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+
+    android:background="@color/white"
+
+     >
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        app:fontFamily="@font/montserrat"
+        android:gravity="center|start"
+
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginTop="@dimen/tittle_text_size"
+
+        android:textSize="@dimen/tittle_text_size"
+
+        android:textColor="@color/colorPrimary"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_mobile"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        tools:ignore="SpUsage"
+        app:layout_constraintTop_toBottomOf="@id/login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:layout_marginStart="@dimen/ten"
+        android:hint="Enter Mobile Number">
+
+        <com.google.android.material.textfield.TextInputEditText
+
+            android:background="@drawable/form_edit_text_background"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:passwordToggleEnabled="true"
+        app:layout_constraintTop_toBottomOf="@id/edit_mobile"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpUsage"
+        android:layout_marginEnd="110dp"
+
+        android:layout_marginStart="@dimen/ten"
+        android:hint="Password">
+
+        <com.google.android.material.textfield.TextInputEditText
+
+            android:background="@drawable/form_edit_text_background"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submit_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:layout_marginRight="@dimen/ten"
+
+        android:textAllCaps="false"
+        android:background="@drawable/btn_bg"
+android:textColor="@color/white"
+         android:textSize="@dimen/text_size_edit"
+        app:layout_constraintTop_toTopOf="@id/edit_password"
+        app:layout_constraintBottom_toBottomOf="@id/edit_password"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/forget_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/forget_password"
+        app:fontFamily="@font/montserrat"
+        android:gravity="center|start"
+
+
+        android:layout_marginStart="@dimen/text_size_edit"
+        android:layout_marginEnd="@dimen/text_size_edit"
+        android:layout_marginTop="@dimen/ten"
+
+        android:textSize="@dimen/twelve"
+
+        android:textColor="@color/black"
+
+        app:layout_constraintTop_toBottomOf="@id/edit_password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/or"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/or"
+        app:fontFamily="@font/montserrat"
+        android:gravity="center"
+
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginTop="70dp"
+
+        android:textSize="@dimen/text_size_edit"
+
+
+        android:textColor="@color/black"
+
+        app:layout_constraintTop_toBottomOf="@id/forget_txt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fblogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fb_login"
+        app:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:drawableRight="@drawable/facebook"
+        android:padding="10dp"
+        android:background="@drawable/blue_frame"
+
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginTop="@dimen/tittle_text_size"
+
+        android:textSize="@dimen/twelve"
+
+        android:textColor="@color/fb_color"
+
+        app:layout_constraintTop_toBottomOf="@id/or"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical">
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/gmail_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/g_login"
+        app:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:padding="10dp"
+        android:drawableRight="@drawable/google"
+        android:background="@drawable/red_frame"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginTop="@dimen/tittle_text_size"
+        android:textSize="@dimen/twelve"
+        android:textColor="@color/g_color"
+        app:layout_constraintTop_toBottomOf="@id/fblogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/singUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sing_up"
+        app:fontFamily="@font/montserrat"
+        android:gravity="center"
+
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginTop="20dp"
+
+        android:textSize="@dimen/sing_up"
+
+
+        android:textColor="@color/black"
+
+        app:layout_constraintTop_toBottomOf="@id/gmail_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+         android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="60dp"
+            android:scaleType="centerCrop"
+
+
+            android:src="@drawable/logo"
+            android:layout_height="60dp"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:text="@string/become_vendor"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            app:fontFamily="@font/montserrat_b"
+            android:textSize="@dimen/ten"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"
+            tools:ignore="SpUsage" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

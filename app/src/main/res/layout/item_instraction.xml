@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content"
+     app:cardCornerRadius="20dp"
+    android:layout_margin="@dimen/five"
+
+    android:padding="@dimen/Margin5dp"
+    android:background="@color/white"
+    android:id="@+id/card_view">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:text=""
+        android:layout_gravity="start"
+        android:padding="@dimen/Margin5dp"
+        android:gravity="start"
+        android:fontFamily="@font/montserrat"
+        android:textColor="@color/black"
+android:textSize="@dimen/Margin15dp"
+        android:id="@+id/tvName"
+        app:fontFamily="@font/montserrat_b"
+        android:layout_height="wrap_content"/>
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/openpanel"
+    android:layout_height="wrap_content"
+
+    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardCornerRadius="0sp"
+    android:layout_gravity="start"
+
+
+    android:layout_margin="0sp"
+    app:contentPadding="0sp"
+    app:rippleColor="@color/colorPrimary"
+    app:cardElevation="0.1sp"
+    >
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="start"
+android:gravity="start"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="24sp"
+                android:id="@+id/img"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/Margin10dp"
+                android:padding="@dimen/Margin5dp"
+                android:background="@drawable/homeicon"
+                android:layout_height="24sp"/>
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:text=" "
+                android:textSize="15sp"
+                android:padding="10sp"
+                app:textAllCaps="true"
+                app:fontFamily="@font/roboto_medium"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <View
+            android:id="@+id/border"
+            android:layout_width="match_parent"
+
+            android:background="@color/colorPrimary"
+            android:layout_height="1sp"/>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

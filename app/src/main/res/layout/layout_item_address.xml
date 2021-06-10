@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="5sp"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvAddress"
+        android:layout_width="match_parent"
+        android:text="Address"
+        android:drawableStart="@drawable/locred"
+        android:drawablePadding="@dimen/Margin15dp"
+        android:layout_gravity="top|start"
+        android:layout_margin="@dimen/Margin5dp"
+        android:gravity="start|center"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvAddresstwo"
+        android:layout_width="match_parent"
+        android:text="Address"
+        android:visibility="gone"
+        android:layout_margin="@dimen/Margin5dp"
+        android:drawableStart="@drawable/locgreen"
+        android:drawablePadding="@dimen/Margin15dp"
+        android:layout_gravity="top|start"
+        android:gravity="start|center"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

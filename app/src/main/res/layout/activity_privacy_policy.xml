@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_gredient_bg"
+        app:titleTextColor="@color/white"
+        android:padding="@dimen/Margin5dp"
+
+
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/white_gredient_bg"
+            app:contentInsetStart="0dp"
+            app:titleTextColor="@color/black"
+
+            app:contentInsetStartWithNavigation="0dp"
+            app:elevation="0dp"
+            >
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+
+        android:id="@+id/tvContent"
+        android:layout_height="wrap_content"/>
+    <WebView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:id="@+id/payumoney_webview" >
+
+
+    </WebView>
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+

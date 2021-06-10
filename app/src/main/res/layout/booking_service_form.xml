@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_gravity="bottom|end"
+    android:gravity="end|bottom"
+    android:layout_height="match_parent"
+    tools:context=".ecommerce.home">
+
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_gravity="end|bottom"
+        android:orientation="vertical"
+        android:padding="@dimen/Margin5dp"
+        android:background="@drawable/green_rect"
+        android:layout_height="wrap_content">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+
+            android:padding="@dimen/Margin10dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center|start"
+                android:gravity="center|start"
+
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/makeCall"
+                    android:elevation="5dp"
+                    android:layout_margin="@dimen/Margin5dp"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Make Call"
+                    android:padding="@dimen/Margin10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat"
+
+                    android:textAllCaps="false"
+                    android:drawableTint="@color/colorPrimary"
+                    android:drawableStart="@drawable/ic_call_black_24dp"
+                    android:background="@drawable/white_gredient_bg_rect"
+                    android:textColor="@color/colorPrimary"
+
+                    android:textSize="@dimen/text_size_edit"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center|start"
+                android:gravity="center|start"
+
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/chatNow"
+                    android:elevation="5dp"
+                    android:layout_margin="@dimen/Margin5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Chat Now"
+                    android:visibility="gone"
+                    android:padding="@dimen/Margin10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:drawableStart="@drawable/ic_chat_bubble_black_24dp"
+
+                    android:drawableTint="@color/orange"
+                    android:fontFamily="@font/montserrat"
+
+                    android:textAllCaps="false"
+
+                    android:background="@drawable/white_gredient_bg_rect"
+                    android:textColor="@color/orange"
+
+                    android:textSize="@dimen/text_size_edit"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center|end"
+                android:gravity="center|end"
+
+                android:layout_height="wrap_content">
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvClose"
+                    android:elevation="5dp"
+                    android:layout_margin="@dimen/Margin5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Close"
+                    android:padding="@dimen/Margin10dp"
+                    app:drawableTint="@color/white"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat"
+                    android:drawableStart="@drawable/ic_close_black_24dp"
+                    android:drawableTint="@color/white"
+
+                    android:textAllCaps="false"
+                    android:background="@drawable/green_gredient_bg_rect"
+                    android:textColor="@color/white"
+
+                    android:textSize="@dimen/text_size_edit"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/black"
+            android:layout_margin="@dimen/Margin5dp"
+            android:layout_height="1dp"/>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/Margin5dp"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/Margin5dp"
+                android:inputType="text"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/text_size_edit"
+                android:background="@drawable/green_form_gredient_light_rect"
+                android:hint="Full Name"
+                android:padding="16dp"
+                />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/Margin10dp"
+                android:inputType="number"
+                android:textSize="@dimen/text_size_edit"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:maxLength="10"
+                android:background="@drawable/green_form_gredient_light_rect"
+                android:hint="Mobile No."
+                android:padding="16dp"
+                />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_email_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/Margin10dp"
+                android:inputType="text"
+                android:textSize="@dimen/text_size_edit"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:background="@drawable/green_gredient_bg_rect"
+                android:hint="Email id."
+                android:padding="16dp"
+                />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_house"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/Margin10dp"
+                android:inputType="text"
+                android:textSize="@dimen/text_size_edit"
+                android:background="@drawable/green_gredient_bg_rect"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:hint="House No./Flate No./Building No"
+                android:padding="16dp"
+                />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_street"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/Margin10dp"
+                android:inputType="text"
+                android:textSize="@dimen/text_size_edit"
+                android:background="@drawable/green_gredient_bg_rect"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:hint="Street Name / Local Name / Locality"
+                android:padding="16dp"
+                />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_pinCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/Margin10dp"
+                android:inputType="number"
+                android:textSize="@dimen/text_size_edit"
+                android:maxLength="6"
+                android:background="@drawable/green_gredient_bg_rect"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:hint="Pin Code"
+                android:padding="16dp"
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/btnContinue"
+            android:elevation="5dp"
+            android:layout_margin="@dimen/Margin10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Continue"
+
+            android:padding="@dimen/Margin10dp"
+            android:layout_gravity="end"
+            android:gravity="end"
+
+            android:fontFamily="@font/montserrat"
+
+            android:textAllCaps="false"
+
+            android:background="@drawable/white_gredient_bg_rect"
+            android:textColor="@color/green"
+
+            android:textSize="@dimen/text_size_edit"/>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

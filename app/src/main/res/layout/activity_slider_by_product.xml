@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
+    tools:context=".ui.auth.fragments.product.UserSearchActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_gredient_bg"
+        app:titleTextColor="@color/white"
+        android:padding="@dimen/Margin5dp"
+
+
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/white_gredient_bg"
+            app:contentInsetStart="0dp"
+            app:titleTextColor="@color/black"
+
+            app:contentInsetStartWithNavigation="0dp"
+            app:elevation="0dp"
+            >
+
+
+
+        </androidx.appcompat.widget.Toolbar>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:weightSum="5"
+            android:id="@+id/layoutSearch"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_weight="0.5"
+                android:layout_margin="@dimen/Margin5dp"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="center"
+                    android:gravity="center|left"
+                    android:inputType="text"
+
+                    android:textSize="12sp"
+                    android:background="@drawable/form_edit_text_background"
+                    android:hint="Search E.g Shop,Category,Service,Product"
+
+                    android:fontFamily="@font/montserrat"
+                    android:textColorHint="@color/grayColor"
+
+                    android:padding="@dimen/Margin15dp"
+
+                    />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_weight="4.5"
+                android:id="@+id/tvSearchLayout"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/tvSearchIcon"
+                    android:layout_width="35sp"
+                    android:layout_gravity="center"
+
+                    android:background="@drawable/ic_search_black_24dp"
+                    android:layout_height="35sp"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <!--        <androidx.appcompat.widget.LinearLayoutCompat-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:weightSum="3"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:layout_height="wrap_content">-->
+        <!--            <androidx.appcompat.widget.LinearLayoutCompat-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:layout_height="wrap_content">-->
+        <!--                <TextView-->
+        <!--                    android:id="@+id/tvProduct"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:text="Product"-->
+        <!--                    android:gravity="center"-->
+        <!--                    android:layout_gravity="center"-->
+        <!--                    android:textSize="14sp"-->
+        <!--                    android:padding="10sp"-->
+        <!--                    android:textAllCaps="true"-->
+        <!--                    app:fontFamily="@font/roboto_medium"-->
+        <!--                    android:textColor="@color/black"-->
+        <!--                    android:layout_height="wrap_content"/>-->
+
+        <!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+        <!--            <androidx.appcompat.widget.LinearLayoutCompat-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:layout_height="wrap_content">-->
+        <!--                <TextView-->
+        <!--                    android:id="@+id/tvVendorName"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:text="Vendor"-->
+        <!--                    android:gravity="center"-->
+        <!--                    android:layout_gravity="center"-->
+        <!--                    android:textSize="14sp"-->
+        <!--                    android:padding="10sp"-->
+        <!--                    android:textAllCaps="true"-->
+        <!--                    app:fontFamily="@font/roboto_medium"-->
+        <!--                    android:textColor="@color/black"-->
+        <!--                    android:layout_height="wrap_content"/>-->
+
+        <!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+        <!--            <androidx.appcompat.widget.LinearLayoutCompat-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:layout_height="wrap_content">-->
+        <!--                <TextView-->
+        <!--                    android:id="@+id/tvVariant"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:text="Variant"-->
+        <!--                    android:gravity="center"-->
+        <!--                    android:layout_gravity="center"-->
+        <!--                    android:textSize="14sp"-->
+        <!--                    android:padding="10sp"-->
+        <!--                    android:textAllCaps="true"-->
+        <!--                    app:fontFamily="@font/roboto_medium"-->
+        <!--                    android:textColor="@color/black"-->
+        <!--                    android:layout_height="wrap_content"/>-->
+
+
+        <!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
+        <!--        </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/menuList"
+            android:layout_marginTop="@dimen/Margin10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_gravity="center"
+
+            tools:listitem="@layout/menuviewlayout"
+            android:orientation="horizontal"
+
+
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+
+            android:divider="@null"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listProduct"
+        android:layout_marginTop="@dimen/Margin10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        tools:listitem="@layout/item_product"
+        android:orientation="vertical"
+
+
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+
+        android:divider="@null"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

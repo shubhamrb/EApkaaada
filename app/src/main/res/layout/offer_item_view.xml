@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/card_view"
+    android:layout_height="wrap_content"
+    android:padding="0sp"
+    android:elevation="1dp"
+    android:layout_margin="@dimen/Margin5dp"
+    android:gravity="center|top"
+    android:layout_gravity="center|top"
+    android:background="@drawable/white_gredient_tobf_bg"
+
+
+    android:orientation="vertical">
+    <FrameLayout
+        android:id="@+id/frameId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="0sp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="150sp"
+            android:contentDescription=""
+            android:scaleType="fitXY"
+            android:background="@drawable/offer"
+            app:shapeAppearanceOverlay="@style/OneSideRoundedImageRect"
+            android:adjustViewBounds="true"/>
+
+
+    </FrameLayout>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/Margin5dp"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/forget_password"
+            app:fontFamily="@font/montserrat_b"
+            android:gravity="center"
+
+
+
+            android:fontFamily="@font/montserrat_b"
+            android:textSize="@dimen/twelve"
+
+            android:textColor="@color/black"
+
+            app:layout_constraintTop_toBottomOf="@id/frameId"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/forget_password"
+            android:fontFamily="@font/montserrat"
+            app:fontFamily="@font/montserrat"
+            android:gravity="center"
+
+
+            android:textSize="@dimen/twelve"
+
+            android:textColor="@color/black"
+
+            app:layout_constraintTop_toBottomOf="@id/frameId"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/submit_btn"
+            android:elevation="0.1dp"
+            android:layout_margin="@dimen/Margin5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Claim Now"
+
+            android:padding="@dimen/Margin10dp"
+
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:fontFamily="@font/poppins"
+
+            android:textAllCaps="false"
+            android:background="@drawable/btn_bg"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+ </androidx.appcompat.widget.LinearLayoutCompat>

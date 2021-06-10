@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    app:contentPadding="@dimen/five"
+    android:layout_height="wrap_content"
+    app:cardElevation="0dp"
+    android:backgroundTint="@color/white"
+    android:id="@+id/card_view">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:padding="@dimen/Margin5dp"
+            android:text="Organic Milk"
+            android:layout_gravity="start"
+            android:gravity="start"
+            android:fontFamily="@font/montserrat_b"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listAttribute"
+            android:layout_marginTop="3sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            tools:listitem="@layout/varriant_attribute_value"
+            android:orientation="horizontal"
+
+
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+
+            android:divider="@null"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F41F1F</color>
+    <color name="colorPrimaryDark">#D11414</color>
+    <color name="red">#D11414</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="editText">#F5F5F5</color>
+    <color name="gray">#F4F4F4</color>
+    <color name="gray_heart">#A3A3A3</color>
+    <color name="grayColor">#464646</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="yellow">#FFC107</color>
+    <color name="orange">#EB8C00</color>
+    <color name="fb_color">#3C5A99</color>
+    <color name="g_black">#2c2f3e</color>
+    <color name="green">#3c8b00</color>
+    <color name="g_color">#EB4132</color>
+    <color name="lightGary">#8D8D8D</color>
+    <color name="transparent">#0D8D8D8D</color>
+    <color name="bg_color">#f7f7f7</color>
+    <color name="light_red_color">#FF9B9B</color>
+</resources>
