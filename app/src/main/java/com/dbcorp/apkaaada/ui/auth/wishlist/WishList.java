@@ -111,7 +111,7 @@ public class WishList extends AppCompatActivity implements  NearByShopAdapter.On
                             Type type = new TypeToken<ArrayList<VendorDetails>>() {
                             }.getType();
                             vendorDetailsList = gson.fromJson(object.getJSONArray("listData").toString(), type);
-                            nearByShopAdapter = new NearByShopAdapter(vendorDetailsList, listner, mContext);
+                            nearByShopAdapter = new NearByShopAdapter("","",vendorDetailsList, listner, mContext);
                             listItem.setAdapter(nearByShopAdapter);
 
                         } else {

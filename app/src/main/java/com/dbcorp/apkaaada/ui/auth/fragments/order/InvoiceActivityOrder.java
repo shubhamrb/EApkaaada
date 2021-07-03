@@ -32,6 +32,7 @@ import com.dbcorp.apkaaada.Adapter.usercard.UserAddressAdapter;
 import com.dbcorp.apkaaada.Adapter.usercard.UserCardAdapter;
 import com.dbcorp.apkaaada.R;
 import com.dbcorp.apkaaada.database.SqliteDatabase;
+import com.dbcorp.apkaaada.database.UserSharedPreference;
 import com.dbcorp.apkaaada.helper.Util;
 import com.dbcorp.apkaaada.model.DroupDownModel;
 import com.dbcorp.apkaaada.model.UserDetails;
@@ -39,16 +40,17 @@ import com.dbcorp.apkaaada.model.card.CardProduct;
 import com.dbcorp.apkaaada.model.card.Coupon;
 import com.dbcorp.apkaaada.model.card.UserAddress;
 import com.dbcorp.apkaaada.model.shopview.Product;
+import com.dbcorp.apkaaada.model.shopview.SubToSubCategory;
 import com.dbcorp.apkaaada.network.ApiService;
 import com.dbcorp.apkaaada.network.InternetConnection;
 import com.dbcorp.apkaaada.network.RestClient;
 import com.dbcorp.apkaaada.ui.auth.fragments.SetAddressActivity;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -69,42 +71,53 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
     UserDetails userDetails;
     RecyclerView recyclerView;
     InvoiceActivityOrder listner;
+    UserSharedPreference userSharedPreference;
 
 
     UserCardAdapter userCardAdapter;
     private ArrayList<CardProduct> cardProducts;
+    private ArrayList<CardProduct> oldCardProducts;
+    private  String vendorIdsList;
     OrderPriceAdapter orderPriceAdapter;
     private Toolbar toolbar;
     MaterialTextView tvChange, edit_coupon_code,tv_totalPrice, tvItemCount, tvTotalPrice;
 
-    String itemCount,totalPrice;
+    String itemCount,totalPrice,totalPriceAfterCoupon;
     CouponAdapter couponAdapter;
 
     ArrayList<Coupon> listCoupon;
     MaterialTextView tvApplyCoupon;
     RecyclerView listProductOrder;
+    String currentCouponVendorId="";
+    String currentCouponPrice="";
     PopupWindow popupWindow;
     UserAddressAdapter userAddressAdapter;
 
     ArrayList<UserAddress> userAddressesList;
-    MaterialTextView tvTotalChargePrice, tvAddTotalChargePrice,tvMultiVenCharge,tvDeliveryCharge, tvCouponPrice,tvAddType,tvAddress,tvChoose;
+    MaterialTextView locationTv,tvTotalChargePrice, tvAddTotalChargePrice,tvMultiVenCharge,tvDeliveryCharge, tvCouponPrice,tvAddType,tvAddress,tvChoose;
 
     MaterialTextView btnProceed;
     ArrayList<String> tokens;
+    HashMap<String, String> address;
     MaterialTextView itemCountTv,tvPrice;
+    MaterialButton submit_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.final_order_item_cat_layout);
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("My Card");
+        toolbar.setTitle("Order Details");
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         listner=this;
-
         userDetails = new SqliteDatabase(this).getLogin();
         this.mContext = this;
+        userSharedPreference=new UserSharedPreference(mContext);
+        address=userSharedPreference.getAddress();
         init();
+
+      // 23.2048039,77.4011025//     double kmDist=Util.distance(23.2232526,77.4313811,23.2048039,77.4011025,"k");
+//        locationTv.setText(String.format("%s km",kmDist));
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -114,8 +127,11 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
 
     private void init() {
         userAddressesList=new ArrayList<>();
+
         orderDetails();
         getCardCount();
+        submit_btn=findViewById(R.id.submit_btn);
+        locationTv=findViewById(R.id.locationTv);
         itemCountTv=findViewById(R.id.itemCount);
         tvPrice = findViewById(R.id.tvPrice);
         listProductOrder =  findViewById(R.id.listProductOrder);
@@ -151,6 +167,10 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
 
 
         });
+
+        submit_btn.setOnClickListener(v->{
+                applyCoupon(currentCouponVendorId,currentCouponPrice);
+        });
         getAddress();
     }
 
@@ -184,7 +204,9 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
         tvMultiVenCharge.setText(String.valueOf(multiCharge));
         tvDeliveryCharge.setText(delivery_charge);
         tvAddTotalChargePrice.setText(String.valueOf(addChargePrice));
-        tvTotalChargePrice.setText(totalPrice);
+        tvTotalChargePrice.setText(totalPriceAfterCoupon);
+
+
         alertDialog = builder2.create();
         alertDialog.show();
         tvClose.setOnClickListener(v->{
@@ -243,10 +265,11 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
  }
     private void orderDetails() {
         cardProducts = new ArrayList<>();
+        oldCardProducts=new ArrayList<>();
         listCoupon=new ArrayList<>();
         if (InternetConnection.checkConnection(mContext)) {
             Map<String, String> params = new HashMap<>();
-            params.put("userId", userDetails.getUserId());
+            params.put("userId", "14");
             Log.e("param", params.toString());
             RestClient.post().userOrder(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -260,6 +283,10 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
                             Type notiType = new TypeToken<ArrayList<String>>() {
                             }.getType();
                             tokens=gson.fromJson(strObj.getJSONArray("notification_token").toString(), notiType);
+
+
+                            vendorIdsList=strObj.getString("vendorIdes") ;
+
                             Log.e("notification_token",tokens.toString());
 
                             for (int i = 0; i < arrayData.length(); i++) {
@@ -269,21 +296,33 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
                                 CardProduct obj = new CardProduct();
                                 obj.setVendorName(str.getString("vendor_name"));
                                 obj.setProductCount(str.getInt("productCount"));
+                                obj.setShop_name(str.getString("shop_name"));
+
+                                obj.setCityName(str.getString("cityName"));
+                                obj.setDelivery_charge_per_km(str.getString("delivery_charge_per_km"));
+                                obj.setDelivery_charge_type(str.getString("delivery_charge_type"));
+                                obj.setOrder_range_limit(str.getString("order_range_limit"));
+                                obj.setLat(str.getString("lat"));
+                                obj.setLng(str.getString("lng"));
+                                obj.setVendorId(str.getString("vendor_id"));
+                                obj.setDiscountPrice(str.getString("discountPrice"));
+
+
+                                obj.setTotalProductPrice(str.getString("totalProductPrice"));
                                 Type productType = new TypeToken<ArrayList<Product>>() {
                                 }.getType();
 
                                 obj.setProductList(gson.fromJson(str.getJSONArray("ProductList").toString(), productType));
                                 cardProducts.add(obj);
                             }
+                            oldCardProducts.addAll(cardProducts);
                             Type couponType = new TypeToken<ArrayList<Coupon>>() {
                             }.getType();
                             listCoupon=gson.fromJson(strObj.getJSONArray("couponList").toString(), couponType);
                             Type tokensType = new TypeToken<ArrayList<String>>() {
                             }.getType();
-
-                            orderPriceAdapter=new OrderPriceAdapter(cardProducts,mContext);
+                            orderPriceAdapter=new OrderPriceAdapter(Double.parseDouble(address.get(UserSharedPreference.CurrentLatitude)),Double.parseDouble(address.get(UserSharedPreference.CurrentLongitude)),cardProducts,mContext);
                             listProductOrder.setAdapter(orderPriceAdapter);
-
 
                         }
                     } catch (Exception e) {
@@ -376,7 +415,7 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
                             tvTotalPrice.setText("₹ "+object.getJSONObject("totalAmount").getString("price"));
                             itemCount=object.getJSONObject("cardCount").getString("cardCount");
                             totalPrice=object.getJSONObject("totalAmount").getString("price");
-
+                            totalPriceAfterCoupon=object.getJSONObject("totalAmount").getString("price");
                         }else{
 
                         }
@@ -444,11 +483,45 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
         });
 
 
+
         couponAdapter=new CouponAdapter(listCoupon,listner,mContext);
         listCountryData2.setAdapter(couponAdapter);
 
     }
 
+
+    public  void applyCoupon(String vendorId,String price){
+        int VenOrderPrice=0;
+        int couponPrice=0;
+        int updatePrice=0;
+        int getPrice= Integer.parseInt(price);
+        totalPriceAfterCoupon=totalPrice;
+        for(int i=0;i<cardProducts.size();i++){
+
+            if (cardProducts.get(i).getVendorId().equals(vendorId)) {
+                VenOrderPrice= Integer.parseInt(cardProducts.get(i).getTotalProductPrice());
+
+if(getPrice>VenOrderPrice){
+     Util.show(mContext,"Please change coupon code");
+     break;
+}else{
+
+    couponPrice= Integer.parseInt(price);
+    updatePrice=VenOrderPrice-couponPrice;
+    Log.e("topvendor", String.valueOf(VenOrderPrice));
+    cardProducts.get(i).setDiscountPrice(String.valueOf(updatePrice));
+    orderPriceAdapter.notifyDataSetChanged();
+    int totalCardPrice=Integer.parseInt(totalPrice)-updatePrice;
+    int tp=totalCardPrice-updatePrice;
+    totalPriceAfterCoupon=String.valueOf(tp);
+    break;
+}
+
+            }
+        }
+
+
+    }
 
 
     @SuppressLint("SetTextI18n")
@@ -508,11 +581,18 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
 
     @Override
     public void clickCoupon(Coupon data, int pos, String type) {
+
         popupWindow.dismiss();
         tvApplyCoupon.setText(data.getCouponCode());
+        currentCouponVendorId=data.getVendorId();
+        currentCouponPrice=data.getPrice();
         int t=Integer.parseInt(totalPrice)-Integer.parseInt(data.getPrice());
         tvTotalPrice.setText("₹ "+String.valueOf(t));
         tvCouponPrice.setText(data.getPrice());
+        cardProducts=new ArrayList<>();
+        //oldCardProducts
+        cardProducts.addAll(oldCardProducts);
+        orderPriceAdapter.notifyDataSetChanged();
     }
 
 

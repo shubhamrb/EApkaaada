@@ -19,20 +19,17 @@ public interface ApiService {
     //   String BASE_URL = "http://cashsaledev.groupbhaskar.in/";   static String AppType="( TEST )";
 
     //test server start
-    String MAIN_BASE_URL = "http://192.168.43.56/";
-    String MAIN_IMAGE_BASE_URL = "http://192.168.43.56/top10/";
-    String BASE_URL = MAIN_BASE_URL + "top10/api/v1/user-api/";
+   // String MAIN_BASE_URL = "http://192.168.43.56/";
+    //String MAIN_IMAGE_BASE_URL = "http://192.168.43.56/top10/";
+    //String BASE_URL = MAIN_BASE_URL + "top10/api/v1/user-api/";
     //test server en
 
     //live server start
-
-    //String MAIN_BASE_URL ="http://top10india.in/";
-    //String MAIN_IMAGE_BASE_URL ="http://top10india.in/";
-    //String BASE_URL = MAIN_BASE_URL+"api/v1/user-api/";
-    // String PRODUCT_IMG_URL="http://top10india.in/upload/product/";
-
-    // String IMG_PRODUCT_URL = "http://top10india.in/upload/product/";
+    String MAIN_BASE_URL ="http://top10india.in/";
+    String MAIN_IMAGE_BASE_URL ="http://top10india.in/";
+    String BASE_URL = MAIN_BASE_URL+"api/v1/user-api/";
     //live server end
+
     String PRODUCT_IMG_URL = MAIN_IMAGE_BASE_URL + "upload/product/";
 
 
@@ -44,6 +41,7 @@ public interface ApiService {
     String slider_URL = MAIN_IMAGE_BASE_URL + "upload/slider/";
 
     String VENDOR_IMG_URL = MAIN_IMAGE_BASE_URL + "upload/profilePhoto/";
+    String VENDOR_SHOP_IMG_URL = MAIN_IMAGE_BASE_URL + "upload/shop/";
     String COMPLAINT_IMG_URL = MAIN_IMAGE_BASE_URL + "upload/complaint/";
 
 
@@ -337,6 +335,11 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(Constants.ADD_SERVICE_DATA)
     Call<String> addService(@Header("SK") String sk, @Header("DID") String did, @FieldMap Map<String, String> uData);
+
+
+    @FormUrlEncoded
+    @POST(Constants.SEARCH_AUTO_DATA)
+    Call<String> searchProduct(@Header("SK") String sk, @Header("DID") String did, @FieldMap Map<String, String> uData);
 
 }
 

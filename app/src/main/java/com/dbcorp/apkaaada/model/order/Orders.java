@@ -10,8 +10,12 @@ import java.io.Serializable;
 
 public class Orders implements Serializable {
 
-
-
+    @SerializedName("gst_name")
+    @Expose
+    private String gst_name;
+    @SerializedName("gst_value")
+    @Expose
+    private String gst_value;
     @SerializedName("VendorNo")
     @Expose
     private String VendorNo;
@@ -107,6 +111,22 @@ public class Orders implements Serializable {
     @SerializedName("address")
     @Expose
     private String address;
+
+    public String getGst_name() {
+        return gst_name;
+    }
+
+    public void setGst_name(String gst_name) {
+        this.gst_name = gst_name;
+    }
+
+    public String getGst_value() {
+        return gst_value;
+    }
+
+    public void setGst_value(String gst_value) {
+        this.gst_value = gst_value;
+    }
 
     public String getCustomerId() {
         return customerId;

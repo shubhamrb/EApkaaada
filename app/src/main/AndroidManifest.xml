@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.auth.fragments.product.ProductSingleDetails"></activity>
+        <activity android:name=".ui.auth.userservice.VendorChatActivity"></activity>
+        <activity android:name=".ui.auth.fragments.product.ProductSingleDetails" />
         <activity android:name=".ui.auth.fragments.account.UserAccount" />
         <activity android:name=".ui.auth.fragments.order.myorder.SingleProductActivity" />
         <activity android:name=".TestDemo" />
@@ -45,6 +46,7 @@
         <activity android:name=".ui.auth.userservice.ChatActivity" />
         <activity android:name=".ui.auth.wishlist.WishList" />
         <activity android:name=".ui.auth.Order.OrderStatus" />
+        <activity android:name=".ui.auth.fragments.location.maps.SearchAddress" />
         <activity android:name=".ui.auth.fragments.shop.SingleShopDetails" />
         <activity android:name=".ui.auth.Order.OrderList" />
         <activity android:name=".ui.auth.Order.OrderDashBoard" />

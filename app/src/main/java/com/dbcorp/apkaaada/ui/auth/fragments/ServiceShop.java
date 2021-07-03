@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -77,12 +78,15 @@ public class ServiceShop extends AppCompatActivity {
     Intent g;
 
     private Context mContext;
+    AppCompatImageView likeDislike,tvStartOne,tvStartTwo,tvStartThree,tvStartFour,tvStartFive;
+
+    MaterialTextView rateCount,rating;
     private UserDetails userDetails;
     private ArrayList<VendorService> servicesList;
     private RecyclerView serviceList;
     private VendorDetails vendorDetails;
     private Intent getInent;
-    private MaterialTextView tvShopName,tvAbout,makeCall,chatNow,bookNow;
+    private MaterialTextView tvShopName,shopDes,tvAbout,makeCall,chatNow,bookNow;
     private ServiceAdapter serviceAdapter;
     private ArrayList<Carouseloffer> listCarousel;
     SliderAdaptercarouseList sliderAdapter;
@@ -114,8 +118,18 @@ public class ServiceShop extends AppCompatActivity {
     private void init(){
         servicesList=new ArrayList<>();
         tvShopName=findViewById(R.id.tvShopName);
+
+        tvStartOne=findViewById(R.id.tvStartOne);
+        tvStartTwo=findViewById(R.id.tvStartTwo);
+        tvStartThree=findViewById(R.id.tvStartThree);
+        tvStartFour=findViewById(R.id.tvStartFour);
+        tvStartFive=findViewById(R.id.tvStartFive);
+        shopDes=findViewById(R.id.shopDes);
+        rateCount=findViewById(R.id.rateCount);
+
+        rating=findViewById(R.id.rating);
         serviceList=findViewById(R.id.serviceList);
-        tvAbout=findViewById(R.id.tvAbout);
+
         bookNow=findViewById(R.id.bookNow);
         chatNow=findViewById(R.id.chatNow);
         makeCall=findViewById(R.id.makeCall);
@@ -139,6 +153,46 @@ public class ServiceShop extends AppCompatActivity {
         bookNow.setOnClickListener(v->{
             addBooking();
         });
+    }
+
+    public void setRating(String rate){
+
+        Util.show(mContext,rate);
+        if(rate.equalsIgnoreCase("5.0")){
+            tvStartFive.setVisibility(View.VISIBLE);
+            tvStartFour.setVisibility(View.VISIBLE);
+            tvStartThree.setVisibility(View.VISIBLE);
+            tvStartTwo.setVisibility(View.VISIBLE);
+            tvStartOne.setVisibility(View.VISIBLE);
+        }else if(rate.equalsIgnoreCase("4.0")){
+            tvStartFive.setVisibility(View.GONE);
+            tvStartFour.setVisibility(View.VISIBLE);
+            tvStartThree.setVisibility(View.VISIBLE);
+            tvStartTwo.setVisibility(View.VISIBLE);
+            tvStartOne.setVisibility(View.VISIBLE);
+
+        }else if(rate.equalsIgnoreCase("3.0")){
+            tvStartFive.setVisibility(View.GONE);
+            tvStartFour.setVisibility(View.GONE);
+            tvStartThree.setVisibility(View.VISIBLE);
+            tvStartTwo.setVisibility(View.VISIBLE);
+            tvStartOne.setVisibility(View.VISIBLE);
+        }else if(rate.equalsIgnoreCase("2.0")){
+            tvStartFive.setVisibility(View.GONE);
+            tvStartFour.setVisibility(View.GONE);
+            tvStartThree.setVisibility(View.GONE);
+            tvStartTwo.setVisibility(View.VISIBLE);
+            tvStartOne.setVisibility(View.VISIBLE);
+
+        } else if(rate.equalsIgnoreCase("1.0")){
+            tvStartFive.setVisibility(View.GONE);
+            tvStartFour.setVisibility(View.GONE);
+            tvStartThree.setVisibility(View.GONE);
+            tvStartTwo.setVisibility(View.GONE);
+            tvStartOne.setVisibility(View.VISIBLE);
+
+        }
+
     }
 
     // funtion for calling on make call btn
@@ -218,21 +272,30 @@ public class ServiceShop extends AppCompatActivity {
                             serviceAdapter = new ServiceAdapter(servicesList,   mContext);
                             serviceList.setAdapter(serviceAdapter);
                             tvShopName.setText(object.getJSONArray("shopDetails").getJSONObject(0).getString("name"));
-                            tvAbout.setText(object.getJSONArray("shopDetails").getJSONObject(0).getString("about"));
+                            shopDes.setText(object.getJSONArray("shopDetails").getJSONObject(0).getString("about"));
                             shopMobile=object.getJSONArray("shopDetails").getJSONObject(0).getString("number");
 
+                            Type pageViewer = new TypeToken<ArrayList<Carouseloffer>>() {
+                            }.getType();
+                            listCarousel = gson.fromJson(object.getJSONArray("sliderImg").toString(), pageViewer);
 
-                            Carouseloffer objSlider=new Carouseloffer();
-                            objSlider.setId("");
-                            objSlider.setTitle("");
-                            objSlider.setImage(object.getJSONArray("shopDetails").getJSONObject(0).getString("photo"));
-                            listCarousel.add(objSlider);
-                            sliderAdapter = new SliderAdaptercarouseList(mContext, listCarousel);
-                            viewPager.setAdapter(sliderAdapter);
-                            indicator.setupWithViewPager(viewPager, true);
-                            sliderAdapter.notifyDataSetChanged();
-                            timer = new Timer();
-                            timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
+                            if(listCarousel.size()>0) {
+                                sliderAdapter = new SliderAdaptercarouseList(mContext, listCarousel);
+                                viewPager.setAdapter(sliderAdapter);
+                                indicator.setupWithViewPager(viewPager, true);
+                                sliderAdapter.notifyDataSetChanged();
+                                timer = new Timer();
+                                timer.scheduleAtFixedRate(new ServiceShop.SliderTimer(), 4000, 6000);
+                            }
+
+
+
+                            rateCount.setText(object.getJSONObject("ratingCount").getString("rateCount"));
+
+                            shopDes.setText(object.getJSONObject("vendorSetting").getString("description"));
+                            tvShopName.setText(object.getJSONObject("vendorSetting").getString("shop_name"));
+                            rating.setText("Rating : 5/"+object.getJSONObject("vendorSetting").getString("rating"));
+                            setRating(object.getJSONObject("vendorSetting").getString("rating"));
 
                         } else {
                             Util.show(mContext, "something is wrong");

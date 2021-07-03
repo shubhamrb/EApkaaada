@@ -8,38 +8,133 @@
     android:padding="@dimen/Margin5dp"
     android:orientation="vertical"
     android:background="@color/white">
-<com.google.android.material.textview.MaterialTextView
-    android:layout_width="match_parent"
-    android:id="@+id/tvVendorName"
-    android:text="@string/vendor_name"
-    android:fontFamily="@font/montserrat_b"
-    android:textColor="@color/black"
-    android:padding="@dimen/Margin5dp"
-    android:textSize="@dimen/text_size_edit"
-    android:layout_height="wrap_content"/>
 
-<androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="match_parent"
+    <com.google.android.material.card.MaterialCardView
 
-    android:weightSum="5"
-    android:layout_height="wrap_content">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/itemList"
-        android:layout_width="match_parent"
+      android:layout_width="match_parent"
+        android:id="@+id/cardView"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        tools:listitem="@layout/item_final_oder_product_varriant"
 
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="0sp"
+        android:layout_margin="4sp"
+        app:contentPadding="10sp"
 
+        app:rippleColor="@color/colorPrimary"
+        app:cardElevation="4sp"
+        >
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:orientation="vertical"
-        app:reverseLayout="true"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:id="@+id/tvVendorName"
+            android:text="@string/vendor_name"
+            android:fontFamily="@font/montserrat_b"
+            android:textColor="@color/black"
+            android:padding="2sp"
+            android:textSize="@dimen/text_size_edit"
+            android:layout_height="wrap_content"/>
 
-        android:divider="@null"
-        />
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:id="@+id/tvVendProductPrice"
+            android:text=" "
+            android:fontFamily="@font/montserrat_b"
+            android:textColor="@color/black"
+            android:padding="2sp"
+            android:textSize="@dimen/Margin10dp"
+            android:layout_height="wrap_content"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:id="@+id/tvVendDiscountPrice"
+            android:text=" "
+            android:visibility="gone"
+            android:fontFamily="@font/montserrat_b"
+            android:textColor="@color/black"
+            android:padding="2sp"
+            android:textSize="@dimen/Margin10dp"
+            android:layout_height="wrap_content"/>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/Margin5dp"
+            android:weightSum="2"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+
+                android:layout_gravity="center|start"
+                android:gravity="center|start"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="15sp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:background="@drawable/distance"
+                    android:layout_height="15sp"/>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:text="1 km"
+                    android:id="@id/tvKm"
+android:layout_marginStart="@dimen/Margin5dp"
+                    app:fontFamily="@font/montserrat_b"
+                    android:layout_height="wrap_content"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="end|center"
+                android:gravity="end|center"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/tvCharge"
+                    android:text="1"
+
+                    android:layout_marginEnd="@dimen/Margin5dp"
+                    app:fontFamily="@font/montserrat_b"
+                    android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="15sp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:background="@drawable/coins"
+                    android:layout_height="15sp"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/gray"
+            android:layout_marginTop="@dimen/Margin5dp"
+            android:layout_marginBottom="@dimen/Margin5dp"
+            android:layout_height="1sp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/itemList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            tools:listitem="@layout/item_final_oder_product_varriant"
+
+
+            android:orientation="vertical"
+            app:reverseLayout="true"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+            android:divider="@null"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
 
 
 

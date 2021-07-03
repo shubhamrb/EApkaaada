@@ -18,6 +18,8 @@ import com.dbcorp.apkaaada.ui.auth.fragments.ShopDetails;
 
 import java.util.List;
 
+import static com.dbcorp.apkaaada.network.ApiService.VENDOR_SHOP_IMG_URL;
+
 
 public class SliderAdaptercarouseList extends PagerAdapter {
     private Context context;
@@ -46,7 +48,7 @@ public class SliderAdaptercarouseList extends PagerAdapter {
         ImageView imageView = view.findViewById(R.id.imageView);
         Carouseloffer item = carouselList.get(position);
         Glide.with(context.getApplicationContext())
-                .load("http://top10india.in/upload/offer/a93cbacb6f5b6f1a7c5feb7a67bf877e.jpg")
+                .load(VENDOR_SHOP_IMG_URL+item.getImage())
                 .into(imageView);
         ViewPager viewPager = (ViewPager) container;
         viewPager.addView(view, 0);

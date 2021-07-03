@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -76,6 +77,7 @@ public class MyOrder extends AppCompatActivity implements  OrdersDetailsAdapter.
     MaterialTextView tvError;
     private  static AlertDialog alertDialog;
     MaterialTextView tvTotal,tvPT;
+    Handler handler;
     ArrayList<Orders> selectedProductData;
     Context mContext;
     UserDetails loginDetails;
@@ -98,7 +100,25 @@ public class MyOrder extends AppCompatActivity implements  OrdersDetailsAdapter.
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init();
+         handler = new Handler();
+        final int delay = 9000; // 1000 milliseconds == 1 second
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                System.out.println("myHandler: here!"); // Do your work here
+                handler.postDelayed(this, delay);
+                init();
+            }
+        }, delay);
+
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        handler.removeCallbacksAndMessages(null);
+    }
+
     public void init() {
         orders=new ArrayList<>();
         selectedIdes=new ArrayList<>();
@@ -159,6 +179,7 @@ public class MyOrder extends AppCompatActivity implements  OrdersDetailsAdapter.
 
             // Calling JSON
             Log.e("params",params.toString());
+            Util.showDialog("Please Wait..",mContext);
             Call<String> call = RestClient.post().getorder(loginDetails.getSk(),"1234", params);
 
             // Enqueue Callback will be call when get response...
@@ -195,20 +216,21 @@ public class MyOrder extends AppCompatActivity implements  OrdersDetailsAdapter.
                                     orders.clear();
                                     ordersAdapter.notifyDataSetChanged();
                                 }
-
+                                Util.hideDialog();
                             }else{
-
+                                Util.hideDialog();
                                 Util.show(mContext,object.getString("message"));
 
                             }
 
 
                         } catch (Exception e) {
-
+                            Util.hideDialog();
                             e.printStackTrace();
                         }
 
                     } else {
+                        Util.hideDialog();
                         try {
                             assert response.errorBody() != null;
                             Toast.makeText(mContext, "error message" + response.errorBody().string(), Toast.LENGTH_SHORT).show();
@@ -223,12 +245,13 @@ public class MyOrder extends AppCompatActivity implements  OrdersDetailsAdapter.
 
                 @Override
                 public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                    Util.hideDialog();
                     Toast.makeText(mContext, R.string.string_some_thing_wrong, Toast.LENGTH_SHORT).show();
                 }
 
             });
         } else {
-
+            Util.hideDialog();
             Toast.makeText(mContext, R.string.string_internet_connection_not_available, Toast.LENGTH_SHORT).show();
         }
     }
@@ -322,7 +345,9 @@ public class MyOrder extends AppCompatActivity implements  OrdersDetailsAdapter.
         return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
     }
     public boolean onOptionsItemSelected(MenuItem item) {
+        handler.removeCallbacksAndMessages(null);
         finish();
+
         return true;
     }
 }

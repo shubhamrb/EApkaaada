@@ -70,6 +70,7 @@ import com.dbcorp.apkaaada.ui.auth.fragments.ServiceShop;
 import com.dbcorp.apkaaada.ui.auth.fragments.SetAddressActivity;
 import com.dbcorp.apkaaada.ui.auth.fragments.account.account;
 
+import com.dbcorp.apkaaada.ui.auth.fragments.location.maps.SearchAddress;
 import com.dbcorp.apkaaada.ui.auth.fragments.nearby.nearbycat;
 import com.dbcorp.apkaaada.ui.auth.fragments.order.ActivityOrder;
 import com.dbcorp.apkaaada.ui.auth.fragments.order.InvoiceActivityOrder;
@@ -259,7 +260,7 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
 
                                 tvAddress.setText(address.get(UserSharedPreference.CurrentAddress));
                             }else{
-                                Intent mv=new Intent(HomeActivity.this, AutoCompleteDemo.class);
+                                Intent mv=new Intent(HomeActivity.this, SearchAddress.class);
                                 mv.putExtra("type","current");
                                 startActivity(mv);
                                 finish();
@@ -277,6 +278,13 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
                         token.continuePermissionRequest();
                     }
                 }).check();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        requestCameraPermission();
     }
 
     private void showPermissionsAlert() {
@@ -348,7 +356,7 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
 
                     break;
                 case R.id.myorder:
-                    Intent mv2 = new Intent(HomeActivity.this, ActivityOrderList.class);
+                    Intent mv2 = new Intent(HomeActivity.this, MyOrder.class);
                     startActivity(mv2);
                     break;
 
@@ -408,14 +416,14 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
         setClick();
         getAddress();
         tvAddress.setOnClickListener(v->{
-            Intent mv=new Intent(HomeActivity.this, AutoCompleteDemo.class);
+            Intent mv=new Intent(HomeActivity.this, SearchAddress.class);
             mv.putExtra("type","current");
             startActivity(mv);
             finish();
         });
 
         locred.setOnClickListener(v->{
-            Intent mv=new Intent(HomeActivity.this, AutoCompleteDemo.class);
+            Intent mv=new Intent(HomeActivity.this, SearchAddress.class);
             mv.putExtra("type","current");
             startActivity(mv);
             finish();

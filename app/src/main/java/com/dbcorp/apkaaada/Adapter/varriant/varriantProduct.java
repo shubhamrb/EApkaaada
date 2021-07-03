@@ -29,9 +29,7 @@ public class varriantProduct extends RecyclerView.Adapter<varriantProduct.MyView
     public varriantProduct(ArrayList<Product> list, OnMeneuClickListnser onLiveTestClickListener, Context context) {
         this.listData = list;
         this.onMenuListClicklistener = onLiveTestClickListener;
-
         this.mContext = context;
-
     }
 
     @NonNull

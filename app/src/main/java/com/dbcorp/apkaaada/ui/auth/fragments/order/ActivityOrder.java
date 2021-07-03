@@ -180,6 +180,7 @@ this.listner=this;
             Map<String, String> params = new HashMap<>();
             params.put("userId", userDetails.getUserId());
             Log.e("param", params.toString());
+            Util.showDialog("Please Wait..",mContext);
             RestClient.post().userOrder(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
@@ -210,20 +211,22 @@ this.listner=this;
 
                             userCardAdapter = new UserCardAdapter(cardProducts, listner, mContext);
                             recyclerView.setAdapter(userCardAdapter);
-
+                            Util.hideDialog();
 
                         }else{
                             layoutProceed.setVisibility(View.GONE);
+                            Util.hideDialog();
                             Util.show(mContext,strObj.getString("message"));
                         }
                     } catch (Exception e) {
+                        Util.hideDialog();
                         Util.show(mContext, e.getMessage());
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<String> call, @NotNull Throwable t) {
-
+                    Util.hideDialog();
                     try {
                         t.printStackTrace();
                     } catch (Exception e) {

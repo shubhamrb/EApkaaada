@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dbcorp.apkaaada.Adapter.NearByShopAdapter;
 import com.dbcorp.apkaaada.R;
 import com.dbcorp.apkaaada.database.SqliteDatabase;
+import com.dbcorp.apkaaada.database.UserSharedPreference;
 import com.dbcorp.apkaaada.helper.Util;
 import com.dbcorp.apkaaada.model.UserDetails;
 import com.dbcorp.apkaaada.model.VendorDetails;
@@ -62,13 +63,14 @@ public class nearbyShop extends Fragment implements NearByShopAdapter.OnMeneuCli
         myExamFragment.setArguments(bundle);
         return myExamFragment;
     }
-
+    HashMap<String, String> address;
     ArrayList<VendorDetails> vendorDetailsList;
     NearByShopAdapter nearByShopAdapter;
     View view;
     RecyclerView listItem;
     Category categoryData;
     UserDetails userDetails;
+    UserSharedPreference userSharedPreference;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -89,6 +91,8 @@ public class nearbyShop extends Fragment implements NearByShopAdapter.OnMeneuCli
         listItem.setHasFixedSize(true);
         //listItem.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         listItem.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        userSharedPreference=new UserSharedPreference(mContext);
+        address=userSharedPreference.getAddress();
         getHomeData();
     }
 
@@ -100,7 +104,9 @@ public class nearbyShop extends Fragment implements NearByShopAdapter.OnMeneuCli
             Map<String, String> params = new HashMap<>();
             params.put("mastCatId", categoryData.getCategoryId());
             params.put("userId",userDetails.getUserId());
-            Log.e("is",categoryData.getCategoryId()+""+userDetails.getUserId());
+            params.put("lat",address.get(UserSharedPreference.CurrentLatitude));
+            params.put("long",address.get(UserSharedPreference.CurrentLongitude));
+            Log.e("is",params.toString());
             RestClient.post().getVendor(userDetails.getSk(), ApiService.APP_DEVICE_ID,params).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NotNull Call<String> call, Response<String> response) {
@@ -116,7 +122,7 @@ public class nearbyShop extends Fragment implements NearByShopAdapter.OnMeneuCli
                             Type type = new TypeToken<ArrayList<VendorDetails>>() {
                             }.getType();
                             vendorDetailsList = gson.fromJson(object.getJSONArray("listData").toString(), type);
-                            nearByShopAdapter = new NearByShopAdapter(vendorDetailsList, listner, mContext);
+                            nearByShopAdapter = new NearByShopAdapter(address.get(UserSharedPreference.CurrentLatitude),address.get(UserSharedPreference.CurrentLongitude),vendorDetailsList, listner, mContext);
                             listItem.setAdapter(nearByShopAdapter);
 
                         } else {

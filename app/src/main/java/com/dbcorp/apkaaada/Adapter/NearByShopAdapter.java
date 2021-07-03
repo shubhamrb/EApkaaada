@@ -10,6 +10,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.dbcorp.apkaaada.R;
+import com.dbcorp.apkaaada.helper.Util;
 import com.dbcorp.apkaaada.model.VendorDetails;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -30,10 +32,12 @@ import com.google.android.material.textview.MaterialTextView;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static com.dbcorp.apkaaada.network.ApiService.BASE_IMG_CAT_URL;
 import static com.dbcorp.apkaaada.network.ApiService.VENDOR_IMG_URL;
+import static com.dbcorp.apkaaada.network.ApiService.VENDOR_SHOP_IMG_URL;
 
 public class NearByShopAdapter extends RecyclerView.Adapter<NearByShopAdapter.MyViewHolder> {
 
@@ -48,11 +52,14 @@ public class NearByShopAdapter extends RecyclerView.Adapter<NearByShopAdapter.My
     int select=100000000;
 
     ArrayList<VendorDetails> listData;
-
-    public NearByShopAdapter(ArrayList<VendorDetails> vendorDetailsList, OnMeneuClickListnser onLiveTestClickListener, Context context) {
+    String currentLat;
+    String currentLng;
+    public NearByShopAdapter(String cLat,String cLng,ArrayList<VendorDetails> vendorDetailsList, OnMeneuClickListnser onLiveTestClickListener, Context context) {
         this.listData = vendorDetailsList;
         this.onMenuListClicklistener = onLiveTestClickListener;
         this.mContext = context;
+        this.currentLng=cLng;
+        this.currentLat=cLat;
     }
 
     @NonNull
@@ -67,13 +74,26 @@ public class NearByShopAdapter extends RecyclerView.Adapter<NearByShopAdapter.My
         return new MyViewHolder(itemView);
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         VendorDetails data = listData.get(position);
-        holder.vendor_name.setText(data.getName());
+        holder.vendor_name.setText(data.getShopName());
+        holder.shopDes.setText(data.getDescription());
+        Log.e("currentLat",currentLng);
+        setRating(holder, data.getRate());
+        //double distance=Util.distance(Double.parseDouble(currentLat),Double.parseDouble(currentLng),Double.parseDouble(data.getLat()),Double.parseDouble(data.getLng()),"");
+        DecimalFormat formater = new DecimalFormat("##.#");
+        String km= formater.format(Double.parseDouble(data.getDistance()));
+        holder.tvKm.setText(String.format("%s km",km));
 
+
+        Glide.with(mContext)
+                .load(VENDOR_SHOP_IMG_URL+data.getPhoto())
+                .into(holder.imageView);
 
         if (data.getShopOnOff().equalsIgnoreCase("")) {
+
             holder.status.setText("Closed");
             holder.status.setTextColor(Color.GRAY);
             holder.shopStatus.setBackgroundTintList(ContextCompat.getColorStateList(mContext, R.color.red));
@@ -82,10 +102,6 @@ public class NearByShopAdapter extends RecyclerView.Adapter<NearByShopAdapter.My
             holder.shopStatus.setBackgroundTintList(ContextCompat.getColorStateList(mContext, R.color.green));
             holder.status.setTextColor(Color.GRAY);
         }
-
-        Glide.with(mContext)
-                .load(VENDOR_IMG_URL+data.getPhoto())
-                .into(holder.imageView);
         holder.likeDislike.setOnClickListener(v -> {
         select=position;
             if(data.getWhislistStatus().equalsIgnoreCase("0")){
@@ -130,7 +146,12 @@ public class NearByShopAdapter extends RecyclerView.Adapter<NearByShopAdapter.My
 
         }
         holder.shopView.setOnClickListener(v -> {
-            onMenuListClicklistener.onOptionClick(data, position);
+//            if (data.getShopOnOff().equalsIgnoreCase("")) {
+//Util.show(mContext,"Sorry Shop is Close Now");
+//            }else{
+                onMenuListClicklistener.onOptionClick(data, position);
+//            }
+
         });
     }
 
@@ -139,13 +160,51 @@ public class NearByShopAdapter extends RecyclerView.Adapter<NearByShopAdapter.My
         return listData.size();
     }
 
+    public void setRating(MyViewHolder holder,String rate){
 
+        //Util.show(mContext,rate);
+        if(rate.equalsIgnoreCase("5.0")){
+            holder.tvStartFive.setVisibility(View.VISIBLE);
+            holder.tvStartFour.setVisibility(View.VISIBLE);
+            holder.tvStartThree.setVisibility(View.VISIBLE);
+            holder.tvStartTwo.setVisibility(View.VISIBLE);
+            holder.tvStartOne.setVisibility(View.VISIBLE);
+        }else if(rate.equalsIgnoreCase("4.0")){
+            holder.tvStartFive.setVisibility(View.GONE);
+            holder.tvStartFour.setVisibility(View.VISIBLE);
+            holder.tvStartThree.setVisibility(View.VISIBLE);
+            holder.tvStartTwo.setVisibility(View.VISIBLE);
+            holder.tvStartOne.setVisibility(View.VISIBLE);
+
+        }else if(rate.equalsIgnoreCase("3.0")){
+            holder.tvStartFive.setVisibility(View.GONE);
+            holder.tvStartFour.setVisibility(View.GONE);
+            holder.tvStartThree.setVisibility(View.VISIBLE);
+            holder.tvStartTwo.setVisibility(View.VISIBLE);
+            holder.tvStartOne.setVisibility(View.VISIBLE);
+        }else if(rate.equalsIgnoreCase("2.0")){
+            holder.tvStartFive.setVisibility(View.GONE);
+            holder.tvStartFour.setVisibility(View.GONE);
+            holder.tvStartThree.setVisibility(View.GONE);
+            holder.tvStartTwo.setVisibility(View.VISIBLE);
+            holder.tvStartOne.setVisibility(View.VISIBLE);
+
+        } else if(rate.equalsIgnoreCase("1.0")){
+            holder.tvStartFive.setVisibility(View.GONE);
+            holder.tvStartFour.setVisibility(View.GONE);
+            holder.tvStartThree.setVisibility(View.GONE);
+            holder.tvStartTwo.setVisibility(View.GONE);
+            holder.tvStartOne.setVisibility(View.VISIBLE);
+
+        }
+
+    }
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         RecyclerView itemList;
         MaterialCardView shopView;
-        MaterialTextView vendor_name;
-        MaterialTextView status;
+        MaterialTextView vendor_name,shopDes,tvKm;
+        MaterialTextView status,submit_btn;
         ShapeableImageView imageView;
         AppCompatImageView tvStartOne,tvStartTwo,tvStartThree,tvStartFour,tvStartFive;
 
@@ -154,7 +213,7 @@ public class NearByShopAdapter extends RecyclerView.Adapter<NearByShopAdapter.My
         LikeButton star_button;
         MyViewHolder(View view) {
             super(view);
-
+            submit_btn=view.findViewById(R.id.submit_btn);
             tvStartOne=view.findViewById(R.id.tvStartOne);
             tvStartTwo=view.findViewById(R.id.tvStartTwo);
             tvStartThree=view.findViewById(R.id.tvStartThree);
@@ -162,6 +221,8 @@ public class NearByShopAdapter extends RecyclerView.Adapter<NearByShopAdapter.My
             tvStartFive=view.findViewById(R.id.tvStartFive);
             shopView = view.findViewById(R.id.shopView);
             status = view.findViewById(R.id.status);
+            shopDes=view.findViewById(R.id.shopDes);
+            tvKm=view.findViewById(R.id.tvKm);
             hearAnimation=view.findViewById(R.id.hearAnimation);
             star_button=view.findViewById(R.id.star_button);
             shopStatus=view.findViewById(R.id.shopStatus);

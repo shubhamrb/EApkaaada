@@ -51,7 +51,15 @@
         android:textColor="@color/black"
         android:fontFamily="@font/montserrat"
         android:layout_height="wrap_content"/>
-
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+android:id="@+id/locationTv"
+        android:text=""
+        android:textSize="@dimen/Margin10dp"
+        android:layout_marginStart="@dimen/Margin15dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat"
+        android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:weightSum="5"

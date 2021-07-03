@@ -28,8 +28,6 @@ import com.dbcorp.apkaaada.network.ApiService
 import com.dbcorp.apkaaada.network.InternetConnection
 import com.dbcorp.apkaaada.network.RestClient
 import com.dbcorp.apkaaada.ui.auth.Home.HomeActivity
-import com.dbcorp.apkaaada.ui.auth.fragments.SetAddressActivity
-import com.dbcorp.apkaaada.ui.auth.fragments.order.InvoiceActivityOrder
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -230,7 +228,7 @@ class GetCurrentLocation : Fragment(), OnMapReadyCallback {
                         `object` = JSONObject(response.body())
                         Log.e("message", `object`.getString("message"))
                         if (`object`.getBoolean("status")) {
-                            sessionUser.setAddress(mapLocation.text.toString(),latitude.toString(),longitude.toString());
+                            sessionUser.setAddress(mapLocation.text.toString(),longitude.toString(),latitude.toString());
 
                             Util.show(mContext, "We have booked your service")
                             val mv = Intent(activity, HomeActivity::class.java)

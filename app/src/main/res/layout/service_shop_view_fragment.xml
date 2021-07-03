@@ -48,7 +48,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="180dp"
                 android:background="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerInParent="true"
-                android:visibility="gone"
+
                 app:tabBackground="@drawable/indicator_selector"
                 app:tabGravity="center"
                 app:tabIndicatorHeight="0dp"
@@ -84,7 +84,7 @@
                 android:fontFamily="@font/montserrat"
                 android:padding="@dimen/Margin5dp"
                 android:textSize="@dimen/Margin10dp"
-                android:id="@+id/tvAbout"
+                android:id="@+id/shopDes"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"/>
 
@@ -109,6 +109,7 @@
                     android:layout_height="wrap_content">
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
+                        android:id="@+id/rating"
 
                         android:layout_gravity="start|center"
                         android:gravity="start|center"
@@ -123,42 +124,49 @@
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
-                        android:layout_weight="1.4"
-                        android:layout_marginStart="@dimen/Margin5dp"
-                        android:orientation="horizontal"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/Margin5dp"
+                        android:layout_weight="1.4"
                         android:gravity="center|start"
-                        android:layout_height="wrap_content">
+                        android:orientation="horizontal">
+
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="16sp"
+                            android:id="@+id/tvStartOne"
+                            android:layout_height="16sp"
                             android:background="@drawable/ic_star_black_24dp"
-                            android:backgroundTint="@color/yellow"
-                            android:layout_height="16sp"/>
+                            android:backgroundTint="@color/yellow" />
+
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="16sp"
+                            android:id="@+id/tvStartTwo"
+                            android:layout_height="16sp"
                             android:background="@drawable/ic_star_black_24dp"
-                            android:backgroundTint="@color/yellow"
-                            android:layout_height="16sp"/>
+                            android:backgroundTint="@color/yellow" />
+
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="16sp"
+                            android:id="@+id/tvStartThree"
+                            android:layout_height="16sp"
                             android:background="@drawable/ic_star_black_24dp"
-                            android:backgroundTint="@color/yellow"
-                            android:layout_height="16sp"/>
+                            android:backgroundTint="@color/yellow" />
+
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="16sp"
+                            android:id="@+id/tvStartFour"
+                            android:layout_height="16sp"
                             android:background="@drawable/ic_star_black_24dp"
-                            android:backgroundTint="@color/yellow"
-                            android:layout_height="16sp"/>
+                            android:backgroundTint="@color/yellow" />
+
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="16sp"
+                            android:id="@+id/tvStartFive"
+                            android:layout_height="16sp"
                             android:background="@drawable/ic_star_black_24dp"
-                            android:backgroundTint="@color/yellow"
-                            android:layout_height="16sp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="16sp"
-                            android:background="@drawable/ic_star_black_24dp"
-                            android:backgroundTint="@color/yellow"
-                            android:layout_height="16sp"/>
+                            android:backgroundTint="@color/yellow" />
+
+
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -171,6 +179,7 @@
 
                     android:layout_height="wrap_content">
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/rateCount"
 
                         android:elevation="5dp"
                         android:layout_margin="@dimen/Margin5dp"

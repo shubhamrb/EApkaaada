@@ -34,7 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import afu.org.checkerframework.checker.nullness.qual.NonNull;
 
 public class AutoCompleteDemo extends AppCompatActivity {
     public  AutoCompleteTextView tvStartPoint, tvEndPoint;
@@ -79,7 +78,7 @@ public class AutoCompleteDemo extends AppCompatActivity {
                 Util.show(this,"Please enter your location");
                 return;
             }
-            sessionUser.setAddress(tvStartPoint.getText().toString(),String.valueOf(latitude),String.valueOf(longitude));
+            sessionUser.setAddress(tvStartPoint.getText().toString(),String.valueOf(longitude),String.valueOf(latitude));
 
             Intent mv=new Intent(AutoCompleteDemo.this, HomeActivity.class);
             mv.putExtra("type","current");
@@ -136,8 +135,7 @@ public class AutoCompleteDemo extends AppCompatActivity {
                             double lo = lotlonaddress.longitude;
                             latitude=String.valueOf(lotlonaddress.latitude);
                             longitude=String.valueOf(lotlonaddress.longitude);
-                            sessionUser.setAddress(tvStartPoint.getText().toString(),String.valueOf(lotlonaddress.latitude),String.valueOf(lotlonaddress.longitude));
-
+                            sessionUser.setAddress(tvStartPoint.getText().toString(),String.valueOf(longitude),String.valueOf(latitude));
 
                             Log.e("dsfsdfsdf", tvStartPoint.getText().toString());
                             Log.e("dsfsdfsdf", String.valueOf(lo));
@@ -146,7 +144,7 @@ public class AutoCompleteDemo extends AppCompatActivity {
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e) {
+                        public void onFailure(Exception e) {
                             Log.e("fghfjhfghfgh",e.getMessage());
                             // responseView.setText(e.getMessage());
                         }

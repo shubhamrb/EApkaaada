@@ -29,6 +29,7 @@ import com.dbcorp.apkaaada.Adapter.varriant.AttributeAdapter;
 import com.dbcorp.apkaaada.Adapter.varriant.AttributeValueAdapter;
 import com.dbcorp.apkaaada.Adapter.varriant.VariantAttributeAdapter;
 import com.dbcorp.apkaaada.Adapter.varriant.VariantProductAdapter;
+import com.dbcorp.apkaaada.Adapter.varriant.VariantValueAdapter;
 import com.dbcorp.apkaaada.R;
 import com.dbcorp.apkaaada.database.SqliteDatabase;
 import com.dbcorp.apkaaada.helper.Util;
@@ -69,7 +70,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VarriantActivity extends AppCompatActivity implements VariantAttributeAdapter.OnClickListener,AttributeAdapter.OnClickListener, AttributeValueAdapter.OnClickListener, VariantProductAdapter.OnMeneuClickListnser {
+public class VarriantActivity extends AppCompatActivity implements VariantAttributeAdapter.OnClickListener,VariantValueAdapter.OnMeneuClickListnser,AttributeAdapter.OnClickListener, AttributeValueAdapter.OnClickListener, VariantProductAdapter.OnMeneuClickListnser {
 
 
     VarriantActivity listner;
@@ -78,7 +79,7 @@ public class VarriantActivity extends AppCompatActivity implements VariantAttrib
     ArrayList<VariantArrayAttributeValue> varriantList;
     Product singleProductDetails;
     ArrayList<Product> filtterVarriantList;
-    ArrayList<VariantsAttribute> variantListValue;
+    ArrayList<String> variantListValue;
     ArrayList<Attribute> attributes;
     ArrayList<AttributeValue> attributesValue;
     ArrayList<AttributeValue> filterAttributesValue;
@@ -93,7 +94,7 @@ public class VarriantActivity extends AppCompatActivity implements VariantAttrib
     AttributeAdapter attributeAdapter;
     AttributeValueAdapter attributeValueAdapter;
 
-    VariantAttributeAdapter variantAttributeAdapter;
+    VariantValueAdapter variantAttributeAdapter;
 
     VariantProductAdapter shopProduct;
     String productId, vendor_id;
@@ -273,6 +274,12 @@ Util.hideDialog();
 
         });
 
+        listProduct.setVisibility(View.GONE);
+        listProduct.setHasFixedSize(true);
+        //listItem.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        listProduct.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+
+
 
         attributeList.setHasFixedSize(true);
         //listItem.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -428,11 +435,19 @@ int quantity= Integer.parseInt(data.getCartQuantity());
                             comMap(varriantList);
 
 
-                            Type variantList = new TypeToken<ArrayList<VariantsAttribute>>() {
+//                            Type variantList = new TypeToken<ArrayList<VariantsAttribute>>() {
+//                            }.getType();
+                            Type variantList = new TypeToken<ArrayList<String>>() {
                             }.getType();
-                            variantListValue = gson.fromJson(object.getJSONArray("attribute").toString(), variantList);
-                            variantAttributeAdapter = new VariantAttributeAdapter(variantListValue, listner, mContext);
+                            variantListValue = gson.fromJson(object.getJSONArray("listDataAttribute").toString(), variantList);
+
+
+                            variantAttributeAdapter = new VariantValueAdapter(variantListValue, listner, mContext);
                             listProduct.setAdapter(variantAttributeAdapter);
+
+//                            variantListValue = gson.fromJson(object.getJSONArray("attribute").toString(), variantList);
+//                            variantAttributeAdapter = new VariantAttributeAdapter(variantListValue, listner, mContext);
+//                            listProduct.setAdapter(variantAttributeAdapter);
 
 
                             //carouselList = gson.fromJson(object.getJSONArray("sliderImg").toString(), pageViewer);
@@ -552,6 +567,11 @@ int count=0;
         }else{
             Util.show(mContext,"Product Not Found, Please Select Both Value");
         }
+
+    }
+
+    @Override
+    public void onVariantValue(String liveTest, int pos) {
 
     }
 

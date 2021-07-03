@@ -10,7 +10,15 @@ import java.io.Serializable;
  */
 public class VendorDetails implements Serializable {
 
-
+    @SerializedName("today_default_message")
+    @Expose
+    private String todayDefaultMessage;
+    @SerializedName("description")
+    @Expose
+    private String description;
+    @SerializedName("shop_name")
+    @Expose
+    private String shopName;
     @SerializedName("rate")
     @Expose
     private String rate;
@@ -58,7 +66,7 @@ public class VendorDetails implements Serializable {
     private String lng;
     @SerializedName("address")
     @Expose
-    private Object address;
+    private String address;
     @SerializedName("referral")
     @Expose
     private String referral;
@@ -68,6 +76,41 @@ public class VendorDetails implements Serializable {
     @SerializedName("default_address_id")
     @Expose
     private Object defaultAddressId;
+    @SerializedName("distance")
+    @Expose
+    private String distance;
+
+    public String getTodayDefaultMessage() {
+        return todayDefaultMessage;
+    }
+
+    public void setTodayDefaultMessage(String todayDefaultMessage) {
+        this.todayDefaultMessage = todayDefaultMessage;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
 
     public String getWhislistStatus() {
         return whislistStatus;
@@ -87,14 +130,6 @@ public class VendorDetails implements Serializable {
 
     public String getUserId() {
         return userId;
-    }
-
-    public String getRate() {
-        return rate;
-    }
-
-    public void setRate(String rate) {
-        this.rate = rate;
     }
 
     public void setUserId(String userId) {
@@ -189,11 +224,11 @@ public class VendorDetails implements Serializable {
         this.lng = lng;
     }
 
-    public Object getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Object address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
@@ -220,4 +255,13 @@ public class VendorDetails implements Serializable {
     public void setDefaultAddressId(Object defaultAddressId) {
         this.defaultAddressId = defaultAddressId;
     }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
 }

@@ -18,6 +18,9 @@ public class Constants {
     static final String GET_CART_COUNT="get-card-count";
     static final String ADD_ADDRESS="add-default-address";
     static final String GET_LOCATION="get-location";
+    static final String GET_SEARCH_DATA="get-search-data";
+
+
     static final String GET_SEARCH_PRODUCT_DATA="get-search-product-data";
     static final String GET_SEARCH_VENDOR_DATA="get-search-shop-vendor-data";
     static final String GET_SEARCH_SERVICE_VENDOR_DATA="get-search-service-vendor-data";
@@ -72,6 +75,7 @@ public class Constants {
     static final String  GET_CHARGE="get-charge";
 
     static final String  ADD_SERVICE_DATA="user-service-request";
+    static final String  SEARCH_AUTO_DATA="get-auto-sugesstion";
 
 }
 

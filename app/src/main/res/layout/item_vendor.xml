@@ -6,8 +6,8 @@
 android:layout_margin="@dimen/Margin5dp"
     android:layout_height="wrap_content"
     android:backgroundTint="@color/white"
-    app:cardCornerRadius="5dp"
-    android:elevation="@dimen/Margin5dp"
+    app:cardCornerRadius="15dp"
+    android:elevation="1sp"
     android:id="@+id/shopView">
 
 
@@ -38,6 +38,7 @@ android:layout_margin="@dimen/Margin5dp"
                     android:layout_height="match_parent"
                     android:contentDescription=""
                     android:scaleType="fitXY"
+
                     android:background="@drawable/f"
                     app:shapeAppearanceOverlay="@style/twoSideRoundedImageRect"
                     android:adjustViewBounds="true"/>
@@ -99,10 +100,12 @@ android:orientation="vertical"
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
                             android:text="@string/vendor_name"
+                            android:id="@+id/shopDes"
                             android:padding="2dp"
                             android:layout_gravity="top|start"
                             android:gravity="top|start"
                             android:alpha="0.7"
+                            android:lines="2"
                             android:layout_marginTop="0dp"
                             app:fontFamily="@font/montserrat"
                             android:textSize="@dimen/ten"
@@ -232,8 +235,8 @@ android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/Margin5dp"
                         android:layout_weight="1.4"
-
                         android:gravity="center|start"
                         android:orientation="horizontal">
 
@@ -278,6 +281,23 @@ android:visibility="gone"
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="match_parent"
                         android:id="@+id/tvtext"
+                        android:text="Free Shiping"
+                        android:padding="2dp"
+
+                        android:layout_marginStart="@dimen/Margin5dp"
+                        android:layout_gravity="center|start"
+                        android:gravity="center|start"
+                        android:alpha="0.7"
+                        android:layout_marginTop="0dp"
+                        app:fontFamily="@font/montserrat"
+                        android:textSize="8sp"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_height="wrap_content"
+                        />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:id="@+id/tvKm"
                         android:text="Free Shiping"
                         android:padding="2dp"
 

@@ -99,14 +99,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShopDetails extends AppCompatActivity implements SubToSubCatAdapter.OnClickListener, ShopProduct.OnMeneuClickListnser, SubCatAdapter.OnClickListener ,  AttributeAdapter.OnClickListener, AttributeValueAdapter.OnClickListener, VariantProductAdapter.OnMeneuClickListnser,VariantValueAdapter.OnMeneuClickListnser {
+public class ShopDetails extends AppCompatActivity implements SubToSubCatAdapter.OnClickListener, ShopProduct.OnMeneuClickListnser, SubCatAdapter.OnClickListener, AttributeAdapter.OnClickListener, AttributeValueAdapter.OnClickListener, VariantProductAdapter.OnMeneuClickListnser, VariantValueAdapter.OnMeneuClickListnser {
 
     private Toolbar toolbar;
     Intent getInent;
 
     Context mContext;
     int actionbarheight;
-    String catId="";
+    String catId = "";
     static String fragmentType = "";
     ShopDetails listner;
     VendorDetails vendorDetails;
@@ -137,15 +137,15 @@ public class ShopDetails extends AppCompatActivity implements SubToSubCatAdapter
     Timer timer;
     Map<String, String> selectAttribute;
     Product data, currentProduct;
-    AppCompatImageView likeDislike,tvStartOne,tvStartTwo,tvStartThree,tvStartFour,tvStartFive;
+    AppCompatImageView likeDislike, tvStartOne, tvStartTwo, tvStartThree, tvStartFour, tvStartFive;
     LottieAnimationView hearAnimation;
-    MaterialTextView itemCount,tvPrice,tvVPrice,shopDes,rating,shopName,rateCount;
+    MaterialTextView itemCount, tvPrice, tvVPrice, shopDes, rating, shopName, rateCount;
     TextInputEditText edit_name;
-    LinearLayoutCompat headerLayout, layView,layoutNoProduct,btnProcess;
+    LinearLayoutCompat headerLayout, layView, layoutNoProduct, btnProcess;
 
     int productItemCount = 0;
     //variant ids
-    Map<String,String> getMap;
+    Map<String, String> getMap;
     ArrayList<VariantArrayAttributeValue> varriantList;
     Product singleProductDetails;
     ArrayList<Product> filtterVarriantList;
@@ -166,27 +166,27 @@ public class ShopDetails extends AppCompatActivity implements SubToSubCatAdapter
     Intent g;
 
 
+    LinearLayoutCompat layoutSad, ShoplayoutSad, layoutVariant, layoutCard, addBtn, addLayout, layoutProceed;
 
-    LinearLayoutCompat layoutSad,ShoplayoutSad, layoutVariant,layoutCard, addBtn,addLayout,layoutProceed;
-
-    MaterialTextView addCartProduct,  tvProductName, addToCard, tv_totalPrice, tvItemCount, tvDescription,  tv_quantity, tvLeftProduct;
-    AppCompatImageView closeTv,img, button_add, button_subtract;
+    MaterialTextView addCartProduct, tvProductName, addToCard, tv_totalPrice, tvItemCount, tvDescription, tv_quantity, tvLeftProduct;
+    AppCompatImageView closeTv, img, button_add, button_subtract;
 
     int i = 0;
 
 
     int leftCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_deatils);
-        this.mContext=this;
-        listner=this;
+        this.mContext = this;
+        listner = this;
         getInent = getIntent();
         vendorDetails = (VendorDetails) getInent.getSerializableExtra("MyData");
         toolbar = findViewById(R.id.toolbar);
-        mCheckoutImgView =  findViewById(R.id.chk_icon);
-        mDummyImgView =    findViewById(R.id.img_cpy);
+        mCheckoutImgView = findViewById(R.id.chk_icon);
+        mDummyImgView = findViewById(R.id.img_cpy);
         setSupportActionBar(toolbar);
         toolbar.setTitle(vendorDetails.getName());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -195,9 +195,9 @@ public class ShopDetails extends AppCompatActivity implements SubToSubCatAdapter
         if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
             actionbarheight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
         }
-        catId=getInent.getStringExtra("categoryId");
-        masterCatId=catId;
-init();
+        catId = getInent.getStringExtra("categoryId");
+        masterCatId = catId;
+        init();
         Animation shake;
         shake = AnimationUtils.loadAnimation(this, R.anim.shake);
         mCheckoutImgView.setAnimation(shake);
@@ -209,23 +209,23 @@ init();
     }
 
     private void init() {
-        selectAttribute=new HashMap<>();
+        selectAttribute = new HashMap<>();
         userDetails = new SqliteDatabase(mContext).getLogin();
         edit_name = findViewById(R.id.edit_name);
-        hearAnimation=findViewById(R.id.hearAnimation);
-        likeDislike=findViewById(R.id.likeDislike);
-        ShoplayoutSad=findViewById(R.id.ShoplayoutSad);
+        hearAnimation = findViewById(R.id.hearAnimation);
+        likeDislike = findViewById(R.id.likeDislike);
+        ShoplayoutSad = findViewById(R.id.ShoplayoutSad);
         //like
-         likeDislike.setOnClickListener(v -> {
+        likeDislike.setOnClickListener(v -> {
 
-            if(vendorDetails.getWhislistStatus().equalsIgnoreCase("0")){
+            if (vendorDetails.getWhislistStatus().equalsIgnoreCase("0")) {
                 vendorDetails.setWhislistStatus("1");
                 hearAnimation.setVisibility(View.GONE);
                 likeDislike.setVisibility(View.VISIBLE);
 
                 likeDislike.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#A3A3A3")));
-                likeDislike(vendorDetails,"0");
-            }else{
+                likeDislike(vendorDetails, "0");
+            } else {
                 vendorDetails.setWhislistStatus("0");
                 hearAnimation.setVisibility(View.GONE);
                 likeDislike.setVisibility(View.VISIBLE);
@@ -245,20 +245,20 @@ init();
 
 
                 likeDislike.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F9423D")));
-                likeDislike(vendorDetails,"1");
+                likeDislike(vendorDetails, "1");
             }
 
         });
 
 
-        if(vendorDetails.getWhislistStatus().equalsIgnoreCase("0")){
+        if (vendorDetails.getWhislistStatus().equalsIgnoreCase("0")) {
             vendorDetails.setWhislistStatus("1");
             hearAnimation.setVisibility(View.GONE);
             likeDislike.setVisibility(View.VISIBLE);
 
             likeDislike.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#A3A3A3")));
 
-        }else{
+        } else {
             vendorDetails.setWhislistStatus("0");
             hearAnimation.setVisibility(View.GONE);
             likeDislike.setVisibility(View.VISIBLE);
@@ -272,34 +272,25 @@ init();
         //dislike
 
 
-
-
-
-
-
-
-
-
-
-        tvStartOne=findViewById(R.id.tvStartOne);
-        tvStartTwo=findViewById(R.id.tvStartTwo);
-        tvStartThree=findViewById(R.id.tvStartThree);
-        tvStartFour=findViewById(R.id.tvStartFour);
-        tvStartFive=findViewById(R.id.tvStartFive);
-        shopDes=findViewById(R.id.shopDes);
-        rateCount=findViewById(R.id.rateCount);
-        shopName=findViewById(R.id.shopName);
-        rating=findViewById(R.id.rating);
+        tvStartOne = findViewById(R.id.tvStartOne);
+        tvStartTwo = findViewById(R.id.tvStartTwo);
+        tvStartThree = findViewById(R.id.tvStartThree);
+        tvStartFour = findViewById(R.id.tvStartFour);
+        tvStartFive = findViewById(R.id.tvStartFive);
+        shopDes = findViewById(R.id.shopDes);
+        rateCount = findViewById(R.id.rateCount);
+        shopName = findViewById(R.id.shopName);
+        rating = findViewById(R.id.rating);
         listCarousel = new ArrayList<>();
-        tvPrice= findViewById(R.id.tvPrice);
+        tvPrice = findViewById(R.id.tvPrice);
 
 
-        btnProcess= findViewById(R.id.btnProcess);
+        btnProcess = findViewById(R.id.btnProcess);
         itemCount = findViewById(R.id.itemCount);
         viewPager = findViewById(R.id.viewPager);
-        layView= findViewById(R.id.layView);
-        layoutNoProduct=  findViewById(R.id.layoutNoProduct);
-        btnProceed =   findViewById(R.id.btnProceed);
+        layView = findViewById(R.id.layView);
+        layoutNoProduct = findViewById(R.id.layoutNoProduct);
+        btnProceed = findViewById(R.id.btnProceed);
         indicator = findViewById(R.id.indicator);
 
         edit_name.addTextChangedListener(new TextWatcher() {
@@ -329,7 +320,7 @@ init();
 
 
         //-------------product list
-        listItem =  findViewById(R.id.listProduct);
+        listItem = findViewById(R.id.listProduct);
         listItem.setHasFixedSize(true);
         //listItem.setLayoutManager(new GridLayoutManager(mContext, 3));
         listItem.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
@@ -357,7 +348,7 @@ init();
 //        });
 
         //category list view
-        listSubCat =  findViewById(R.id.listCat);
+        listSubCat = findViewById(R.id.listCat);
         listSubCat.setHasFixedSize(true);
         //listItem.setLayoutManager(new GridLayoutManager(mContext, 3));
         listSubCat.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
@@ -370,25 +361,26 @@ init();
         btnProceed.setOnClickListener(v -> {
             Intent mv = new Intent(mContext, ActivityOrder.class);
             startActivity(mv);
-          finish();
+            finish();
 
         });
 
         getData();
         getCardCount();
     }
-    private void likeDislike(VendorDetails data,String active){
+
+    private void likeDislike(VendorDetails data, String active) {
         if (InternetConnection.checkConnection(mContext)) {
 
-            Util.show(mContext,"dddd");
+            Util.show(mContext, "dddd");
             Map<String, String> params = new HashMap<>();
             params.put("user_id", userDetails.getUserId());
             params.put("vendor_id", data.getUserId());
 
             params.put("active", active);
 
-            Log.e("params",params.toString());
-            RestClient.post().likeShop(ApiService.APP_DEVICE_ID,userDetails.getSk(),params).enqueue(new Callback<String>() {
+            Log.e("params", params.toString());
+            RestClient.post().likeShop(ApiService.APP_DEVICE_ID, userDetails.getSk(), params).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NotNull Call<String> call, Response<String> response) {
                     Gson gson = new Gson();
@@ -396,7 +388,7 @@ init();
                     try {
 
                         object = new JSONObject(response.body());
-                        Log.e("message",object.getString("message"));
+                        Log.e("message", object.getString("message"));
 
                         if (object.getBoolean("status")) {
 
@@ -425,6 +417,7 @@ init();
 
         }
     }
+
     private void getData() {
         carouselList = new ArrayList<>();
         subCategoriesList = new ArrayList<>();
@@ -462,13 +455,13 @@ init();
                             }.getType();
 
 
-if(object.getJSONArray("productList").length()>0){
-    listItem.setVisibility(View.VISIBLE);
-    ShoplayoutSad.setVisibility(View.GONE);
-}else{
-    listItem.setVisibility(View.GONE);
-    ShoplayoutSad.setVisibility(View.VISIBLE);
-}
+                            if (object.getJSONArray("productList").length() > 0) {
+                                listItem.setVisibility(View.VISIBLE);
+                                ShoplayoutSad.setVisibility(View.GONE);
+                            } else {
+                                listItem.setVisibility(View.GONE);
+                                ShoplayoutSad.setVisibility(View.VISIBLE);
+                            }
                             productList = gson.fromJson(object.getJSONArray("productList").toString(), productType);
                             productFilterList = gson.fromJson(object.getJSONArray("productList").toString(), productType);
                             shopProduct = new ShopProduct(productList, listner, mContext);
@@ -521,15 +514,15 @@ if(object.getJSONArray("productList").length()>0){
 
                             carouselList = gson.fromJson(object.getJSONArray("sliderImg").toString(), pageViewer);
 
-                            if(carouselList.size()>0){
+                            if (carouselList.size() > 0) {
                                 sliderAdapter = new SliderAdaptercarouseList(mContext, carouselList);
                                 viewPager.setAdapter(sliderAdapter);
                                 indicator.setupWithViewPager(viewPager, true);
                                 sliderAdapter.notifyDataSetChanged();
                                 timer = new Timer();
-                                timer.scheduleAtFixedRate(new  SliderTimer(), 4000, 6000);
+                                timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
 
-                            }else{
+                            } else {
                                 indicator.setVisibility(View.GONE);
                                 viewPager.setVisibility(View.GONE);
                             }
@@ -537,13 +530,13 @@ if(object.getJSONArray("productList").length()>0){
 
                             shopDes.setText(object.getJSONObject("vendorSetting").getString("description"));
                             shopName.setText(object.getJSONObject("vendorSetting").getString("shop_name"));
-                            rating.setText("Rating : 5/"+object.getJSONObject("vendorSetting").getString("rating"));
+                            rating.setText("Rating : 5/" + object.getJSONObject("vendorSetting").getString("rating"));
                             setRating(object.getJSONObject("vendorSetting").getString("rating"));
 
-                        }else{
+                        } else {
                             layView.setVisibility(View.GONE);
                             layoutNoProduct.setVisibility(View.VISIBLE);
-                            Util.show(mContext,object.getString("message"));
+                            Util.show(mContext, object.getString("message"));
                         }
                     } catch (Exception e) {
 
@@ -656,6 +649,7 @@ if(object.getJSONArray("productList").length()>0){
         }
 
     }
+
     @Override
     public void subCatOnClick(SubToSubCategory list, int pos, String type) {
 
@@ -677,22 +671,22 @@ if(object.getJSONArray("productList").length()>0){
 
 
     }
+
     @Override
     public void productClick(Product listData, int pos) {
         Log.e("mks", "mks");
-if(listData.getVariantStatus().equalsIgnoreCase("View More")){
-    getVariant(listData);
-    viewVariant("");
+        if (listData.getVariantStatus().equalsIgnoreCase("View More")) {
+            getVariant(listData);
+            viewVariant("");
 
 
-}else{
-    Intent mv = new Intent(mContext, VarriantActivity.class);
-    mv.putExtra("product", listData);
-    mv.putExtra("productId", listData.getProductId());
-    mv.putExtra("vendor_id", vendorDetails.getUserId());
-    startActivity(mv);
-}
-
+        } else {
+            Intent mv = new Intent(mContext, VarriantActivity.class);
+            mv.putExtra("product", listData);
+            mv.putExtra("productId", listData.getProductId());
+            mv.putExtra("vendor_id", vendorDetails.getUserId());
+            startActivity(mv);
+        }
 
 
     }
@@ -703,14 +697,14 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
     }
 
     @SuppressLint("SetTextI18n")
-    private void setData(VariantProduct data) {
-        int quantity= Integer.parseInt(data.getCartQuantity());
+    private void setData(VariantProduct data,String vName) {
+        int quantity = Integer.parseInt(data.getCartQuantity());
 
-        if(data.getCartQuantity().equalsIgnoreCase("0")){
+        if (data.getCartQuantity().equalsIgnoreCase("0")) {
             addCartProduct.setVisibility(View.VISIBLE);
             addBtn.setVisibility(View.GONE);
-        }else {
-            productItemCount= Integer.parseInt(data.getCartQuantity());
+        } else {
+            productItemCount = Integer.parseInt(data.getCartQuantity());
             tv_quantity.setText(String.valueOf(productItemCount));
             addBtn.setVisibility(View.VISIBLE);
             addCartProduct.setVisibility(View.GONE);
@@ -722,7 +716,7 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
         Glide.with(mContext)
                 .load(ApiService.PRODUCT_IMG_URL + data.getPhoto())
                 .into(img);
-        currentVariantData=data;
+        currentVariantData = data;
 
         sliderVriantAdapter = new ProductImageSlider(mContext, currentVariantData.getImagesGallery());
         viewPager.setAdapter(sliderAdapter);
@@ -735,16 +729,8 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
     }
 
 
-
-
-
-
-
-
-
-
     @Override
-    public void addCartClick(Product liveTest, int pos, String addSub, ArrayList<Product> listProduct,View  cardv) {
+    public void addCartClick(Product liveTest, int pos, String addSub, ArrayList<Product> listProduct, View cardv) {
 
         Log.e("bhs", "hghj");
 
@@ -752,12 +738,12 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
         for (int i = 0; i < listProduct.size(); i++) {
             if (Integer.parseInt(listProduct.get(i).getUserQuantity()) > 0) {
                 itemCountValue++;
-                price = price + Integer.parseInt(listProduct.get(i).getPrice())*Integer.parseInt(listProduct.get(i).getUserQuantity());
+                price = price + Integer.parseInt(listProduct.get(i).getPrice()) * Integer.parseInt(listProduct.get(i).getUserQuantity());
 
             }
         }
 
-        addCart(liveTest,addSub,cardv);
+        addCart(liveTest, addSub, cardv);
 
 
     }
@@ -773,21 +759,18 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
     }
 
 
-
-
-
     @Override
     public void onVariantValue(String name, int pos) {
-        String valueName=name;
+        String valueName = name;
 
         for (VariantArrayAttributeValue d : varriantList) {
-            String strd=d.getProductList().getValueName();
+            String strd = d.getProductList().getValueName();
             if (strd.equals(valueName)) {
 
-                currentVariantData=d.getProductList();
+                currentVariantData = d.getProductList();
             }
         }
-        setData(currentVariantData);
+        setData(currentVariantData,valueName);
     }
 
     private class SliderTimer extends TimerTask {
@@ -803,7 +786,7 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
         }
     }
 
-    private void addCart(Product data, String addSub,View cardv) {
+    private void addCart(Product data, String addSub, View cardv) {
 
         if (InternetConnection.checkConnection(mContext)) {
             Util.showDialog("Please wait..", mContext);
@@ -826,7 +809,7 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
 
 
                             Log.e("param", response.toString());
-                         Util.show(mContext, object.getString("message"));
+                            Util.show(mContext, object.getString("message"));
                             getCardCount();
 //                            if (cardv != null) {
 //                                Bitmap b = FoodOrderApplication.getInstance().loadBitmapFromView(cardv, cardv.getWidth(), cardv.getHeight());
@@ -859,6 +842,7 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
         }
 
     }
+
     private void getCardCount() {
         if (InternetConnection.checkConnection(mContext)) {
             Map<String, String> params = new HashMap<>();
@@ -874,9 +858,9 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
                         if (object.getBoolean("status")) {
 
 
-                            tvPrice.setText("₹ "+object.getJSONObject("totalAmount").getString("price"));
+                            tvPrice.setText("₹ " + object.getJSONObject("totalAmount").getString("price"));
                             itemCount.setText(object.getJSONObject("cardCount").getString("cardCount"));
-                        }else{
+                        } else {
 
                         }
                     } catch (Exception ignored) {
@@ -902,6 +886,7 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
         }
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -934,7 +919,7 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
         boolean focusable = true;
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
         popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
-        variantInit(popupView,popupWindow);
+        variantInit(popupView, popupWindow);
 //        AlertDialog alertDialog;
 //
 //        AlertDialog.Builder builder2 = new AlertDialog.Builder(mContext);
@@ -963,23 +948,24 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
 
 
     }
-    private void variantInit(View popupView,PopupWindow popupWindow) {
 
-        variantListValue=new ArrayList<>();
-        addCartProduct=popupView.findViewById(R.id.addCartProduct);
+    private void variantInit(View popupView, PopupWindow popupWindow) {
+
+        variantListValue = new ArrayList<>();
+        addCartProduct = popupView.findViewById(R.id.addCartProduct);
         tvProductName = popupView.findViewById(R.id.tvProductName);
         tvDescription = popupView.findViewById(R.id.tvDescription);
         img = popupView.findViewById(R.id.img);
-        closeTv=popupView.findViewById(R.id.closeTv);
-        addBtn=popupView.findViewById(R.id.addBtn);
+        closeTv = popupView.findViewById(R.id.closeTv);
+        addBtn = popupView.findViewById(R.id.addBtn);
         addLayout = popupView.findViewById(R.id.addLayout);
         tv_totalPrice = popupView.findViewById(R.id.tv_totalPrice);
         tvItemCount = popupView.findViewById(R.id.tvItemCount);
         tvLeftProduct = popupView.findViewById(R.id.tvLeftProduct);
-        layoutProceed=popupView.findViewById(R.id.layoutProceed);
+        layoutProceed = popupView.findViewById(R.id.layoutProceed);
         attributeValue = popupView.findViewById(R.id.attributeValue);
-        layoutVariant= popupView.findViewById(R.id.layoutVariant);
-        layoutSad= popupView.findViewById(R.id.layoutSad);
+        layoutVariant = popupView.findViewById(R.id.layoutVariant);
+        layoutSad = popupView.findViewById(R.id.layoutSad);
         tvVPrice = popupView.findViewById(R.id.tvPrice);
         tv_quantity = popupView.findViewById(R.id.tv_quantity);
         button_subtract = popupView.findViewById(R.id.button_subtract);
@@ -990,7 +976,7 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
         indicator = popupView.findViewById(R.id.indicator);
         attributeList = popupView.findViewById(R.id.attributeList);
         listProduct = popupView.findViewById(R.id.listProduct);
-        btnProceed=popupView.findViewById(R.id.btnProceed);
+        btnProceed = popupView.findViewById(R.id.btnProceed);
         addToCard = popupView.findViewById(R.id.addToCard);
 
         btnProceed.setOnClickListener(v -> {
@@ -999,60 +985,56 @@ if(listData.getVariantStatus().equalsIgnoreCase("View More")){
             finish();
 
         });
-        addCartProduct.setOnClickListener(v->{
-            if(selectAttribute.size()>0){
-                Util.show(mContext,"Please Select Value");
-            }else {
+        addCartProduct.setOnClickListener(v -> {
+            if (selectAttribute.size() > 0) {
+                Util.show(mContext, "Please Select Value");
+            } else {
                 Util.show(mContext, "shhs");
                 variantaddCart(currentVariantData, "-");
                 currentVariantData.setCartQuantity("1");
 
-                setData(currentVariantData);
+                setData(currentVariantData,"");
 
             }
         });
         addToCard.setOnClickListener(v -> {
-if(selectAttribute.size()>0){
-    Util.show(mContext,"Please Select Value");
-}else{
-    int item= Integer.parseInt(currentVariantData.getCartQuantity());
-    item--;
-    currentVariantData.setCartQuantity(String.valueOf(item));
-    variantaddCart(currentVariantData, "1");
-    setData(currentVariantData);
-}
-
-
+            if (selectAttribute.size() > 0) {
+                Util.show(mContext, "Please Select Value");
+            } else {
+                int item = Integer.parseInt(currentVariantData.getCartQuantity());
+                item--;
+                currentVariantData.setCartQuantity(String.valueOf(item));
+                variantaddCart(currentVariantData, "1");
+                setData(currentVariantData,"");
+            }
 
 
         });
 
         button_add.setOnClickListener(v -> {
 
-            int item= Integer.parseInt(currentVariantData.getCartQuantity());
+            int item = Integer.parseInt(currentVariantData.getCartQuantity());
             item++;
             currentVariantData.setCartQuantity(String.valueOf(item));
 
 
-
-
             variantaddCart(currentVariantData, "1");
-            setData(currentVariantData);
+            setData(currentVariantData,"");
 
 
         });
         button_subtract.setOnClickListener(v -> {
 
 
-            int item= Integer.parseInt(currentVariantData.getCartQuantity());
+            int item = Integer.parseInt(currentVariantData.getCartQuantity());
             item--;
             currentVariantData.setCartQuantity(String.valueOf(item));
             variantaddCart(currentVariantData, "0");
-            setData(currentVariantData);
+            setData(currentVariantData,"");
 
 
         });
-        closeTv.setOnClickListener(v->{
+        closeTv.setOnClickListener(v -> {
             popupWindow.dismiss();
         });
 
@@ -1065,7 +1047,19 @@ if(selectAttribute.size()>0){
         //listItem.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         attributeValue.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
 
+        Gson gson = new Gson();
+        layoutVariant.setOnClickListener(v -> {
 
+            Type productList = new TypeToken<Product>() {
+            }.getType();
+            Product ob = gson.fromJson(gson.toJson(currentVariantData), productList);
+
+            Intent mv = new Intent(mContext, VarriantActivity.class);
+            mv.putExtra("product", ob);
+            mv.putExtra("productId", ob.getProductId());
+            mv.putExtra("vendor_id", vendorDetails.getUserId());
+            startActivity(mv);
+        });
         getCardCount();
 
     }
@@ -1102,7 +1096,7 @@ if(selectAttribute.size()>0){
                         }
                         //Util.hideDialog("Please wait..", mContext);
                     } catch (Exception ignored) {
-                        Util.hideDialog( );
+                        Util.hideDialog();
 
                     }
 
@@ -1124,6 +1118,7 @@ if(selectAttribute.size()>0){
         }
 
     }
+
     public void loadFragment(Fragment fragment, String fragName) {
         fragmentType = fragName;
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -1150,36 +1145,36 @@ if(selectAttribute.size()>0){
         animSetXY.start();
     }
 
-    public void setRating(String rate){
+    public void setRating(String rate) {
 
-Util.show(mContext,rate);
-        if(rate.equalsIgnoreCase("5.0")){
+        Util.show(mContext, rate);
+        if (rate.equalsIgnoreCase("5.0")) {
             tvStartFive.setVisibility(View.VISIBLE);
             tvStartFour.setVisibility(View.VISIBLE);
             tvStartThree.setVisibility(View.VISIBLE);
             tvStartTwo.setVisibility(View.VISIBLE);
             tvStartOne.setVisibility(View.VISIBLE);
-        }else if(rate.equalsIgnoreCase("4.0")){
+        } else if (rate.equalsIgnoreCase("4.0")) {
             tvStartFive.setVisibility(View.GONE);
             tvStartFour.setVisibility(View.VISIBLE);
             tvStartThree.setVisibility(View.VISIBLE);
             tvStartTwo.setVisibility(View.VISIBLE);
             tvStartOne.setVisibility(View.VISIBLE);
 
-        }else if(rate.equalsIgnoreCase("3.0")){
+        } else if (rate.equalsIgnoreCase("3.0")) {
             tvStartFive.setVisibility(View.GONE);
             tvStartFour.setVisibility(View.GONE);
             tvStartThree.setVisibility(View.VISIBLE);
             tvStartTwo.setVisibility(View.VISIBLE);
             tvStartOne.setVisibility(View.VISIBLE);
-        }else if(rate.equalsIgnoreCase("2.0")){
+        } else if (rate.equalsIgnoreCase("2.0")) {
             tvStartFive.setVisibility(View.GONE);
             tvStartFour.setVisibility(View.GONE);
             tvStartThree.setVisibility(View.GONE);
             tvStartTwo.setVisibility(View.VISIBLE);
             tvStartOne.setVisibility(View.VISIBLE);
 
-        } else if(rate.equalsIgnoreCase("1.0")){
+        } else if (rate.equalsIgnoreCase("1.0")) {
             tvStartFive.setVisibility(View.GONE);
             tvStartFour.setVisibility(View.GONE);
             tvStartThree.setVisibility(View.GONE);
@@ -1201,10 +1196,10 @@ Util.show(mContext,rate);
 
 
         if (InternetConnection.checkConnection(mContext)) {
-            Util.showDialog("Please wait..",mContext);
+            Util.showDialog("Please wait..", mContext);
             Map<String, String> params = new HashMap<>();
             params.put("productId", listData.getProductId());
-            params.put("vendor_id",listData.getVendorId());
+            params.put("vendor_id", listData.getVendorId());
             params.put("userId", userDetails.getUserId());
 
             Log.e("param", params.toString());
@@ -1223,16 +1218,16 @@ Util.show(mContext,rate);
 
                             varriantList = gson.fromJson(object.getJSONArray("listData").toString(), productlist);
 
-                            if(varriantList.size()>0){
+                            if (varriantList.size() > 0) {
                                 layoutVariant.setVisibility(View.VISIBLE);
                                 layoutSad.setVisibility(View.GONE);
                             }
-                         //   comMap(varriantList);
+                            //   comMap(varriantList);
 
 
-                            VariantProduct ob=  varriantList.get(0).getProductList();
-                            currentVariantData=ob;
-                            setData(currentVariantData);
+                            VariantProduct ob = varriantList.get(0).getProductList();
+                            currentVariantData = ob;
+                            setData(currentVariantData,"");
                             Type variantList = new TypeToken<ArrayList<String>>() {
                             }.getType();
                             variantListValue = gson.fromJson(object.getJSONArray("listDataAttribute").toString(), variantList);
@@ -1244,7 +1239,7 @@ Util.show(mContext,rate);
 
                             //carouselList = gson.fromJson(object.getJSONArray("sliderImg").toString(), pageViewer);
 
-                        }else{
+                        } else {
                             layoutVariant.setVisibility(View.GONE);
                             layoutSad.setVisibility(View.VISIBLE);
                             Util.hideDialog();

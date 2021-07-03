@@ -11,12 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dbcorp.apkaaada.Adapter.AutoSearchAdapter;
 import com.dbcorp.apkaaada.Adapter.MenuListAdapter;
 import com.dbcorp.apkaaada.Adapter.NearByShopAdapter;
 import com.dbcorp.apkaaada.Adapter.Search.SearchCategoryAdapter;
@@ -26,7 +32,9 @@ import com.dbcorp.apkaaada.Adapter.ShopCategory;
 import com.dbcorp.apkaaada.Adapter.TabListAdapter;
 import com.dbcorp.apkaaada.R;
 import com.dbcorp.apkaaada.database.SqliteDatabase;
+import com.dbcorp.apkaaada.database.UserSharedPreference;
 import com.dbcorp.apkaaada.helper.Util;
+import com.dbcorp.apkaaada.model.AutoSearch;
 import com.dbcorp.apkaaada.model.SearchByProduct;
 import com.dbcorp.apkaaada.model.UserDetails;
 import com.dbcorp.apkaaada.model.Varriant.AttributeValue;
@@ -49,6 +57,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -56,7 +65,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserSearchActivity extends AppCompatActivity implements NearByShopAdapter.OnMeneuClickListnser,ShopCategory.OnMeneuClickListnser, TabListAdapter.OnMeneuClickListnser, SearchProductAdapter.OnClickListener{
+public class UserSearchActivity extends AppCompatActivity implements AutoSearchAdapter.OnMeneuClickListnser,NearByShopAdapter.OnMeneuClickListnser,ShopCategory.OnMeneuClickListnser, TabListAdapter.OnMeneuClickListnser, SearchProductAdapter.OnClickListener{
 
 
     private Toolbar toolbar;
@@ -67,8 +76,11 @@ public class UserSearchActivity extends AppCompatActivity implements NearByShopA
     ArrayList<SearchByProduct> searchByCategory;
     ArrayList<SearchByProduct> filterSearchByProducts;
     MaterialTextView itemCount,tvPrice;
-
+    HashMap<String, String> address;
+    UserSharedPreference userSharedPreference;
+    AutoSearchAdapter autoSearchAdapter;
     ArrayList<VendorDetails> vendorDetailsList;
+    ArrayList<AutoSearch> autoSearchArrayList;
     ArrayList<Category> categoriesList;
     ArrayList<SearchByProduct> filterSearchByVendor;
     ArrayList<SearchByProduct> filterSearchByCategory;
@@ -79,7 +91,7 @@ public class UserSearchActivity extends AppCompatActivity implements NearByShopA
     SearchProductAdapter searchProduct;
     SearchCategoryAdapter searchCategoryAdapter;
     SearchVendorAdapter searchVendorAdapter;
-    RecyclerView listProduct,menuList;
+    RecyclerView autoSearchList,listProduct,menuList,verndoList,serviceVerndoList,ecomeCategory,serviceCategory;
     TextView tvProduct,tvVendorName,tvVariant;
     AppCompatImageView tvSearchIcon;
     TabListAdapter menuListAdapter;
@@ -87,6 +99,9 @@ public class UserSearchActivity extends AppCompatActivity implements NearByShopA
     NearByShopAdapter nearByShopAdapter;
     LinearLayoutCompat processBar;
     ShopCategory shopCategory;
+    MaterialTextView tvEcomList,tvserviceList,tvServiceCat,tvEcompCat;
+
+    AutoCompleteTextView edtSearch;
     String arrItems[] = new String[]{"Product","Vendor Shop","ECommerce Category","Service Category","Service Provider"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +115,12 @@ public class UserSearchActivity extends AppCompatActivity implements NearByShopA
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 this.listner=this;
         g = getIntent();
+        userSharedPreference=new UserSharedPreference(mContext);
+        address=userSharedPreference.getAddress();
+        getAutoSearchData();
         init();
+
+
 
     }
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -113,11 +133,25 @@ this.listner=this;
         searchByProducts=new ArrayList<>();
         searchByCategory=new ArrayList<>();
         searchByVendor=new ArrayList<>();
+
+
+        tvEcomList=findViewById(R.id.tvEcomList);
+        tvserviceList=findViewById(R.id.tvserviceList);
+        tvServiceCat=findViewById(R.id.tvServiceCat);
+        tvEcompCat=findViewById(R.id.tvEcompCat);
+
+        autoSearchList=findViewById(R.id.autoSearchList);
         processBar=findViewById(R.id.processBar);
         listProduct=findViewById(R.id.listProduct);
         menuList=findViewById(R.id.menuList);
         itemCount = findViewById(R.id.itemCount);
         tvPrice = findViewById(R.id.tvPrice);
+        verndoList=findViewById(R.id.verndoList);
+        serviceVerndoList=findViewById(R.id.serviceVerndoList);
+        ecomeCategory=findViewById(R.id.ecomeCategory);
+        serviceCategory=findViewById(R.id.serviceCategory);
+
+
 //        tvProduct=findViewById(R.id.tvProduct);
 //        tvVariant=findViewById(R.id.tvVariant);
 //        tvVendorName=findViewById(R.id.tvVendorName);
@@ -125,13 +159,75 @@ this.listner=this;
         menuList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         menuListAdapter = new TabListAdapter(arrItems, this, mContext);
         menuList.setAdapter(menuListAdapter);
-
+        tvEcomList.setVisibility(View.GONE);
+        tvserviceList.setVisibility(View.GONE);
+        tvEcompCat.setVisibility(View.GONE);
+        tvServiceCat.setVisibility(View.GONE);
         tvSearchLayout=findViewById(R.id.tvSearchLayout);
         edit_name=findViewById(R.id.edit_name);
         tvSearchIcon=findViewById(R.id.tvSearchIcon);
+        autoSearchAdapter=new AutoSearchAdapter(autoSearchArrayList,listner,mContext);
+        autoSearchList.setAdapter(nearByShopAdapter);
+        edit_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                String text = edit_name.getText().toString().toLowerCase(Locale.getDefault());
+                Log.e("bhs==>>", text);
+
+                if(text.length()>3){
+                    autoSearchList.setVisibility(View.VISIBLE);
+                    listProduct.setVisibility(View.VISIBLE);
+                }else if(text.length()==0){
+                    getSearch();
+                }
+
+                
+                autoSearchAdapter.getFilter().filter(cs);
+                autoSearchAdapter.notifyDataSetChanged();
+
+
+
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        verndoList.setHasFixedSize(true);
+        //listItem.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        verndoList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+
         listProduct.setHasFixedSize(true);
         //listItem.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         listProduct.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+
+
+        serviceVerndoList.setHasFixedSize(true);
+        //listItem.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+         serviceVerndoList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+
+
+
+        ecomeCategory.setHasFixedSize(true);
+         ecomeCategory.setLayoutManager(new GridLayoutManager(mContext, 3));
+       // ecomeCategory.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+
+
+        serviceCategory.setHasFixedSize(true);
+        //listItem.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        serviceCategory.setLayoutManager(new GridLayoutManager(mContext, 3));
+
+
 
         tvSearchIcon.setOnClickListener(v->{
             if(edit_name.getText().toString().length()==0){
@@ -139,6 +235,12 @@ this.listner=this;
               //  Util.show(mContext,"Please enter any search keyword");
             }else{
                 getSearchData();
+              //  getCategory();
+                getVendor();
+                getServiceVendor();
+                getServiceCategory();
+                getCategory();
+               // getServiceCategory();
 
             }
         });
@@ -185,8 +287,19 @@ this.listner=this;
 //        });
 
         getCardCount();
+
+
+
+
     }
 
+    private  void  getSearch(){
+        if(edit_name.getText().length()==0){
+
+            autoSearchList.setVisibility(View.GONE);
+        }
+
+    }
     private void getSearchData() {
         if (InternetConnection.checkConnection(mContext)) {
             filterSearchByProducts=new ArrayList<>();
@@ -199,6 +312,7 @@ this.listner=this;
             params.put("cityId", "1");
             params.put("userId", userDetails.getUserId());
             params.put("searchValue", edit_name.getText().toString());
+
             Log.e("param",params.toString());
             RestClient.post().getSearchData(userDetails.getSk(), ApiService.APP_DEVICE_ID,params).enqueue(new Callback<String>() {
                 @Override
@@ -298,7 +412,7 @@ this.listner=this;
                             }.getType();
                             categoriesList = gson.fromJson(object.getJSONArray("cateogory").toString(), type);
                             shopCategory = new ShopCategory("allcat",categoriesList, listner, mContext);
-                            listProduct.setAdapter(shopCategory);
+                            ecomeCategory.setAdapter(shopCategory);
 
                         } else {
                             processBar.setVisibility(View.GONE);
@@ -363,7 +477,7 @@ this.listner=this;
                             }.getType();
                             categoriesList = gson.fromJson(object.getJSONArray("cateogory").toString(), type);
                             shopCategory = new ShopCategory("allcat",categoriesList, listner, mContext);
-                            listProduct.setAdapter(shopCategory);
+                            serviceCategory.setAdapter(shopCategory);
 
                         } else {
                             processBar.setVisibility(View.GONE);
@@ -409,7 +523,8 @@ this.listner=this;
             Map<String, String> params = new HashMap<>();
             params.put("searchValue", edit_name.getText().toString());
             params.put("userId",userDetails.getUserId());
-
+            params.put("lat",address.get(UserSharedPreference.CurrentLatitude));
+            params.put("long",address.get(UserSharedPreference.CurrentLongitude));
             RestClient.post().getSearchVendorData(userDetails.getSk(), ApiService.APP_DEVICE_ID,params).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NotNull Call<String> call, Response<String> response) {
@@ -426,12 +541,12 @@ this.listner=this;
                             Type type = new TypeToken<ArrayList<VendorDetails>>() {
                             }.getType();
                             vendorDetailsList = gson.fromJson(object.getJSONArray("listData").toString(), type);
-                            nearByShopAdapter = new NearByShopAdapter(vendorDetailsList, listner, mContext);
-                            listProduct.setAdapter(nearByShopAdapter);
+                            nearByShopAdapter = new NearByShopAdapter("","",vendorDetailsList, listner, mContext);
+                            verndoList.setAdapter(nearByShopAdapter);
 
                         } else {
                             processBar.setVisibility(View.GONE);
-                            listProduct.setVisibility(View.GONE);
+                            verndoList.setVisibility(View.GONE);
 
                             Util.show(mContext, object.getString("message"));
                         }
@@ -477,7 +592,8 @@ this.listner=this;
             Map<String, String> params = new HashMap<>();
             params.put("searchValue", edit_name.getText().toString());
             params.put("userId",userDetails.getUserId());
-
+            params.put("lat",address.get(UserSharedPreference.CurrentLatitude));
+            params.put("long",address.get(UserSharedPreference.CurrentLongitude));
             RestClient.post().getSearchServiceVendorData(userDetails.getSk(), ApiService.APP_DEVICE_ID,params).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NotNull Call<String> call, Response<String> response) {
@@ -494,8 +610,8 @@ this.listner=this;
                             Type type = new TypeToken<ArrayList<VendorDetails>>() {
                             }.getType();
                             vendorDetailsList = gson.fromJson(object.getJSONArray("listData").toString(), type);
-                            nearByShopAdapter = new NearByShopAdapter(vendorDetailsList, listner, mContext);
-                            listProduct.setAdapter(nearByShopAdapter);
+                            nearByShopAdapter = new NearByShopAdapter("","",vendorDetailsList, listner, mContext);
+                            serviceVerndoList.setAdapter(nearByShopAdapter);
 
                         } else {
                             processBar.setVisibility(View.GONE);
@@ -743,6 +859,72 @@ this.listner=this;
 
     }
 
+
+
+
+    private void getAutoSearchData(){
+        if (InternetConnection.checkConnection(mContext)) {
+            autoSearchArrayList=new ArrayList<>();
+            Map<String, String> params = new HashMap<>();
+            params.put("userId",userDetails.getUserId());
+            params.put("lat",address.get(UserSharedPreference.CurrentLatitude));
+            params.put("long",address.get(UserSharedPreference.CurrentLongitude));
+            Log.e("bfbv",params.toString());
+            RestClient.post().searchProduct(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(@NotNull Call<String> call, Response<String> response) {
+                    try {
+
+                        JSONObject object = new JSONObject(Objects.requireNonNull(response.body()));
+                        JSONObject objectList=object.getJSONObject("listData");
+Log.e("lisdataa",objectList.toString());
+                        Gson gson = new Gson();
+                        Type type1 = new TypeToken<ArrayList<AutoSearch>>() {
+                        }.getType();
+                        ArrayList<AutoSearch> ecomVendorList = gson.fromJson(objectList.getJSONArray("ecomVendorList").toString(), type1);
+                        autoSearchArrayList.addAll(ecomVendorList);
+                        Type type2 = new TypeToken<ArrayList<AutoSearch>>() {
+                        }.getType();
+                        ArrayList<AutoSearch> serviceVendorList = gson.fromJson(objectList.getJSONArray("serviceVendorList").toString(), type2);
+                        autoSearchArrayList.addAll(serviceVendorList);
+                        Type type3 = new TypeToken<ArrayList<AutoSearch>>() {
+                        }.getType();
+                        ArrayList<AutoSearch> productList = gson.fromJson(objectList.getJSONArray("productList").toString(), type3);
+                        autoSearchArrayList.addAll(productList);
+                        Type type4 = new TypeToken<ArrayList<AutoSearch>>() {
+                        }.getType();
+                        ArrayList<AutoSearch> ecomcategoryList = gson.fromJson(objectList.getJSONArray("ecomcategoryList").toString(), type4);
+                        autoSearchArrayList.addAll(ecomcategoryList);
+                        Type type5 = new TypeToken<ArrayList<AutoSearch>>() {
+                        }.getType();
+                        ArrayList<AutoSearch> serviceCategoryList = gson.fromJson(objectList.getJSONArray("serviceCategoryList").toString(), type5);
+                        autoSearchArrayList.addAll(serviceCategoryList);
+                        autoSearchAdapter=new AutoSearchAdapter(autoSearchArrayList,listner,mContext);
+                        autoSearchList.setAdapter(autoSearchAdapter);
+
+                    } catch (Exception ignored) {
+
+
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<String> call, @NotNull Throwable t) {
+
+                    try {
+                        t.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
+        }
+    }
+
     @Override
     public void catServiceClick(Category liveTest, int pos, String type) {
 
@@ -755,6 +937,25 @@ this.listner=this;
 
     @Override
     public void onHeartClick(VendorDetails data, String status) {
+
+    }
+
+    @Override
+    public void onOptionClick(AutoSearch liveTest) {
+
+        autoSearchList.setVisibility(View.GONE);
+        listProduct.setVisibility(View.VISIBLE);
+        edit_name.setText(liveTest.getName());
+        getSearchData();
+        //  getCategory();
+        getVendor();
+        getServiceVendor();
+        getServiceCategory();
+        getCategory();
+        tvEcomList.setVisibility(View.VISIBLE);
+        tvserviceList.setVisibility(View.VISIBLE);
+        tvEcompCat.setVisibility(View.VISIBLE);
+        tvServiceCat.setVisibility(View.VISIBLE);
 
     }
 }
