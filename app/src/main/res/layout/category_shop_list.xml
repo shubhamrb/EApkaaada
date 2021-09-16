@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="start"
+    android:layout_margin="5sp"
+    android:gravity="start"
+    android:background="@drawable/gray_rounded_bg"
+    android:layout_height="wrap_content">
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvCatName"
+        android:layout_width="wrap_content"
+        android:padding="@dimen/Margin5dp"
+        android:text="Organic Milk"
+        android:layout_gravity="start"
+        android:gravity="start"
+        android:alpha=".9"
+
+        android:textSize="11sp"
+        android:fontFamily="@font/montserrat_b"
+        android:textColor="@color/g_black"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

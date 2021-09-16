@@ -1,16 +1,18 @@
 package com.dbcorp.apkaaada.model.home;
 
+import com.dbcorp.apkaaada.model.HomeShopListCategory;
 import com.dbcorp.apkaaada.model.VendorDetails;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Bhupesh Sen on 16-02-2021.
  */
-public class HomeData {
+public class HomeData implements Serializable {
     @SerializedName("ecomlist")
     @Expose
     private ArrayList<Category> ecomlist = null;
@@ -28,7 +30,28 @@ public class HomeData {
     @Expose
     private ArrayList<SliderImage> sliderImages = null;
 
+    @SerializedName("serviceCatVendorList")
+    @Expose
+    private ArrayList<HomeShopListCategory> serviceCatVendorList = null;
+    @SerializedName("ecomCatVendorList")
+    @Expose
+    private ArrayList<HomeShopListCategory> ecomCatVendorList = null;
 
+    public ArrayList<HomeShopListCategory> getServiceCatVendorList() {
+        return serviceCatVendorList;
+    }
+
+    public void setServiceCatVendorList(ArrayList<HomeShopListCategory> serviceCatVendorList) {
+        this.serviceCatVendorList = serviceCatVendorList;
+    }
+
+    public ArrayList<HomeShopListCategory> getEcomCatVendorList() {
+        return ecomCatVendorList;
+    }
+
+    public void setEcomCatVendorList(ArrayList<HomeShopListCategory> ecomCatVendorList) {
+        this.ecomCatVendorList = ecomCatVendorList;
+    }
 
     public ArrayList<SliderImage> getSliderImages() {
         return sliderImages;

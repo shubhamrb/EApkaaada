@@ -189,7 +189,12 @@ public class HelpActivity extends AppCompatActivity implements DroupdownMenuAdap
             params.put("complaint_by", userDetails.getUserId());
             params.put("orders_detail_id", orderId);
             params.put("complaint", tvMessage.getText().toString());
-            params.put("complaint_photo",getBitmapstr);
+            if(getBitmapstr!=null){
+                params.put("complaint_photo",getBitmapstr);
+            }else{
+                params.put("complaint_photo","");
+            }
+Log.e("data",params.toString());
             RestClient.post().orderComplaint(userDetails.getSk(), ApiService.APP_DEVICE_ID,params).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NotNull Call<String> call, Response<String> response) {
@@ -283,6 +288,13 @@ finish();
     public void onOptionClick(DroupDownModel liveTest) {
         Util.hideDropDown();
         tvDrop.setText(liveTest.getDescription());
-        orderId=liveTest.getId();
+
+        if(liveTest.getDescription().equalsIgnoreCase("other help")){
+            orderId="00";
+            Util.show(mContext,"other");
+        }else{
+            orderId=liveTest.getId();
+        }
+
     }
 }

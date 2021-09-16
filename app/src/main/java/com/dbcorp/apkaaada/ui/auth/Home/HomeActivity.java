@@ -353,7 +353,6 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
                 case R.id.category:
                     nearbycat categoryObj = nearbycat.getInstance("category");
                     loadFragment(categoryObj, "");
-
                     break;
                 case R.id.myorder:
                     Intent mv2 = new Intent(HomeActivity.this, MyOrder.class);

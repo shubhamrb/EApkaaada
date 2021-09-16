@@ -20,6 +20,7 @@ import com.dbcorp.apkaaada.Adapter.offer.SliderCategoryAdapter;
 import com.dbcorp.apkaaada.R;
 import com.dbcorp.apkaaada.database.SqliteDatabase;
 import com.dbcorp.apkaaada.helper.Util;
+import com.dbcorp.apkaaada.model.HomeShopListCategory;
 import com.dbcorp.apkaaada.model.UserDetails;
 import com.dbcorp.apkaaada.model.VendorDetails;
 import com.dbcorp.apkaaada.model.home.Category;
@@ -57,13 +58,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> implements Offer.OnClickListener, HomeItemAdapter.OnMeneuClickListnser, ShopCategory.OnMeneuClickListnser,ShopHome.OnClickListener,SliderCategoryAdapter.OnClickListener {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> implements Offer.OnClickListener,ShopCategoryVendor.OnClickListener, HomeItemAdapter.OnMeneuClickListnser, ShopCategory.OnMeneuClickListnser,ShopHome.OnClickListener,SliderCategoryAdapter.OnClickListener {
 
     HomeItemAdapter homeItemAdapter;
     HomeAdapter listner;
     ShopCategory shopCategory;
     ShopHome shopHome;
     Offer offerAdapter;
+    ShopCategoryVendor shopCategoryVendor;
     SliderCategoryAdapter sliderCategoryAdapter;
     private String arrItems[];
     private String arrItemslist[] = {"a", "b", "c"};
@@ -133,10 +135,23 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         }else if (position == 4) {
             holder.tvText.setText("Nearest  Shopes");
             if(data.getVendorData()!=null) {
-                shopHome = new ShopHome("Home",data.getVendorData(), HomeAdapter.this::offerClick, mContext);
+                shopHome = new ShopHome("home",data.getVendorData(), HomeAdapter.this::offerClick, mContext);
                 holder.itemList.setAdapter(shopHome);
             }
+        }else if (position == 5) {
+            holder.tvText.setText("Nearest  Ecom vendor ");
+            if(data.getServiceCatVendorList()!=null) {
+                shopCategoryVendor = new ShopCategoryVendor("home",data.getServiceCatVendorList(), HomeAdapter.this::clickShopCat, mContext);
+                holder.itemList.setAdapter(shopCategoryVendor);
+            }
         }
+//        else if (position == 6) {
+//            holder.tvText.setText("Nearest  Service vendor ");
+//            if(data.getServiceCatVendorList()!=null) {
+//                shopCategoryVendor = new ShopCategoryVendor("home",data.getServiceCatVendorList(), HomeAdapter.this::clickShopCat, mContext);
+//                holder.itemList.setAdapter(shopCategoryVendor);
+//            }
+//        }
 
 
     }
@@ -215,6 +230,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
             intent.putExtra("query",data.getQuery());
             mContext.startActivity(intent);
         }
+
+    }
+
+    @Override
+    public void clickShopCat(HomeShopListCategory liveTest, int pos, String type) {
 
     }
 

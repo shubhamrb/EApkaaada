@@ -126,7 +126,7 @@ MaterialTextView selectService;
                 public void onResponse(@NotNull Call<HomeUser> call, Response<HomeUser> response) {
 
                     HomeUser obj = response.body();
-                    Log.e("getMessage", obj.getMessage().toString());
+                    Log.e("getMessage", obj.getHomeData().get(5).getServiceCatVendorList().toString());
                     if(obj.getMessage().equalsIgnoreCase("session expired")){
                         Logout();
                     }
