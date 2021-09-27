@@ -19,8 +19,8 @@ public interface ApiService {
     //   String BASE_URL = "http://cashsaledev.groupbhaskar.in/";   static String AppType="( TEST )";
 
     //test server start
-   // String MAIN_BASE_URL = "http://192.168.43.56/";
-    //String MAIN_IMAGE_BASE_URL = "http://192.168.43.56/top10/";
+   // String MAIN_BASE_URL = "http://192.168.1.101/";
+    //String MAIN_IMAGE_BASE_URL = "http://192.168.1.101/top10/";
     //String BASE_URL = MAIN_BASE_URL + "top10/api/v1/user-api/";
     //test server en
 

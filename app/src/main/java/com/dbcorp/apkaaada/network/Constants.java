@@ -2,8 +2,8 @@ package com.dbcorp.apkaaada.network;
 
 
 public class Constants {
-    String MAIN_BASE_URL ="http://top10india.in/";
-    String BASE_URL = MAIN_BASE_URL+"api/v1/user-api/";
+    String MAIN_BASE_URL ="http://192.168.43.56/";
+    String BASE_URL = MAIN_BASE_URL+"top10/api/v1/user-api/";
     static final String GET_OTP="get-otp";
     static final String MATCH_OTP="match-otp";
     static final String USER_LOGIN="login";

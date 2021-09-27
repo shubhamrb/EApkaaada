@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,6 +72,7 @@ public class nearbyShop extends Fragment implements NearByShopAdapter.OnMeneuCli
     RecyclerView listItem;
     Category categoryData;
     UserDetails userDetails;
+    AppCompatImageView noShopFoundImg;
     UserSharedPreference userSharedPreference;
     @Nullable
     @Override
@@ -87,6 +90,7 @@ public class nearbyShop extends Fragment implements NearByShopAdapter.OnMeneuCli
             categoryData = (Category) bundle.getSerializable("data");
         }
         vendorDetailsList=new ArrayList<>();
+        noShopFoundImg=view.findViewById(R.id.noShopFoundImg);
         listItem = view.findViewById(R.id.listItem);
         listItem.setHasFixedSize(true);
         //listItem.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -118,7 +122,8 @@ public class nearbyShop extends Fragment implements NearByShopAdapter.OnMeneuCli
                         Log.e("message",object.getString("message"));
 
                         if (object.getBoolean("status")) {
-
+                            listItem.setVisibility(View.VISIBLE);
+                            noShopFoundImg.setVisibility(View.GONE);
                             Type type = new TypeToken<ArrayList<VendorDetails>>() {
                             }.getType();
                             vendorDetailsList = gson.fromJson(object.getJSONArray("listData").toString(), type);
@@ -126,10 +131,13 @@ public class nearbyShop extends Fragment implements NearByShopAdapter.OnMeneuCli
                             listItem.setAdapter(nearByShopAdapter);
 
                         } else {
-                            Util.show(mContext, "something is wrong");
+                            listItem.setVisibility(View.GONE);
+                            noShopFoundImg.setVisibility(View.VISIBLE);
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Util.show(mContext, e.getMessage());
                     }
 
 
@@ -141,6 +149,7 @@ public class nearbyShop extends Fragment implements NearByShopAdapter.OnMeneuCli
                     try {
                         t.printStackTrace();
                     } catch (Exception e) {
+                        Util.show(mContext, e.getMessage());
                         e.printStackTrace();
                     }
 

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import com.dbcorp.apkaaada.Adapter.offer.OfferAdapter;
 import com.dbcorp.apkaaada.R;
 import com.dbcorp.apkaaada.database.SqliteDatabase;
+import com.dbcorp.apkaaada.database.UserSharedPreference;
 import com.dbcorp.apkaaada.helper.Util;
 import com.dbcorp.apkaaada.model.OfferModel;
 import com.dbcorp.apkaaada.model.ServiceModel;
@@ -47,11 +48,14 @@ public class ViewOffer extends AppCompatActivity implements OfferAdapter.OnClick
     ArrayList<OfferModel> list;
     RecyclerView listItem;
     private Toolbar toolbar;
+    HashMap<String, String> address;
+    UserSharedPreference sessionUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer);
-
+        sessionUser=new UserSharedPreference(this);
+        address=sessionUser.getAddress();
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("My Offer");
         setSupportActionBar(toolbar);
@@ -77,6 +81,8 @@ public class ViewOffer extends AppCompatActivity implements OfferAdapter.OnClick
     private void getOffer() {
         if (InternetConnection.checkConnection(mContext)) {
             Map<String, String> params = new HashMap<>();
+            params.put("latitude",address.get(UserSharedPreference.CurrentLatitude));
+            params.put("longitude",address.get(UserSharedPreference.CurrentLongitude));
 
             RestClient.post().getOffer(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
                 @Override

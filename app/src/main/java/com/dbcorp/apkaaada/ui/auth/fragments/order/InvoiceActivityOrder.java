@@ -269,7 +269,7 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
         listCoupon=new ArrayList<>();
         if (InternetConnection.checkConnection(mContext)) {
             Map<String, String> params = new HashMap<>();
-            params.put("userId", "14");
+            params.put("userId", userDetails.getUserId());
             Log.e("param", params.toString());
             RestClient.post().userOrder(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -494,7 +494,8 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
         int VenOrderPrice=0;
         int couponPrice=0;
         int updatePrice=0;
-        int getPrice= Integer.parseInt(price);
+        String p=price.equalsIgnoreCase("")?"0":price;
+        int getPrice= Integer.parseInt(p);
         totalPriceAfterCoupon=totalPrice;
         for(int i=0;i<cardProducts.size();i++){
 

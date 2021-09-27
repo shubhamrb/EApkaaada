@@ -218,6 +218,9 @@ public class MyOrder extends AppCompatActivity implements  OrdersDetailsAdapter.
                                 }
                                 Util.hideDialog();
                             }else{
+
+                                progressBar.setVisibility(View.GONE);
+                                tvError.setVisibility(View.GONE);
                                 Util.hideDialog();
                                 Util.show(mContext,object.getString("message"));
 

@@ -18,10 +18,11 @@
         android:layout_gravity="start"
         android:gravity="start"
         android:alpha=".9"
-
+android:background="@drawable/bg_stroke_gray_two"
         android:textSize="11sp"
         android:fontFamily="@font/montserrat_b"
         android:textColor="@color/g_black"
+
         android:layout_height="wrap_content"/>
 
 </LinearLayout>

@@ -382,7 +382,7 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
 //
 //        }
 
-        Toast.makeText(getApplicationContext(),""+latitude+""+longitude+""+addressName+""+localAddress, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),""+latitude+""+longitude+""+addressName+""+localAddress, Toast.LENGTH_LONG).show();
         Intent mv=new Intent(SearchAddress.this, HomeActivity.class);
         mv.putExtra("type","current");
         startActivity(mv);

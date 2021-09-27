@@ -332,8 +332,8 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
 
         tvSearch.setOnClickListener(v->{
             Intent mv = new Intent(mContext, UserSearchActivity.class);
-          //  mv.putExtra("product", listData);
-         //  mv.putExtra("productId", listData.rr());
+            mv.putExtra("type", "no");
+           mv.putExtra("keyWord", "");
            // mv.putExtra("vendor_id", vendorDetails.getUserId());
             startActivity(mv);
 
@@ -490,7 +490,7 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
 
                         if (object.getBoolean("status")) {
 
-                            Util.show(mContext,"Successfully updated your setting data");
+                            //Util.show(mContext,"Successfully updated your setting data");
 
 
                         //    Util.hideDialog();
@@ -675,7 +675,7 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
 
 
                         if (object.getBoolean("status")) {
-                            Util.show(mContext,object.getString("message"));
+                           // Util.show(mContext,object.getString("message"));
                             getAddress();;
                         }else{
                             Util.show(mContext,object.getString("message"));

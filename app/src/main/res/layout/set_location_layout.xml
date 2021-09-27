@@ -72,12 +72,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
-
+            android:textAllCaps="true"
             android:layout_weight="4"
             android:backgroundTint="@color/red"
             android:onClick="searchLocation"
             android:padding="15sp"
-            android:text="Conform Location"
+
+
+            android:text="Confirm Location"
             android:textSize="14sp" />
 
     </LinearLayout>

@@ -102,6 +102,7 @@ public class UserSearchActivity extends AppCompatActivity implements AutoSearchA
     MaterialTextView tvEcomList,tvserviceList,tvServiceCat,tvEcompCat;
 
     AutoCompleteTextView edtSearch;
+    String typeSearchPage="";
     String arrItems[] = new String[]{"Product","Vendor Shop","ECommerce Category","Service Category","Service Provider"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,11 +116,16 @@ public class UserSearchActivity extends AppCompatActivity implements AutoSearchA
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 this.listner=this;
         g = getIntent();
+
+
         userSharedPreference=new UserSharedPreference(mContext);
         address=userSharedPreference.getAddress();
         getAutoSearchData();
         init();
-
+        typeSearchPage=g.getStringExtra("type");
+        if(typeSearchPage.equalsIgnoreCase("keySearch")){
+            edit_name.setText(g.getStringExtra("keyWord"));
+        }
 
 
     }

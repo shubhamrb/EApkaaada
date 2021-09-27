@@ -71,6 +71,7 @@ public class ShopCategory extends RecyclerView.Adapter<ShopCategory.MyViewHolder
         Category menuName=listCategory.get(position);
         Glide.with(mContext)
                 .load(BASE_IMG_CAT_URL+menuName.getPhoto())
+                .placeholder(R.drawable.logo)
                 .into(holder.shapeableImageView);
         holder.tvName.setText(menuName.getName());
 

@@ -104,7 +104,7 @@ AppCompatImageView tvBack;
         proceedToPay.setOnClickListener(v -> {
             if(instructionList.size()>0){
 
-                Log.e("tokensList.toString()",tokensList.toString());
+               // Log.e("tokensList.toString()",tokensList.toString());
                  startProceedToPay();
             }else{
                 Util.show(mContext,"Please select instruction");

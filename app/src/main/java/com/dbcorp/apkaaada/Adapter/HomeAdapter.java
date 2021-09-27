@@ -35,6 +35,7 @@ import com.dbcorp.apkaaada.ui.auth.fragments.Home;
 import com.dbcorp.apkaaada.ui.auth.fragments.ServiceShop;
 import com.dbcorp.apkaaada.ui.auth.fragments.SetAddressActivity;
 import com.dbcorp.apkaaada.ui.auth.fragments.ShopDetails;
+import com.dbcorp.apkaaada.ui.auth.fragments.product.UserSearchActivity;
 import com.dbcorp.apkaaada.ui.auth.fragments.product.shopview;
 import com.dbcorp.apkaaada.ui.auth.fragments.shop.SingleShopDetails;
 import com.dbcorp.apkaaada.ui.auth.fragments.shop.nearbyShop;
@@ -218,9 +219,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
             ((HomeActivity) Objects.requireNonNull(mContext)).loadFragment(categoryObj, "");
 
         }else if(data.getType().equalsIgnoreCase("2")){
-            Intent intent = new Intent(mContext, SliderSearchKeyWord.class);
-            intent.putExtra("query",data.getQuery());
-            mContext.startActivity(intent);
+
+            Intent mv = new Intent(mContext, UserSearchActivity.class);
+            mv.putExtra("type", "keySearch");
+            mv.putExtra("keyWord", data.getQuery());
+            // mv.putExtra("vendor_id", vendorDetails.getUserId());
+            mContext.startActivity(mv);
+
         }else if(data.getType().equalsIgnoreCase("3")){
             Intent intent = new Intent(mContext, SliderProduct.class);
             intent.putExtra("query",data.getQuery());

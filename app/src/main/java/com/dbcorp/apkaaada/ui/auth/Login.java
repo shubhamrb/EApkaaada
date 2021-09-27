@@ -130,7 +130,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
 
                     UserDetails obj = response.body();
-
+Log.e("response", String.valueOf(response.body()));
                     if (obj.getStatus()) {
                         Util.hideDialog();
                         new SqliteDatabase(context).addLogin(obj);
@@ -138,7 +138,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                         startActivity(intent);
                         finish();
                     } else {
-                        Util.show(context, "wrong");
+                        Util.show(context, obj.getMessage());
                         Util.hideDialog();
                     }
 

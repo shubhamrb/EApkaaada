@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-
+android:padding="@dimen/Margin10dp"
         android:orientation="vertical"
         app:reverseLayout="true"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
