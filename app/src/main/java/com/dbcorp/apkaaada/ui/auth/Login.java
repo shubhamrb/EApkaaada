@@ -127,10 +127,8 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
             RestClient.post().getLogin(APP_DEVICE_ID, params).enqueue(new Callback<UserDetails>() {
                 @Override
                 public void onResponse(Call<UserDetails> call, Response<UserDetails> response) {
-
-
                     UserDetails obj = response.body();
-Log.e("response", String.valueOf(response.body()));
+                    Log.e("response", String.valueOf(response.body()));
                     if (obj.getStatus()) {
                         Util.hideDialog();
                         new SqliteDatabase(context).addLogin(obj);

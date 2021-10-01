@@ -450,6 +450,7 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
                 });
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
@@ -561,7 +562,7 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
 
     @Override
     public void onOptionClick(String liveTest, int pos) {
-      //  Util.show(mContext,""+pos);
+        Util.show(mContext,""+pos);
         switch (pos) {
             case 1:
                 Intent mv = new Intent(HomeActivity.this, ActivityOrder.class);
@@ -599,7 +600,10 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
                 Intent intent = new Intent(mContext, PrivacyPolicy.class);
                 startActivity(intent);
                 break;
-
+            case 2:
+                drawer.closeDrawers();
+                loadFragment(new account(), "");
+                break;
 
 
         }
