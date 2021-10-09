@@ -207,7 +207,6 @@ public class nearbyShop extends Fragment implements NearByShopAdapter.OnMeneuCli
 
             params.put("active", data.getWhislistStatus());
 
-            Log.e("params",params.toString());
             RestClient.post().likeShop(ApiService.APP_DEVICE_ID,userDetails.getSk(),params).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NotNull Call<String> call, Response<String> response) {
@@ -219,7 +218,7 @@ public class nearbyShop extends Fragment implements NearByShopAdapter.OnMeneuCli
                         Log.e("message",object.getString("message"));
 
                         if (object.getBoolean("status")) {
-
+                            Util.show(mContext,data.getWhislistStatus());
                             nearByShopAdapter.notifyDataSetChanged();
 
                         } else {

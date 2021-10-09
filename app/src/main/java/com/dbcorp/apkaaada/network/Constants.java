@@ -61,6 +61,11 @@ public class Constants {
 
     static final String  FORGET_PASSWORD="forget-password";
     static final String  GET_NOTIFICATION="get-notification";
+    static final String  GET_DAILY_NOTIFICATION="get-daily-notification";
+
+
+
+
 
     static final String  UPDATE_NOTIFICATION="update-fcm";
 

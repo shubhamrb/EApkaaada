@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,6 +55,24 @@ public class Util {
 //            dialog.cancel();
 //            dialog.dismiss();
 //        });
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+    public static void showDialogAlert(String title,String message, Context context) {
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.alert_dialog);
+        MaterialTextView TvTittle = dialog.findViewById(R.id.TvTittle);
+        MaterialTextView TvMessage = dialog.findViewById(R.id.TvMessage);
+        AppCompatImageView close=dialog.findViewById(R.id.close);
+        AppCompatButton btnOk=dialog.findViewById(R.id.BtnOk);
+        btnOk.setOnClickListener(v->{
+            dialog.cancel();
+            dialog.dismiss();
+        });
+        TvTittle.setText(title);
+        TvMessage.setText(message);
+
         dialog.setCancelable(false);
         dialog.show();
     }

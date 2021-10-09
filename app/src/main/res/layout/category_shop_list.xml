@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_gravity="start"
     android:layout_margin="5sp"
     android:gravity="start"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:background="@drawable/gray_rounded_bg"
     android:layout_height="wrap_content">
 
@@ -18,11 +20,22 @@
         android:layout_gravity="start"
         android:gravity="start"
         android:alpha=".9"
-android:background="@drawable/bg_stroke_gray_two"
-        android:textSize="11sp"
-        android:fontFamily="@font/montserrat_b"
+        android:textSize="15sp"
+        android:fontFamily="@font/montserrat"
         android:textColor="@color/g_black"
 
         android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:orientation="horizontal"
+        app:reverseLayout="true"
+
+        tools:listitem="@layout/item_shop"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:divider="@null"
+        />
 
 </LinearLayout>

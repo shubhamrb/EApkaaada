@@ -135,7 +135,11 @@ public class HelpActivity extends AppCompatActivity implements DroupdownMenuAdap
 
                         object = new JSONObject(response.body());
                         Log.e("message", object.getString("message"));
-
+                        DroupDownModel obj1=new DroupDownModel();
+                        obj1.setId("00");
+                        obj1.setName("Other Help");
+                        obj1.setDescription("Other Help");
+                        list.add(obj1);
                         if (object.getBoolean("status")) {
 
 
@@ -144,11 +148,7 @@ public class HelpActivity extends AppCompatActivity implements DroupdownMenuAdap
 //                            }.getType();
 //                          //  listData = gson.fromJson(object.getJSONArray("listData").toString(), type);
 
-                            DroupDownModel obj1=new DroupDownModel();
-                            obj1.setId("00");
-                            obj1.setName("Other Help");
-                            obj1.setDescription("Other Help");
-                            list.add(obj1);
+
                             for (int i = 0; i < jsonArray.length(); i++) {
 
                                 JSONObject str=jsonArray.getJSONObject(i);

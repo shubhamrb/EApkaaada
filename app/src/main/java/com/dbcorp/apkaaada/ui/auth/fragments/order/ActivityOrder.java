@@ -81,12 +81,13 @@ public class ActivityOrder extends AppCompatActivity implements UserCardAdapter.
     MaterialTextView tvApplyCoupon;
     LinearLayoutCompat layoutProceed;
     MaterialTextView itemCount,tvPrice;
+    LinearLayoutCompat emptyCartLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("My Cart");
+        toolbar.setTitle("My Cart ");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 this.listner=this;
@@ -103,7 +104,7 @@ this.listner=this;
     private void init() {
         layoutProceed=findViewById(R.id.layoutProceed);
         btnProceed = findViewById(R.id.btnProceed);
-
+        emptyCartLayout=findViewById(R.id.emptyCartLayout);
 
         itemCount=findViewById(R.id.itemCount);
         tvPrice = findViewById(R.id.tvPrice);
@@ -191,7 +192,7 @@ this.listner=this;
                         if (strObj.getBoolean("status")) {
                             JSONArray arrayData = strObj.getJSONArray("productDetails");
                             layoutProceed.setVisibility(View.VISIBLE);
-
+                            emptyCartLayout.setVisibility(View.GONE);
                             for (int i = 0; i < arrayData.length(); i++) {
 
 
@@ -214,11 +215,14 @@ this.listner=this;
                             Util.hideDialog();
 
                         }else{
+                            emptyCartLayout.setVisibility(View.VISIBLE);
                             layoutProceed.setVisibility(View.GONE);
                             Util.hideDialog();
                             Util.show(mContext,strObj.getString("message"));
                         }
                     } catch (Exception e) {
+                        emptyCartLayout.setVisibility(View.VISIBLE);
+                        layoutProceed.setVisibility(View.GONE);
                         Util.hideDialog();
                         Util.show(mContext, e.getMessage());
                     }

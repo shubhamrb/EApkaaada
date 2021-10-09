@@ -89,7 +89,7 @@ public class NearByShopAdapter extends RecyclerView.Adapter<NearByShopAdapter.My
 
 
         Glide.with(mContext)
-                .load(VENDOR_SHOP_IMG_URL+data.getPhoto())
+                .load(VENDOR_SHOP_IMG_URL+data.getPhoto()).placeholder(R.drawable.logo)
                 .into(holder.imageView);
 
         if (data.getShopOnOff().equalsIgnoreCase("")) {
@@ -108,12 +108,14 @@ public class NearByShopAdapter extends RecyclerView.Adapter<NearByShopAdapter.My
                 data.setWhislistStatus("1");
             }else{
                 data.setWhislistStatus("0");
+
             }
+
             onMenuListClicklistener.onHeartClick(data,data.getWhislistStatus());
+
             notifyDataSetChanged();
+
         });
-
-
 
 
         if(data.getWhislistStatus().equalsIgnoreCase("0")){

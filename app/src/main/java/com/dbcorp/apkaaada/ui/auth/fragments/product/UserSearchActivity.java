@@ -101,6 +101,7 @@ public class UserSearchActivity extends AppCompatActivity implements AutoSearchA
     ShopCategory shopCategory;
     MaterialTextView tvEcomList,tvserviceList,tvServiceCat,tvEcompCat;
 
+    UserSharedPreference sessionUser;
     AutoCompleteTextView edtSearch;
     String typeSearchPage="";
     String arrItems[] = new String[]{"Product","Vendor Shop","ECommerce Category","Service Category","Service Provider"};
@@ -113,6 +114,8 @@ public class UserSearchActivity extends AppCompatActivity implements AutoSearchA
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Search");
         setSupportActionBar(toolbar);
+        sessionUser=new UserSharedPreference(this);
+        address=sessionUser.getAddress();
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 this.listner=this;
         g = getIntent();
@@ -873,8 +876,10 @@ this.listner=this;
             autoSearchArrayList=new ArrayList<>();
             Map<String, String> params = new HashMap<>();
             params.put("userId",userDetails.getUserId());
-            params.put("lat",address.get(UserSharedPreference.CurrentLatitude));
-            params.put("long",address.get(UserSharedPreference.CurrentLongitude));
+            params.put("latitude",address.get(UserSharedPreference.CurrentLatitude));
+            params.put("longitude",address.get(UserSharedPreference.CurrentLongitude));
+
+
             Log.e("bfbv",params.toString());
             RestClient.post().searchProduct(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
                 @Override

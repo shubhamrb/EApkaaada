@@ -29,6 +29,7 @@ import com.dbcorp.apkaaada.Adapter.DroupdownMenuAdapter;
 import com.dbcorp.apkaaada.Adapter.HomeAdapter;
 import com.dbcorp.apkaaada.R;
 import com.dbcorp.apkaaada.database.SqliteDatabase;
+import com.dbcorp.apkaaada.database.UserSharedPreference;
 import com.dbcorp.apkaaada.helper.Util;
 import com.dbcorp.apkaaada.model.DroupDownModel;
 import com.dbcorp.apkaaada.model.OTP;
@@ -54,6 +55,7 @@ import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -91,7 +93,8 @@ MaterialTextView selectService;
     UserDetails userDetails;
     String serviceId;
     TextInputLayout edtComment;
-
+    HashMap<String, String> address;
+    UserSharedPreference sessionUser;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -99,6 +102,8 @@ MaterialTextView selectService;
         view = inflater.inflate(R.layout.fragment_home, container, false);
         this.listner=this;
         userDetails= new SqliteDatabase(getActivity()).getLogin();
+        sessionUser=new UserSharedPreference(getActivity());
+        address=sessionUser.getAddress();
         init();
         return view;
     }
@@ -109,6 +114,7 @@ MaterialTextView selectService;
         listItem.setHasFixedSize(true);
         listItem.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         getHomeData();
+
     }
 
 
@@ -116,21 +122,26 @@ MaterialTextView selectService;
     public void getHomeData() {
         if (InternetConnection.checkConnection(mContext)) {
 
-            Util.showDialog("Please wait..",mContext);
+          //  Util.showDialog("Please wait..",mContext);
             Map<String, String> params = new HashMap<>();
             params.put("userId", userDetails.getUserId());
+            params.put("latitude",address.get(UserSharedPreference.CurrentLatitude));
+            params.put("longitude",address.get(UserSharedPreference.CurrentLongitude));
 
-            Log.e("sk",userDetails.getSk());
+
+
+            Log.e("userDetailssk",userDetails.getSk());
             RestClient.post().getHomeData(userDetails.getSk(), ApiService.APP_DEVICE_ID,params).enqueue(new Callback<HomeUser>() {
                 @Override
                 public void onResponse(@NotNull Call<HomeUser> call, Response<HomeUser> response) {
 
                     HomeUser obj = response.body();
-                    Log.e("getMessage", obj.getHomeData().get(5).getServiceCatVendorList().toString());
+//                    Log.e("getMessage", obj.getHomeData().get(5).getServiceCatVendorList().toString());
                     if(obj.getMessage().equalsIgnoreCase("session expired")){
                         Logout();
                     }
                     if(obj.getStatus()){
+
                         homeDataList= (ArrayList<HomeData>) obj.getHomeData();
                         for(int i=0;i<homeDataList.get(2).getServiceList().size();i++){
                             DroupDownModel droupDownModel=new DroupDownModel();
@@ -147,10 +158,10 @@ MaterialTextView selectService;
                         homeAdapter = new HomeAdapter(homeDataList, listner, mContext);
                         listItem.setAdapter(homeAdapter);
 
-                        Util.hideDialog();
+
 
                     }else{
-                        Util.hideDialog();
+
 
                     }
 
@@ -164,7 +175,7 @@ MaterialTextView selectService;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    Util.hideDialog();
+
 
                 }
             });

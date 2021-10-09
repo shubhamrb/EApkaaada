@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public class HomeShopListCategory implements Serializable {
     private String catName;
     @SerializedName("listData")
     @Expose
-    private List<VendorData> listData = null;
+    private ArrayList<VendorData> listData = null;
 
     public String getCatName() {
         return catName;
@@ -27,11 +28,11 @@ public class HomeShopListCategory implements Serializable {
         this.catName = catName;
     }
 
-    public List<VendorData> getListData() {
+    public ArrayList<VendorData> getListData() {
         return listData;
     }
 
-    public void setListData(List<VendorData> listData) {
+    public void setListData(ArrayList<VendorData> listData) {
         this.listData = listData;
     }
 }

@@ -39,7 +39,7 @@ android:layout_margin="@dimen/Margin5dp"
                     android:contentDescription=""
                     android:scaleType="fitXY"
 
-                    android:background="@drawable/f"
+                    android:src="@drawable/f"
                     app:shapeAppearanceOverlay="@style/twoSideRoundedImageRect"
                     android:adjustViewBounds="true"/>
 

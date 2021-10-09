@@ -17,7 +17,7 @@
         android:layout_height="140sp"
         android:contentDescription=""
         android:scaleType="fitXY"
-        android:background="@drawable/zf"
+        android:src="@drawable/zf"
         app:shapeAppearanceOverlay="@style/RoundedImageRecttwo"
         android:adjustViewBounds="true"/>
 

@@ -5,6 +5,7 @@ package com.dbcorp.apkaaada.Adapter;
  */
  
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,7 @@ public class Offer extends RecyclerView.Adapter<Offer.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         VendorDetails data=list.get(position);
         Glide.with(mContext)
-                .load(OFFER_URL+data.getPhoto())
+                .load(OFFER_URL+data.getPhoto()).placeholder(R.drawable.logo)
                 .into(holder.shapeableImageView);
 
         holder.frameId.setOnClickListener(v->{

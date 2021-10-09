@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -28,6 +30,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.dbcorp.apkaaada.Adapter.DroupdownMenuAdapter;
 import com.dbcorp.apkaaada.Adapter.NearByShopAdapter;
 import com.dbcorp.apkaaada.Adapter.SearchProductAdapter;
 import com.dbcorp.apkaaada.Adapter.SliderAdaptercarouseList;
@@ -37,6 +40,7 @@ import com.dbcorp.apkaaada.database.SqliteDatabase;
 import com.dbcorp.apkaaada.helper.Util;
 import com.dbcorp.apkaaada.model.Carousel;
 import com.dbcorp.apkaaada.model.Carouseloffer;
+import com.dbcorp.apkaaada.model.DroupDownModel;
 import com.dbcorp.apkaaada.model.OTP;
 import com.dbcorp.apkaaada.model.SearchByProduct;
 import com.dbcorp.apkaaada.model.UserDetails;
@@ -46,6 +50,7 @@ import com.dbcorp.apkaaada.model.shopview.VendorService;
 import com.dbcorp.apkaaada.network.ApiService;
 import com.dbcorp.apkaaada.network.InternetConnection;
 import com.dbcorp.apkaaada.network.RestClient;
+import com.dbcorp.apkaaada.ui.auth.Home.HelpActivity;
 import com.dbcorp.apkaaada.ui.auth.fragments.product.shopview;
 import com.dbcorp.apkaaada.ui.auth.userservice.ChatBookingList;
 import com.google.android.material.button.MaterialButton;
@@ -53,9 +58,11 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -71,24 +78,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ServiceShop extends AppCompatActivity {
+public class ServiceShop extends AppCompatActivity implements DroupdownMenuAdapter.OnMeneuClickListnser{
 
-
+    ServiceShop listner;
     private Toolbar toolbar;
     Intent g;
 
     private Context mContext;
     AppCompatImageView likeDislike,tvStartOne,tvStartTwo,tvStartThree,tvStartFour,tvStartFive;
-
+    ArrayList <DroupDownModel> dropServicesList;
     MaterialTextView rateCount,rating;
     private UserDetails userDetails;
     private ArrayList<VendorService> servicesList;
     private RecyclerView serviceList;
     private VendorDetails vendorDetails;
+    private String serviceName="";
     private Intent getInent;
+    AppCompatTextView selected_service;
     private MaterialTextView tvShopName,shopDes,tvAbout,makeCall,chatNow,bookNow;
     private ServiceAdapter serviceAdapter;
     private ArrayList<Carouseloffer> listCarousel;
+
     SliderAdaptercarouseList sliderAdapter;
     private ViewPager viewPager;
     TabLayout indicator;
@@ -100,6 +110,7 @@ public class ServiceShop extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.service_shop_view_fragment);
         mContext=this;
+        listner=this;
         userDetails=new SqliteDatabase(this).getLogin();
         getInent = getIntent();
         vendorDetails = (VendorDetails) getInent.getSerializableExtra("MyData");
@@ -109,14 +120,17 @@ public class ServiceShop extends AppCompatActivity {
         toolbar.setTitle("Service Details");
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         g = getIntent();
         init();
+
 
     }
 
     private void init(){
         servicesList=new ArrayList<>();
+        dropServicesList=new ArrayList<>();
         tvShopName=findViewById(R.id.tvShopName);
 
         tvStartOne=findViewById(R.id.tvStartOne);
@@ -253,6 +267,7 @@ public class ServiceShop extends AppCompatActivity {
 
             Map<String, String> params = new HashMap<>();
             params.put("vendorId", vendorDetails.getUserId());
+            Log.e("vendor", vendorDetails.getUserId());
 
             RestClient.post().getServiceShop(userDetails.getSk(), ApiService.APP_DEVICE_ID,params).enqueue(new Callback<String>() {
                 @Override
@@ -271,8 +286,18 @@ public class ServiceShop extends AppCompatActivity {
                             servicesList = gson.fromJson(object.getJSONArray("serviceList").toString(), type);
                             serviceAdapter = new ServiceAdapter(servicesList,   mContext);
                             serviceList.setAdapter(serviceAdapter);
-                            tvShopName.setText(object.getJSONArray("shopDetails").getJSONObject(0).getString("name"));
-                            shopDes.setText(object.getJSONArray("shopDetails").getJSONObject(0).getString("about"));
+                            JSONArray jsonArray = object.getJSONArray("serviceList");
+                            for(int i=0;i<jsonArray.length();i++){
+                                JSONObject str=jsonArray.getJSONObject(i);
+                                DroupDownModel obj=new DroupDownModel();
+                                obj.setDescription(str.getString("name"));
+                                obj.setId(str.getString("services_id"));
+                                obj.setName(str.getString("name"));
+                                dropServicesList.add(obj);
+
+                            }
+                            //tvShopName.setText(object.getJSONArray("shopDetails").getJSONObject(0).getString("name"));
+                           // shopDes.setText(object.getJSONArray("shopDetails").getJSONObject(0).getString("about"));
                             shopMobile=object.getJSONArray("shopDetails").getJSONObject(0).getString("number");
 
                             Type pageViewer = new TypeToken<ArrayList<Carouseloffer>>() {
@@ -290,10 +315,11 @@ public class ServiceShop extends AppCompatActivity {
 
 
 
-                            rateCount.setText(object.getJSONObject("ratingCount").getString("rateCount"));
 
                             shopDes.setText(object.getJSONObject("vendorSetting").getString("description"));
                             tvShopName.setText(object.getJSONObject("vendorSetting").getString("shop_name"));
+                            rateCount.setText(object.getJSONObject("ratingCount").getString("rateCount"));
+
                             rating.setText("Rating : 5/"+object.getJSONObject("vendorSetting").getString("rating"));
                             setRating(object.getJSONObject("vendorSetting").getString("rating"));
 
@@ -320,6 +346,13 @@ public class ServiceShop extends AppCompatActivity {
             });
 
         }
+    }
+
+    @Override
+    public void onOptionClick(DroupDownModel liveTest) {
+        serviceName=liveTest.getName();
+        selected_service.setText(liveTest.getName());
+        Util.hideDropDown();
     }
 
 
@@ -395,6 +428,7 @@ public class ServiceShop extends AppCompatActivity {
         MaterialTextView tvClose=popupView.findViewById(R.id.tvClose);
         TextInputEditText edt_mobile =  popupView.findViewById(R.id.edit_mobile);
         TextInputEditText edit_email =  popupView.findViewById(R.id.edit_email_id);
+           selected_service =  popupView.findViewById(R.id.edit_service_name);
 
         TextInputEditText edit_house =  popupView.findViewById(R.id.edit_house);
         TextInputEditText edit_street =  popupView.findViewById(R.id.edit_street);
@@ -402,7 +436,10 @@ public class ServiceShop extends AppCompatActivity {
 
         MaterialTextView btnContinue =  popupView.findViewById(R.id.btnContinue);
 
+        selected_service.setOnClickListener(v->{
+            Util.showDropDown(dropServicesList,"Select Services",mContext,listner);
 
+        });
         tvClose.setOnClickListener(v->{
             popupWindow.dismiss();
         });
@@ -570,7 +607,7 @@ public class ServiceShop extends AppCompatActivity {
             params.put("pincode", pincode);
             params.put("house_address", house);
             params.put("vendor_id", vendorDetails.getUserId());
-
+            params.put("serviceName",serviceName);
             params.put("street_name", street);
             params.put("add_by", userDetails.getUserId());
             RestClient.post().addServiceShop(userDetails.getSk(), ApiService.APP_DEVICE_ID,params).enqueue(new Callback<String>() {

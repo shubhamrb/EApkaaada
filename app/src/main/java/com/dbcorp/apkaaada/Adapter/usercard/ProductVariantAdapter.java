@@ -48,7 +48,11 @@ public class ProductVariantAdapter extends RecyclerView.Adapter<ProductVariantAd
         int totalPrice=cartQuantity*productPrice;
         holder.tvPrice.setText("₹ "+totalPrice);
         holder.allOrderItem.setText(data.getName()+" | "+data.getValueName()+"|" +cartQuantity+"X"+productPrice);
+        holder.gstValue.setText(data.getGst_name());
 
+
+
+        \\pal
     }
 
     @Override
@@ -62,12 +66,21 @@ public class ProductVariantAdapter extends RecyclerView.Adapter<ProductVariantAd
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         MaterialTextView tvPrice,allOrderItem;
-
+        MaterialTextView gstPercentage,gstValue,grossAmount;
           MyViewHolder(View view) {
             super(view);
               tvPrice=view.findViewById(R.id.tvPrice);
+              gstValue=view.findViewById(R.id.gstValue);
+              grossAmount=view.findViewById(R.id.grossAmount);
+
+              gstPercentage=view.findViewById(R.id.gstPercentage);
               allOrderItem=view.findViewById(R.id.allOrderItem);
           }
+    }
+
+
+    void gstPercentagePrice(){
+
     }
 
 

@@ -5,8 +5,9 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:padding="@dimen/Margin5dp"
+
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@drawable/bottom_border">
      <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
 
@@ -40,8 +41,72 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+
+        android:weightSum="5"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:id="@+id/gstPercentage"
+            android:text="GST "
+
+            android:fontFamily="@font/montserrat"
+            android:textSize="@dimen/text_size_edit"
+            android:layout_weight="1"
+            android:layout_gravity="start|center"
+            android:gravity="start|center"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:id="@+id/gstValue"
+            android:text="10"
+            android:layout_gravity="end|center"
+            android:gravity="end|center"
+            android:fontFamily="@font/montserrat_b"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_edit"
+
+            android:layout_weight="4"
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+
+        android:weightSum="5"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+
+            android:text="Gross Amount  "
+
+            android:fontFamily="@font/montserrat"
+            android:textSize="@dimen/text_size_edit"
+            android:layout_weight="1"
+            android:layout_gravity="start|center"
+            android:gravity="start|center"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:id="@+id/grossAmount"
+            android:text="10"
+            android:layout_gravity="end|center"
+            android:gravity="end|center"
+            android:fontFamily="@font/montserrat_b"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_edit"
+
+            android:layout_weight="4"
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 

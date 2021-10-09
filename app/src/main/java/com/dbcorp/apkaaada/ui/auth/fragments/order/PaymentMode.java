@@ -1,4 +1,4 @@
-package com.dbcorp.apkaaada.ui.auth.fragments.order;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         package com.dbcorp.apkaaada.ui.auth.fragments.order;
 
 import android.content.Context;
 import android.content.Intent;
@@ -172,7 +172,7 @@ AppCompatImageView tvBack;
 
             params.put("u__id", userDetails.getUserId());
             params.put("pm__id", payMode);
-            params.put("tokens", tokensList.toString().replace("[","").replace("]","").replace(" ",""));
+            params.put("tokens", "1,5");
             params.put("i__ids", instructionList.toString().replace("[", "").replace("]", "").replace(" ",""));
             Log.e("message", params.toString());
 
@@ -185,14 +185,14 @@ AppCompatImageView tvBack;
                         Gson gson = new Gson();
 
                         JSONObject object = new JSONObject(response.body());
-                        Log.e("message", object.getString("message"));
+                        Log.e("message response", response.body());
 
 
                         if (object.getBoolean("status")) {
                             Util.show(mContext, object.getString("message"));
 
                             JSONObject orderDetails = object.getJSONObject("orderDetails");
-                        Intent mv = new Intent(PaymentMode.this, SuccessActivity.class);
+                             Intent mv = new Intent(PaymentMode.this, SuccessActivity.class);
                             Log.e("order_number", orderDetails.getString("order_number"));
                             mv.putExtra("order_number", orderDetails.getString("order_number"));
                             mv.putExtra("amount", orderDetails.getString("total"));
@@ -202,7 +202,7 @@ AppCompatImageView tvBack;
                             Util.show(mContext, object.getString("message"));
                         }
                     } catch (Exception e) {
-                        Util.show(mContext, e.getMessage());
+                        Util.show(mContext, "bshshs"+e.getMessage());
                     }
 //                    OTP obj = response.body();
                     // assert obj != null;

@@ -48,7 +48,7 @@ public class SliderAdaptercarouseList extends PagerAdapter {
         ImageView imageView = view.findViewById(R.id.imageView);
         Carouseloffer item = carouselList.get(position);
         Glide.with(context.getApplicationContext())
-                .load(VENDOR_SHOP_IMG_URL+item.getImage())
+                .load(VENDOR_SHOP_IMG_URL+item.getImage()).placeholder(R.drawable.logo)
                 .into(imageView);
         ViewPager viewPager = (ViewPager) container;
         viewPager.addView(view, 0);

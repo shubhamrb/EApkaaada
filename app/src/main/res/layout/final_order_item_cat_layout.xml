@@ -346,7 +346,7 @@ android:padding="@dimen/Margin5dp"
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:id="@+id/tvCouponPrice"
-                    android:text="100"
+                    android:text=""
 
                     android:layout_gravity="center|right"
                     android:gravity="center|right"
@@ -364,6 +364,7 @@ android:padding="@dimen/Margin5dp"
                 android:id="@+id/deliverCharge"
                 app:layout_constraintTop_toBottomOf="@+id/tvCoupon"
                 android:weightSum="5"
+                android:visibility="gone"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
@@ -381,7 +382,7 @@ android:padding="@dimen/Margin5dp"
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
 
-                    android:text="100"
+                    android:text=""
                     android:layout_gravity="right"
                     android:gravity="right"
                     android:layout_marginEnd="@dimen/Margin10dp"
@@ -426,7 +427,7 @@ android:padding="@dimen/Margin5dp"
 
                     android:layout_width="match_parent"
 
-                    android:text="100"
+                    android:text=" "
                     android:layout_gravity="right"
                     android:gravity="right"
                     android:layout_marginEnd="@dimen/Margin10dp"

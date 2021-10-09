@@ -32,6 +32,59 @@
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:weightSum="2"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/Margin5dp"
+        android:layout_height="wrap_content">
+        <com.google.android.material.button.MaterialButton
+android:id="@+id/order_noti_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Order Notification"
+            android:layout_marginRight="@dimen/ten"
+
+            android:textAllCaps="false"
+             android:textColor="@color/white"
+
+            android:textSize="@dimen/text_size_edit"
+            app:layout_constraintTop_toTopOf="@id/edit_password"
+            app:layout_constraintBottom_toBottomOf="@id/edit_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/ten" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/Margin5dp"
+        android:layout_height="wrap_content">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/daily_noti_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Daily Notification"
+            android:layout_marginRight="@dimen/ten"
+
+            android:textAllCaps="false"
+
+            android:textColor="@color/white"
+
+            android:textSize="@dimen/text_size_edit"
+            app:layout_constraintTop_toTopOf="@id/edit_password"
+            app:layout_constraintBottom_toBottomOf="@id/edit_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/ten" />
+
+
+    </LinearLayout>
+</LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/OfferlistItem"

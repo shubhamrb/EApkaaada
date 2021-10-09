@@ -30,7 +30,7 @@
             android:layout_height="130sp"
             android:contentDescription=""
             android:scaleType="fitXY"
-            android:background="@drawable/f"
+            android:src="@drawable/f"
             app:shapeAppearanceOverlay="@style/OneSideRoundedImageRect"
             android:adjustViewBounds="true"/>
 

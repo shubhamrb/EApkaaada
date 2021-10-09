@@ -324,28 +324,7 @@ public class ShopDetails extends AppCompatActivity implements SubToSubCatAdapter
         listItem.setHasFixedSize(true);
         //listItem.setLayoutManager(new GridLayoutManager(mContext, 3));
         listItem.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-//        listItem.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//
-//            @Override
-//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                View firstChild = listItem.getChildAt(0);
-//                int topY = 0;
-//                if (firstChild != null) {
-//                    topY = firstChild.getTop();
-//                }
-//
-//                int headerTopY = headerSpace.getTop();
-//                listSubCat.setY(Math.max(0, headerTopY + topY));
-//
-//                // Set the image to scroll half of the amount that of ListView
-//                headerView.setY(topY * 0.5f);
-//            }
-//        });
+
 
         //category list view
         listSubCat = findViewById(R.id.listCat);
@@ -431,8 +410,8 @@ public class ShopDetails extends AppCompatActivity implements SubToSubCatAdapter
             params.put("mastCatId", masterCatId);
             params.put("vendorId", vendorDetails.getUserId());
             params.put("userId", userDetails.getUserId());
-
-            Log.e("param", userDetails.getSk());
+            Log.e("userDetails", userDetails.toString());
+            Log.e("param", params.toString());
             RestClient.post().getProductDetails(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NotNull Call<String> call, Response<String> response) {

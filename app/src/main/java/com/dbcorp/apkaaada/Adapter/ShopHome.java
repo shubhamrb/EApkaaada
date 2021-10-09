@@ -29,6 +29,7 @@ import com.google.android.material.textview.MaterialTextView;
 import java.util.ArrayList;
 
 import static com.dbcorp.apkaaada.network.ApiService.VENDOR_IMG_URL;
+import static com.dbcorp.apkaaada.network.ApiService.VENDOR_SHOP_IMG_URL;
 
 public class ShopHome extends RecyclerView.Adapter<ShopHome.MyViewHolder> {
 
@@ -74,7 +75,7 @@ public class ShopHome extends RecyclerView.Adapter<ShopHome.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         VendorData data = list.get(position);
         Glide.with(mContext)
-                .load(VENDOR_IMG_URL+data.getPhoto())
+                .load(VENDOR_SHOP_IMG_URL+data.getPhoto()).placeholder(R.drawable.logo)
                 .into(holder.shapeableImageView);
         holder.tvName.setText(data.getShop_name());
         holder.tvDescription.setText(data.getDescription());

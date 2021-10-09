@@ -376,7 +376,7 @@ android:layout_gravity="center"
                         android:layout_height="wrap_content"
                         android:id="@+id/shopName"
                         android:fontFamily="@font/montserrat_b"
-                        android:padding="@dimen/Margin5dp"
+                        android:padding="@dimen/Margin10dp"
                         android:text=""
 
                         android:textSize="@dimen/text_size_edit" />
@@ -385,8 +385,9 @@ android:layout_gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 android:id="@+id/shopDes"
+                        android:padding="@dimen/Margin10dp"
                         android:fontFamily="@font/montserrat"
-                        android:padding="@dimen/Margin5dp"
+
                         android:text=""
                         android:alpha="0.7"
                         android:textSize="@dimen/text_size_edit" />

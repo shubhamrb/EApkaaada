@@ -204,7 +204,8 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
         tvMultiVenCharge.setText(String.valueOf(multiCharge));
         tvDeliveryCharge.setText(delivery_charge);
         tvAddTotalChargePrice.setText(String.valueOf(addChargePrice));
-        tvTotalChargePrice.setText(totalPriceAfterCoupon);
+        int t=Integer.parseInt(totalPriceAfterCoupon)- Integer.parseInt(currentCouponPrice);
+        tvTotalChargePrice.setText(String.valueOf(t));
 
 
         alertDialog = builder2.create();
@@ -465,8 +466,11 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
         popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.white_gredient_bg));
         popupWindow.showAtLocation(popupView, Gravity.TOP, 0, 0);
         ImageView closeImg=popupView.findViewById(R.id.closeImg);
+        AppCompatImageView tvClose=popupView.findViewById(R.id.tvClose);
         EditText search=popupView.findViewById(R.id.search);
+
         search.setVisibility(View.GONE);
+
         TextView tittleName=popupView.findViewById(R.id.tittleName);
         EditText inputSearch=popupView.findViewById(R.id.search);
         tittleName.setVisibility(View.VISIBLE);
@@ -481,8 +485,13 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
             popupWindow.dismiss();
 
         });
+        if(listCoupon.size()<=0){
+            Util.showDialogAlert("","No Coupon result found",mContext);
+        }
 
-
+        tvClose.setOnClickListener(v->{
+            popupWindow.dismiss();
+        });
 
         couponAdapter=new CouponAdapter(listCoupon,listner,mContext);
         listCountryData2.setAdapter(couponAdapter);

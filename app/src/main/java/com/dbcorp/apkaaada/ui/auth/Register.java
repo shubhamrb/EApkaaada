@@ -31,6 +31,7 @@ import com.dbcorp.apkaaada.network.RestClient;
 import com.dbcorp.apkaaada.ui.auth.Home.HomeActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 
 import org.json.JSONException;
@@ -48,13 +49,14 @@ public class Register extends AppCompatActivity {
 
     MaterialButton submitBtn;
     Context mContext;
-    TextInputEditText editMobile,edit_email,edit_name,edit_password;
+    TextInputLayout edit_password;
+    TextInputEditText editMobile,edit_email,edit_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regster);
-       getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         mContext=this;
         init();
@@ -89,7 +91,7 @@ submitBtn.setOnClickListener(v->{
         return;
     }
 
-    if(edit_password.getText().length()==0 ){
+    if(edit_password.getEditText().getText().length()==0 ){
         Util.show(mContext,"Please enter your password");
         return;
     }
@@ -106,7 +108,7 @@ submitBtn.setOnClickListener(v->{
     //1 . otp verify
     public void verifyOtp(){
         if (InternetConnection.checkConnection(mContext)) {
-
+            Util.showDialog("Please wait..",mContext);
             Map<String, String> params = new HashMap<>();
             params.put("number", editMobile.getText().toString());
 
@@ -117,9 +119,10 @@ submitBtn.setOnClickListener(v->{
                     OTP obj = response.body();
                     Log.e("editMobile", obj.getStatus().toString());
                     if(obj.getStatus()){
-
+                        Util.hideDialog();
                         otpWindow(obj.getTitle());
                     }else{
+                        Util.hideDialog();
                         Util.show(mContext,"wrong id password");
                     }
 
@@ -128,7 +131,7 @@ submitBtn.setOnClickListener(v->{
 
                 @Override
                 public void onFailure(Call<OTP> call, Throwable t) {
-
+                    Util.hideDialog();
                     try {
                         t.printStackTrace();
                     } catch (Exception e) {
@@ -181,20 +184,22 @@ submitBtn.setOnClickListener(v->{
     public void register(String otp){
         if (InternetConnection.checkConnection(mContext)) {
             Map<String, String> params = new HashMap<>();
+            Util.showDialog("Please wait..",mContext);
             params.put("otp", otp);
             params.put("number", editMobile.getText().toString());
             params.put("name", edit_name.getText().toString());
             params.put("email", edit_email.getText().toString());
-            params.put("password", edit_password.getText().toString());
+            params.put("password", edit_password.getEditText().getText().toString());
             Log.e("data", params.toString());
             RestClient.post().userRegister("1234",params).enqueue(new Callback<UserDetails>() {
                 @Override
                 public void onResponse(Call<UserDetails> call, Response<UserDetails> response) {
-
+                    Util.hideDialog();
                     UserDetails obj = response.body();
                     Log.e("data", obj.getMessage());
-
-                    startActivity(new Intent(mContext, Login.class));
+                    new SqliteDatabase(mContext).addLogin(obj);
+                    Intent intent = new Intent(mContext, HomeActivity.class);
+                    startActivity(intent);
                     finish();
 
 
@@ -202,7 +207,7 @@ submitBtn.setOnClickListener(v->{
 
                 @Override
                 public void onFailure(Call<UserDetails> call, Throwable t) {
-
+                    Util.hideDialog();
                     try {
                         t.printStackTrace();
                     } catch (Exception e) {

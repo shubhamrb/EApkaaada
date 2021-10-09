@@ -103,19 +103,28 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         });
 
         if (position == 0) {
+            holder.itemList.setHasFixedSize(true);
+            holder.itemList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+
             holder.tvText.setText("Top Offers");
             if(data.getOfferList()!=null) {
-                holder.clickView.setVisibility(View.GONE);
+                holder.clickView.setVisibility(View.VISIBLE);
                 offerAdapter = new Offer(data.getOfferList(), HomeAdapter.this::offerClickView, mContext);
                 holder.itemList.setAdapter(offerAdapter);
             }
         } else if (position == 1) {
+            holder.itemList.setHasFixedSize(true);
+            holder.itemList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+
             holder.tvText.setText("Top Ecommerce Category");
             if(data.getEcomlist()!=null) {
                 shopCategory = new ShopCategory("home",data.getEcomlist(), HomeAdapter.this::catServiceClick, mContext);
                 holder.itemList.setAdapter(shopCategory);
             }
         } else if (position == 2) {
+            holder.itemList.setHasFixedSize(true);
+            holder.itemList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+
             holder.tvText.setText("Top Services Category");
             if(data.getServiceList()!=null){
 
@@ -125,24 +134,32 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
 
         } else if (position == 3) {
+            holder.itemList.setHasFixedSize(true);
+            holder.itemList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
 
 
             if(data.getSliderImages()!=null) {
                 holder.clickView.setVisibility(View.GONE);
-                holder.tvText.setText("");
+                holder.tvText.setText("Top Deal");
                 sliderCategoryAdapter = new SliderCategoryAdapter(data.getSliderImages(), HomeAdapter.this::clickProductCategory, mContext);
                 holder.itemList.setAdapter(sliderCategoryAdapter);
             }
         }else if (position == 4) {
+            holder.itemList.setHasFixedSize(true);
+            holder.itemList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+
             holder.tvText.setText("Nearest  Shopes");
             if(data.getVendorData()!=null) {
                 shopHome = new ShopHome("home",data.getVendorData(), HomeAdapter.this::offerClick, mContext);
                 holder.itemList.setAdapter(shopHome);
             }
-        }else if (position == 5) {
-            holder.tvText.setText("Nearest  Ecom vendor ");
-            if(data.getServiceCatVendorList()!=null) {
-                shopCategoryVendor = new ShopCategoryVendor("home",data.getServiceCatVendorList(), HomeAdapter.this::clickShopCat, mContext);
+        }else if (position == 6) {
+            holder.itemList.setHasFixedSize(true);
+            holder.itemList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+
+            holder.tvText.setText("Nearest  E-commerce vendor ");
+            if(data.getEcomCatVendorList()!=null) {
+                shopCategoryVendor = new ShopCategoryVendor("home",data.getEcomCatVendorList(), HomeAdapter.this::clickShopCat, mContext);
                 holder.itemList.setAdapter(shopCategoryVendor);
             }
         }

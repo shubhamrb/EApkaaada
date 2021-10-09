@@ -173,14 +173,14 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
 
 
         requestCameraPermission();
-        getLocation();
+
 
         toolbar.setTitle("Dashboard");
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        loadFragment(new Home(), "HomeFragment");
+
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), getString(R.string.api_key), Locale.US);
         }
@@ -189,65 +189,6 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
     }
 
 
-    private void getLocation() {
-        if (InternetConnection.checkConnection(mContext)) {
-            Map<String, String> params = new HashMap<>();
-            params.put("cityId", userDetails.getUserId());
-
-
-            RestClient.post().getLocation(userDetails.getSk(), ApiService.APP_DEVICE_ID,params).enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(@NotNull Call<String> call, Response<String> response) {
-
-
-                    Gson gson = new Gson();
-                    JSONObject object = null;
-                    try {
-
-                        object = new JSONObject(response.body());
-                        Log.e("message", object.getString("message"));
-
-                        if (object.getBoolean("status")) {
-
-
-                            JSONArray jsonArray = object.getJSONArray("location");
-//                            Type type = new TypeToken<ArrayList<Coupon>>() {
-//                            }.getType();
-//                          //  listData = gson.fromJson(object.getJSONArray("listData").toString(), type);
-                            for (int i = 0; i < jsonArray.length(); i++) {
-
-                                JSONObject str=jsonArray.getJSONObject(i);
-                                DroupDownModel obj=new DroupDownModel();
-                                obj.setId(str.getString("city_id"));
-                                obj.setName(str.getString("city_id"));
-                                obj.setDescription(str.getString("name"));
-                                listData.add(obj);
-                            }
-
-                        } else {
-                            Util.show(mContext, "something is wrong");
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<String> call, @NotNull Throwable t) {
-
-                    try {
-                        t.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            });
-
-        }
-    }
     private void requestCameraPermission() {
         Dexter.withActivity(this)
                 .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -259,6 +200,7 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
                             if(address.get(UserSharedPreference.CurrentLongitude)!=null && tvAddress.getText().length()>0){
 
                                 tvAddress.setText(address.get(UserSharedPreference.CurrentAddress));
+                                loadFragment(new Home(), "HomeFragment");
                             }else{
                                 Intent mv=new Intent(HomeActivity.this, SearchAddress.class);
                                 mv.putExtra("type","current");
