@@ -27,7 +27,6 @@ import com.dbcorp.apkaaada.R;
 import com.dbcorp.apkaaada.database.UserSharedPreference;
 import com.dbcorp.apkaaada.helper.AppUtils;
 import com.dbcorp.apkaaada.ui.auth.Home.HomeActivity;
-import com.dbcorp.apkaaada.ui.auth.fragments.AutoCompleteDemo;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
@@ -58,17 +57,17 @@ import java.util.Locale;
 
 public class SearchAddress extends AppCompatActivity implements OnMapReadyCallback,
         LocationListener, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener {
     private LatLng mCenterLatLong;
     private GoogleMap mMap;
     int AUTOCOMPLETE_REQUEST_CODE = 1;
-    String TAG=getClass().getSimpleName();
+    String TAG = getClass().getSimpleName();
     TextView getPlace;
     protected String mAddressOutput;
     protected String mAreaOutput;
     protected String mCityOutput;
     protected String mStateOutput;
-    private AppCompatTextView shortName,compAddress;
+    private AppCompatTextView shortName, compAddress;
     private AddressResultReceiver mResultReceiver;
     Location mLastLocation;
     Marker mCurrLocationMarker;
@@ -78,23 +77,23 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
     Context mContext;
     UserSharedPreference sessionUser;
     TextView mLocationMarkerText;
-    String latitude,longitude,addressName,localAddress;
+    String latitude, longitude, addressName, localAddress;
     ProgressBar my_progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_location_layout);
-        mContext=this;
-        sessionUser=new UserSharedPreference(this);
+        mContext = this;
+        sessionUser = new UserSharedPreference(this);
         mResultReceiver = new AddressResultReceiver(new Handler());
         mLocationMarkerText = (TextView) findViewById(R.id.locationMarkertext);
-        searchLocation=findViewById(R.id.searchLocation);
-        shortName =findViewById(R.id.shortName);
-        my_progressBar=findViewById(R.id.my_progressBar);
+        searchLocation = findViewById(R.id.searchLocation);
+        shortName = findViewById(R.id.shortName);
+        my_progressBar = findViewById(R.id.my_progressBar);
         compAddress = findViewById(R.id.compAddress);
         String apiKey = getString(R.string.api_key);
-        if(apiKey.isEmpty()){
+        if (apiKey.isEmpty()) {
 
             return;
         }
@@ -108,7 +107,7 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        searchLocation.setOnClickListener(v->{
+        searchLocation.setOnClickListener(v -> {
             List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS_COMPONENTS, Place.Field.NAME);
 
 // Start the autocomplete intent.
@@ -153,7 +152,7 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
 
 
                             double longitude1 = mCenterLatLong.longitude;
-                            double latitude1 =mCenterLatLong.latitude;
+                            double latitude1 = mCenterLatLong.latitude;
 
 
                             Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
@@ -168,21 +167,21 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
                                     String subLocality = listAddresses.get(0).getSubLocality();
 
                                     //String addresstxt=listAddresses.get(0).getAddressLine(0);
-                                    String log= String.valueOf(listAddresses.get(0).getAddressLine(0));
+                                    String log = String.valueOf(listAddresses.get(0).getAddressLine(0));
                                     // Toast.makeText(Takeattendnace.this,log,Toast.LENGTH_LONG).show();
 
-                                    Log.e("currentplacename",listAddresses.get(0).getLocality());
-                                   // current.setText(String.valueOf(listAddresses.get(0).getAddressLine(0)));
-                                    latitude= String.valueOf(mCenterLatLong.latitude);
-                                    longitude= String.valueOf(mCenterLatLong.longitude);
-                                    addressName=listAddresses.get(0).getAddressLine(0);
-                                    localAddress=listAddresses.get(0).getLocality();
+                                    Log.e("currentplacename", listAddresses.get(0).getLocality());
+                                    // current.setText(String.valueOf(listAddresses.get(0).getAddressLine(0)));
+                                    latitude = String.valueOf(mCenterLatLong.latitude);
+                                    longitude = String.valueOf(mCenterLatLong.longitude);
+                                    addressName = listAddresses.get(0).getAddressLine(0);
+                                    localAddress = listAddresses.get(0).getLocality();
                                     shortName.setText(listAddresses.get(0).getLocality());
                                     compAddress.setText(listAddresses.get(0).getAddressLine(0));
-                                    mLocationMarkerText.setText(listAddresses.get(0).getAddressLine(0)+"\n Lat : " + mCenterLatLong.latitude + "," + "Long : " + mCenterLatLong.longitude);
+                                    mLocationMarkerText.setText(listAddresses.get(0).getAddressLine(0) + "\n Lat : " + mCenterLatLong.latitude + "," + "Long : " + mCenterLatLong.longitude);
                                     my_progressBar.setVisibility(View.GONE);
 
-                                    sessionUser.setAddress(listAddresses.get(0).getAddressLine(0),longitude,latitude);
+                                    sessionUser.setAddress(listAddresses.get(0).getAddressLine(0), longitude, latitude);
 
                                 }
                             } catch (IOException e) {
@@ -210,13 +209,13 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
                 }
 
             }
-        }
-        else {
+        } else {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
 
     }
+
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -224,7 +223,6 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
                 .addApi(LocationServices.API).build();
         mGoogleApiClient.connect();
     }
-
 
 
     class AddressResultReceiver extends ResultReceiver {
@@ -251,28 +249,27 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
             // Show a toast message if an address was found.
             if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
                 //  showToast(getString(R.string.address_found));
-
-
             }
-
 
         }
 
     }
+
     protected void displayAddressOutput() {
         //  mLocationAddressTextView.setText(mAddressOutput);
         try {
-            if (mAreaOutput != null){
+            if (mAreaOutput != null) {
 
             }
-                // mLocationText.setText(mAreaOutput+ "");
+            // mLocationText.setText(mAreaOutput+ "");
 
-                //mLocationAddress.setText(mAddressOutput);
+            //mLocationAddress.setText(mAddressOutput);
             //mLocationText.setText(mAreaOutput);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @Override
     public void onConnected(Bundle bundle) {
 
@@ -290,7 +287,6 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
@@ -323,6 +319,7 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
+
     public void searchLocationName(View view) {
         String apiKey = getString(R.string.api_key);
         List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
@@ -333,7 +330,7 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
                 .build(this);
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
 
-        if(apiKey.isEmpty()){
+        if (apiKey.isEmpty()) {
 
             return;
         }
@@ -344,6 +341,7 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
         }
         PlacesClient placesClient = Places.createClient(this);
     }
+
     public void searchLocation(View view) {
 //        EditText locationSearch = (EditText) findViewById(R.id.editText);
 //        String location = locationSearch.getText().toString();
@@ -353,7 +351,6 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
 //            Geocoder geocoder = new Geocoder(this);
 //            try {
 //                addressList = geocoder.getFromLocationName(location, 1);
-//
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }
@@ -362,34 +359,26 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
 //            mMap.addMarker(new MarkerOptions().position(latLng).title(location));
 //            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 
-
-//
 //        if (getIntent().hasExtra("helpForm")) {
-//
 //
 //            Intent intent=new Intent(mContext,DashboardActivity.class);
 //            intent.putExtra("helpForm", true);
 //            finish();
 //            startActivity(intent);
-//
 //        }
 //        if (getIntent().hasExtra("nearest")) {
-//
 //            Intent intent=new Intent(mContext,DashboardActivity.class);
 //            intent.putExtra("nearest", true);
 //            finish();
 //            startActivity(intent);
-//
 //        }
-
-        //Toast.makeText(getApplicationContext(),""+latitude+""+longitude+""+addressName+""+localAddress, Toast.LENGTH_LONG).show();
-        Intent mv=new Intent(SearchAddress.this, HomeActivity.class);
-        mv.putExtra("type","current");
+        Toast.makeText(getApplicationContext(), "" + latitude + "" + longitude + "" + addressName + "" + localAddress, Toast.LENGTH_LONG).show();
+        Intent mv = new Intent(SearchAddress.this, HomeActivity.class);
+        mv.putExtra("type", "current");
         startActivity(mv);
         finish();
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -398,7 +387,7 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
-                Log.e("Place: " , place.toString());
+                Log.e("Place: ", place.toString());
                 mLocationMarkerText.setText(place.getName());
 
                 String location = place.getName();
@@ -413,27 +402,25 @@ public class SearchAddress extends AppCompatActivity implements OnMapReadyCallba
                         e.printStackTrace();
                     }
 
-                    if(addressList.size()>0){
+                    if (addressList.size() > 0) {
                         Address address = addressList.get(0);
                         LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                         mMap.addMarker(new MarkerOptions().position(latLng).title(location));
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-
-                    }else{
+                    } else {
                         final LatLng lotlonaddress = place.getLatLng();
                         double ll = lotlonaddress.latitude;
                         double lo = lotlonaddress.longitude;
-                        Log.e("latitudebgttt: " , String.valueOf(lotlonaddress.latitude));
+                        Log.e("latitudebgttt: ", String.valueOf(lotlonaddress.latitude));
 
-                        latitude=String.valueOf(lotlonaddress.latitude);
-                        longitude=String.valueOf(lotlonaddress.longitude);
+                        latitude = String.valueOf(lotlonaddress.latitude);
+                        longitude = String.valueOf(lotlonaddress.longitude);
                         shortName.setText(place.getName());
                         compAddress.setText(place.getName());
-                        sessionUser.setAddress(place.getName(),longitude,latitude);
+                        sessionUser.setAddress(place.getName(), longitude, latitude);
 
                         my_progressBar.setVisibility(View.GONE);
                     }
-
 
                 }
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {

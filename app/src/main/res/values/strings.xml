@@ -61,8 +61,8 @@ your email examplemail@gmail.com</string>
         <item>@string/help</item>
         <item>@string/helplist</item>
         <item>Terms and Condition</item>
-
         <item>@string/privacy</item>
+        <item>@string/aboutUs</item>
     </string-array>
     <string name="home">Home</string>
     <string name="helplist">Help List</string>
@@ -74,6 +74,7 @@ your email examplemail@gmail.com</string>
     <string name="wishlist">My Wishlist</string>
     <string name="help">Help</string>
     <string name="privacy">Privacy Policy</string>
+    <string name="aboutUs">About Us</string>
     <string name="offer">offer</string>
     <string name="coupons">coupons</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>

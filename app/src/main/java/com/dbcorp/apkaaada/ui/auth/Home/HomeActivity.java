@@ -1,22 +1,5 @@
 package com.dbcorp.apkaaada.ui.auth.Home;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -29,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -38,12 +20,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dbcorp.apkaaada.Adapter.DroupdownMenuAdapter;
-import com.dbcorp.apkaaada.Adapter.HomeAdapter;
 import com.dbcorp.apkaaada.Adapter.MenuListAdapter;
-import com.dbcorp.apkaaada.Adapter.NearByShopAdapter;
 import com.dbcorp.apkaaada.Adapter.usercard.UserAddressAdapter;
 import com.dbcorp.apkaaada.BuildConfig;
 import com.dbcorp.apkaaada.R;
@@ -52,35 +46,25 @@ import com.dbcorp.apkaaada.database.UserSharedPreference;
 import com.dbcorp.apkaaada.helper.Util;
 import com.dbcorp.apkaaada.model.DroupDownModel;
 import com.dbcorp.apkaaada.model.UserDetails;
-import com.dbcorp.apkaaada.model.VendorDetails;
-import com.dbcorp.apkaaada.model.card.Coupon;
 import com.dbcorp.apkaaada.model.card.UserAddress;
-import com.dbcorp.apkaaada.model.home.HomeData;
-import com.dbcorp.apkaaada.model.home.HomeUser;
+import com.dbcorp.apkaaada.model.home.Category;
 import com.dbcorp.apkaaada.network.ApiService;
 import com.dbcorp.apkaaada.network.InternetConnection;
 import com.dbcorp.apkaaada.network.RestClient;
 import com.dbcorp.apkaaada.ui.auth.Login;
 import com.dbcorp.apkaaada.ui.auth.Offer.ViewOffer;
+import com.dbcorp.apkaaada.ui.auth.WebUi.AboutUs;
 import com.dbcorp.apkaaada.ui.auth.WebUi.PrivacyPolicy;
 import com.dbcorp.apkaaada.ui.auth.WebUi.TermsCondition;
-import com.dbcorp.apkaaada.ui.auth.fragments.AutoCompleteDemo;
 import com.dbcorp.apkaaada.ui.auth.fragments.Home;
-import com.dbcorp.apkaaada.ui.auth.fragments.ServiceShop;
-import com.dbcorp.apkaaada.ui.auth.fragments.SetAddressActivity;
 import com.dbcorp.apkaaada.ui.auth.fragments.account.account;
-
 import com.dbcorp.apkaaada.ui.auth.fragments.location.maps.SearchAddress;
 import com.dbcorp.apkaaada.ui.auth.fragments.nearby.nearbycat;
 import com.dbcorp.apkaaada.ui.auth.fragments.order.ActivityOrder;
-import com.dbcorp.apkaaada.ui.auth.fragments.order.InvoiceActivityOrder;
-import com.dbcorp.apkaaada.ui.auth.fragments.order.myorder.ActivityOrderList;
 import com.dbcorp.apkaaada.ui.auth.fragments.order.myorder.MyOrder;
 import com.dbcorp.apkaaada.ui.auth.fragments.product.UserSearchActivity;
-import com.dbcorp.apkaaada.ui.auth.fragments.product.VarriantActivity;
-import com.dbcorp.apkaaada.ui.auth.fragments.shop.CustomActivity;
+import com.dbcorp.apkaaada.ui.auth.fragments.shop.nearbyShop;
 import com.dbcorp.apkaaada.ui.auth.searchbyslider.MyhelpList;
-import com.dbcorp.apkaaada.ui.auth.searchbyslider.SliderByWeb;
 import com.dbcorp.apkaaada.ui.auth.userservice.ChatBookingList;
 import com.dbcorp.apkaaada.ui.auth.wishlist.WishList;
 import com.google.android.gms.common.api.Status;
@@ -90,15 +74,12 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -107,7 +88,6 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -124,7 +104,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity extends AppCompatActivity implements MenuListAdapter.OnMeneuClickListnser, DroupdownMenuAdapter.OnMeneuClickListnser,UserAddressAdapter.OnClickListener {
+public class HomeActivity extends AppCompatActivity implements MenuListAdapter.OnMeneuClickListnser, DroupdownMenuAdapter.OnMeneuClickListnser, UserAddressAdapter.OnClickListener {
 
     private FrameLayout frameLayout;
     private Toolbar toolbar;
@@ -145,7 +125,7 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
     MenuListAdapter menuListAdapter;
 
     UserDetails userDetails;
-    MaterialTextView   tvCityName,tvSearch,tvAddress,tvName,tvMobile;
+    MaterialTextView tvCityName, tvSearch, tvAddress, tvName, tvMobile;
 
     ArrayList<DroupDownModel> listData;
     UserSharedPreference userSharedPreference;
@@ -154,26 +134,26 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
 
     // Set the fields to specify which types of place data to
     // return after the user has made a selection.
-    List<Place.Field> fields ;
+    List<Place.Field> fields;
     HashMap<String, String> address;
-    AppCompatImageView tvNoti,offerClick,tvWishList;
-
+    AppCompatImageView tvNoti, offerClick, tvWishList;
+    String fragmentToDisplay;
     ShapeableImageView locred;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        userSharedPreference=new UserSharedPreference(this);
-        address=userSharedPreference.getAddress();
+
+        userSharedPreference = new UserSharedPreference(this);
+        address = userSharedPreference.getAddress();
         userDetails = new SqliteDatabase(this).getLogin();
         mContext = this;
-        listner=this;
+        listner = this;
         init();
         tvAddress.setText(address.get(UserSharedPreference.CurrentAddress));
 
-
         requestCameraPermission();
-
 
         toolbar.setTitle("Dashboard");
         drawer = findViewById(R.id.drawer_layout);
@@ -188,7 +168,6 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
 
     }
 
-
     private void requestCameraPermission() {
         Dexter.withActivity(this)
                 .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -197,17 +176,35 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted()) {
 
-                            if(address.get(UserSharedPreference.CurrentLongitude)!=null && tvAddress.getText().length()>0){
+                            if (address.get(UserSharedPreference.CurrentLongitude) != null && tvAddress.getText().length() > 0) {
 
                                 tvAddress.setText(address.get(UserSharedPreference.CurrentAddress));
-                                loadFragment(new Home(), "HomeFragment");
-                            }else{
-                                Intent mv=new Intent(HomeActivity.this, SearchAddress.class);
-                                mv.putExtra("type","current");
+
+                                Intent intent = getIntent();
+
+                                if (intent.hasExtra("fragmentToDisplay")) {
+                                    fragmentToDisplay = getIntent().getStringExtra("fragmentToDisplay");
+                                    if (fragmentToDisplay.equalsIgnoreCase("nearShop")) {
+                                        Log.e("Inside", fragmentToDisplay);
+
+                                        Category category = (Category) getIntent().getSerializableExtra("catgeory");
+                                        Log.e("category 1", category.getCategoryId());
+                                        nearbyShop categoryObj = nearbyShop.getInstance(category);
+                                        ((HomeActivity) Objects.requireNonNull(mContext)).loadFragment(categoryObj, "");
+                                    }
+
+
+                                } else {
+                                    // Do something else
+                                    loadFragment(new Home(), "HomeFragment");
+                                }
+
+                            } else {
+                                Intent mv = new Intent(HomeActivity.this, SearchAddress.class);
+                                mv.putExtra("type", "current");
                                 startActivity(mv);
                                 finish();
                             }
-
 
 
                         } else if (report.isAnyPermissionPermanentlyDenied()) {
@@ -230,9 +227,9 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
     }
 
     private void showPermissionsAlert() {
-        AlertDialog.Builder builder = new  AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
-        alertDialog=builder.create();
+        alertDialog = builder.create();
         alertDialog.show();
         builder.setTitle("Permissions required!")
                 .setMessage("Camera needs few permissions to work properly. Grant them in settings.")
@@ -255,30 +252,29 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
     }
 
     private void init() {
-        userAddressesList=new ArrayList<>();
-        listData=new ArrayList<>();
+        userAddressesList = new ArrayList<>();
+        listData = new ArrayList<>();
         llRoot = findViewById(R.id.llRoot);
-        tvCityName=findViewById(R.id.tvCityName);
+        tvCityName = findViewById(R.id.tvCityName);
         logoutBtn = findViewById(R.id.btnLogout);
         navView = findViewById(R.id.nav_view);
-        tvAddress=findViewById(R.id.tvAddress);
-        locred=findViewById(R.id.locred);
-        offerClick=findViewById(R.id.offerClick);
-        tvSearch=findViewById(R.id.tvSearch);
-        tvMobile=findViewById(R.id.tvMobile);
-        tvName=findViewById(R.id.tvName);
-        tvWishList=findViewById(R.id.tvWishList);
-        tvNoti=findViewById(R.id.tvNoti);
+        tvAddress = findViewById(R.id.tvAddress);
+        locred = findViewById(R.id.locred);
+        offerClick = findViewById(R.id.offerClick);
+        tvSearch = findViewById(R.id.tvSearch);
+        tvMobile = findViewById(R.id.tvMobile);
+        tvName = findViewById(R.id.tvName);
+        tvWishList = findViewById(R.id.tvWishList);
+        tvNoti = findViewById(R.id.tvNoti);
         tvName.setText(userDetails.getName());
         tvMobile.setText(userDetails.getNumber());
 
-        tvSearch.setOnClickListener(v->{
+        tvSearch.setOnClickListener(v -> {
             Intent mv = new Intent(mContext, UserSearchActivity.class);
             mv.putExtra("type", "no");
-           mv.putExtra("keyWord", "");
-           // mv.putExtra("vendor_id", vendorDetails.getUserId());
+            mv.putExtra("keyWord", "");
+            // mv.putExtra("vendor_id", vendorDetails.getUserId());
             startActivity(mv);
-
         });
         logoutBtn.setOnClickListener(v -> {
             Logout();
@@ -308,15 +304,15 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
             return true;
 
         });
-        tvNoti.setOnClickListener(v->{
+        tvNoti.setOnClickListener(v -> {
             Intent wishListMv = new Intent(HomeActivity.this, NotificationActivity.class);
             startActivity(wishListMv);
         });
-        tvWishList.setOnClickListener(v->{
+        tvWishList.setOnClickListener(v -> {
             Intent wishListMv = new Intent(HomeActivity.this, WishList.class);
             startActivity(wishListMv);
         });
-        offerClick.setOnClickListener(v->{
+        offerClick.setOnClickListener(v -> {
             Intent offer = new Intent(HomeActivity.this, ViewOffer.class);
             startActivity(offer);
         });
@@ -356,16 +352,16 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
         toggle.syncState();
         setClick();
         getAddress();
-        tvAddress.setOnClickListener(v->{
-            Intent mv=new Intent(HomeActivity.this, SearchAddress.class);
-            mv.putExtra("type","current");
+        tvAddress.setOnClickListener(v -> {
+            Intent mv = new Intent(HomeActivity.this, SearchAddress.class);
+            mv.putExtra("type", "current");
             startActivity(mv);
             finish();
         });
 
-        locred.setOnClickListener(v->{
-            Intent mv=new Intent(HomeActivity.this, SearchAddress.class);
-            mv.putExtra("type","current");
+        locred.setOnClickListener(v -> {
+            Intent mv = new Intent(HomeActivity.this, SearchAddress.class);
+            mv.putExtra("type", "current");
             startActivity(mv);
             finish();
         });
@@ -412,16 +408,16 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private  void UpdateNotification(){
+    private void UpdateNotification() {
         if (InternetConnection.checkConnection(mContext)) {
-         //   Util.showDialog("Please wait..",mContext);
+            //   Util.showDialog("Please wait..",mContext);
             Map<String, String> params = new HashMap<>();
             params.put("user_id", userDetails.getUserId());
             params.put("notification_token", token);
 
 
-            Log.e("vendor_id",params.toString());
-            RestClient.post().updateNotification(ApiService.APP_DEVICE_ID,userDetails.getSk(),params).enqueue(new Callback<String>() {
+            Log.e("vendor_id", params.toString());
+            RestClient.post().updateNotification(ApiService.APP_DEVICE_ID, userDetails.getSk(), params).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NotNull Call<String> call, Response<String> response) {
                     Gson gson = new Gson();
@@ -429,21 +425,21 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
                     try {
 
                         object = new JSONObject(response.body());
-                        Log.e("message",object.getString("message"));
+                        Log.e("message", object.getString("message"));
 
                         if (object.getBoolean("status")) {
 
                             //Util.show(mContext,"Successfully updated your setting data");
 
 
-                        //    Util.hideDialog();
+                            //    Util.hideDialog();
                         } else {
-                       //     Util.hideDialog();
+                            //     Util.hideDialog();
                             Util.show(mContext, "something is wrong");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
-                      //  Util.hideDialog();
+                        //  Util.hideDialog();
 
                     }
 
@@ -458,14 +454,15 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                 //   Util.hideDialog();
+                    //   Util.hideDialog();
                 }
             });
 
         }
     }
-    private  void setClick(){
-        tvCityName.setOnClickListener(v->{
+
+    private void setClick() {
+        tvCityName.setOnClickListener(v -> {
 
         });
     }
@@ -504,7 +501,7 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
 
     @Override
     public void onOptionClick(String liveTest, int pos) {
-        Util.show(mContext,""+pos);
+//        Util.show(mContext,""+pos);
         switch (pos) {
             case 1:
                 Intent mv = new Intent(HomeActivity.this, ActivityOrder.class);
@@ -527,7 +524,7 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
                 startActivity(mv2);
                 break;
             case 6:
-                Intent mv3= new Intent(HomeActivity.this, ChatBookingList.class);
+                Intent mv3 = new Intent(HomeActivity.this, ChatBookingList.class);
                 startActivity(mv3);
                 break;
             case 8:
@@ -536,11 +533,18 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
                 break;
             case 9:
                 Intent termC = new Intent(HomeActivity.this, TermsCondition.class);
+                termC.putExtra("pageType", "3");
                 startActivity(termC);
                 break;
             case 10:
                 Intent intent = new Intent(mContext, PrivacyPolicy.class);
+                intent.putExtra("pageType", "2");
                 startActivity(intent);
+                break;
+            case 11:
+                Intent intentAbout = new Intent(mContext, AboutUs.class);
+                intentAbout.putExtra("pageType", "1");
+                startActivity(intentAbout);
                 break;
             case 2:
                 drawer.closeDrawers();
@@ -551,7 +555,6 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
         }
 
     }
-
 
     @SuppressLint("SetTextI18n")
     public void openAddress() {
@@ -569,13 +572,13 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
         popupWindow = new PopupWindow(popupView, width, height, focusable);
         popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.white_gredient_bg));
         popupWindow.showAtLocation(popupView, Gravity.TOP, 0, 0);
-        ImageView closeImg=popupView.findViewById(R.id.closeImg);
-        EditText search=popupView.findViewById(R.id.search);
-        MaterialTextView tvChoose=popupView.findViewById(R.id.tvChoose);
+        ImageView closeImg = popupView.findViewById(R.id.closeImg);
+        EditText search = popupView.findViewById(R.id.search);
+        MaterialTextView tvChoose = popupView.findViewById(R.id.tvChoose);
         search.setVisibility(View.GONE);
-        LinearLayoutCompat addressLayout=popupView.findViewById(R.id.addressLayout);
-        TextView tittleName=popupView.findViewById(R.id.tittleName);
-        EditText inputSearch=popupView.findViewById(R.id.search);
+        LinearLayoutCompat addressLayout = popupView.findViewById(R.id.addressLayout);
+        TextView tittleName = popupView.findViewById(R.id.tittleName);
+        EditText inputSearch = popupView.findViewById(R.id.search);
         tittleName.setVisibility(View.VISIBLE);
         tittleName.setText("Select Address");
         RecyclerView listCountryData2 = popupView.findViewById(R.id.listView);
@@ -589,7 +592,7 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
             popupWindow.dismiss();
         });
 
-        userAddressAdapter=new UserAddressAdapter(userAddressesList,listner,mContext);
+        userAddressAdapter = new UserAddressAdapter(userAddressesList, listner, mContext);
         listCountryData2.setAdapter(userAddressAdapter);
 
 
@@ -621,10 +624,11 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
 
 
                         if (object.getBoolean("status")) {
-                           // Util.show(mContext,object.getString("message"));
-                            getAddress();;
-                        }else{
-                            Util.show(mContext,object.getString("message"));
+                            // Util.show(mContext,object.getString("message"));
+                            getAddress();
+                            ;
+                        } else {
+                            Util.show(mContext, object.getString("message"));
                         }
                     } catch (Exception ignored) {
 
@@ -650,7 +654,6 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
 
     }
 
-
     private void getAddress() {
         if (InternetConnection.checkConnection(mContext)) {
             Map<String, String> params = new HashMap<>();
@@ -666,12 +669,12 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
                         if (object.getBoolean("status")) {
 
                             //tvAddress.setText(object.getJSONObject("userAddress").getString("address"));
-                             Type productType = new TypeToken<ArrayList<UserAddress>>() {
+                            Type productType = new TypeToken<ArrayList<UserAddress>>() {
                             }.getType();
-                            userAddressesList=gson.fromJson(object.getJSONArray("location").toString(), productType);
+                            userAddressesList = gson.fromJson(object.getJSONArray("location").toString(), productType);
 
-                        }else{
-                            Util.show(mContext,object.getString("message"));
+                        } else {
+                            Util.show(mContext, object.getString("message"));
                         }
                     } catch (Exception ignored) {
 

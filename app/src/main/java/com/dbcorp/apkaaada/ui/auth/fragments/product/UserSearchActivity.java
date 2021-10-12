@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -44,6 +45,11 @@ import com.dbcorp.apkaaada.model.shopview.Product;
 import com.dbcorp.apkaaada.network.ApiService;
 import com.dbcorp.apkaaada.network.InternetConnection;
 import com.dbcorp.apkaaada.network.RestClient;
+import com.dbcorp.apkaaada.ui.auth.Home.HomeActivity;
+import com.dbcorp.apkaaada.ui.auth.fragments.Home;
+import com.dbcorp.apkaaada.ui.auth.fragments.ServiceShop;
+import com.dbcorp.apkaaada.ui.auth.fragments.ShopDetails;
+import com.dbcorp.apkaaada.ui.auth.fragments.shop.nearbyShop;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.Gson;
@@ -100,7 +106,6 @@ public class UserSearchActivity extends AppCompatActivity implements AutoSearchA
     LinearLayoutCompat processBar;
     ShopCategory shopCategory;
     MaterialTextView tvEcomList,tvserviceList,tvServiceCat,tvEcompCat;
-
     UserSharedPreference sessionUser;
     AutoCompleteTextView edtSearch;
     String typeSearchPage="";
@@ -190,13 +195,8 @@ this.listner=this;
                 }else if(text.length()==0){
                     getSearch();
                 }
-
-                
                 autoSearchAdapter.getFilter().filter(cs);
                 autoSearchAdapter.notifyDataSetChanged();
-
-
-
 
             }
 
@@ -297,14 +297,10 @@ this.listner=this;
 
         getCardCount();
 
-
-
-
     }
 
     private  void  getSearch(){
         if(edit_name.getText().length()==0){
-
             autoSearchList.setVisibility(View.GONE);
         }
 
@@ -347,22 +343,6 @@ this.listner=this;
                                 searchProduct=new SearchProductAdapter("product",searchByProducts,listner,mContext);
                                 listProduct.setAdapter(searchProduct);
                           }
-//                            else if(typeView.equalsIgnoreCase("Shop")){
-//                                Type productList = new TypeToken<ArrayList<SearchByProduct>>() {
-//                                }.getType();
-//                                searchByProducts = gson.fromJson(object.getJSONArray("vendorList").toString(), productList);
-//                                filterSearchByProducts= gson.fromJson(object.getJSONArray("vendorList").toString(), productList);
-//                                searchProduct=new SearchProductAdapter("Shop",searchByProducts,listner,mContext);
-//                                listProduct.setAdapter(searchProduct);
-//                            }else if(typeView.equalsIgnoreCase("Category")){
-//                                Type productList = new TypeToken<ArrayList<SearchByProduct>>() {
-//                                }.getType();
-//                                searchByProducts = gson.fromJson(object.getJSONArray("categoryList").toString(), productList);
-//                                filterSearchByProducts= gson.fromJson(object.getJSONArray("categoryList").toString(), productList);
-//                                searchProduct=new SearchProductAdapter("Category",searchByProducts,listner,mContext);
-//                                listProduct.setAdapter(searchProduct);
-//                            }
-
                         } else {
                             Util.show(mContext, object.getString("message"));
                         }
@@ -879,7 +859,6 @@ this.listner=this;
             params.put("latitude",address.get(UserSharedPreference.CurrentLatitude));
             params.put("longitude",address.get(UserSharedPreference.CurrentLongitude));
 
-
             Log.e("bfbv",params.toString());
             RestClient.post().searchProduct(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
                 @Override
@@ -938,12 +917,35 @@ Log.e("lisdataa",objectList.toString());
 
     @Override
     public void catServiceClick(Category liveTest, int pos, String type) {
-
+        if(liveTest.getCategoryId().equalsIgnoreCase("29")){
+           // onMenuListClicklistener.clickService(liveTest,pos);
+        }else{
+            Log.e("liveTest   ", liveTest.getCategoryId());
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            intent.putExtra("fragmentToDisplay", "nearShop");
+            intent.putExtra("catgeory", liveTest);
+            startActivity(intent);
+        }
     }
 
     @Override
     public void onOptionClick(VendorDetails data, int pos) {
+        if(data.getMasterCategoryId().equalsIgnoreCase("1")){
+            Intent mv =new Intent(mContext, ServiceShop.class);
+            mv.putExtra("MyData", data);
+            mv.putExtra("categoryId", data.getMasterCategoryId());
 
+            Objects.requireNonNull(this).getIntent().getSerializableExtra("MyData");
+            startActivity(mv);
+        }else{
+            Intent mv =new Intent(this, ShopDetails.class);
+            mv.putExtra("MyData", data);
+            mv.putExtra("categoryId", data.getMasterCategoryId());
+           // Log.e("cat",categoryData.getCategoryId());
+            Objects.requireNonNull(this).getIntent().getSerializableExtra("MyData");
+            startActivity(mv);
+        }
+        Log.e("vendorshop","shop");
     }
 
     @Override

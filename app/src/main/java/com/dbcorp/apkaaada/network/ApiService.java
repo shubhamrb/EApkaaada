@@ -70,6 +70,10 @@ public interface ApiService {
     @POST(Constants.USER_HOME)
     Call<HomeUser> getHomeData(@Header("SK") String sk, @Header("DID") String did, @FieldMap Map<String, String> uData);
 
+ @FormUrlEncoded
+    @POST(Constants.GETPAGEBYPAGETYPE)
+    Call<String> getPageByPageType(@Header("SK") String sk, @Header("DID") String did, @FieldMap Map<String, String> uData);
+
 
     @FormUrlEncoded
     @POST(Constants.GET_CATEGORY)

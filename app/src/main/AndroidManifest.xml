@@ -75,6 +75,7 @@
         <activity android:name=".ui.auth.fragments.order.SuccessActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ui.auth.Register" />
+        <activity android:name=".ui.auth.WebUi.AboutUs" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

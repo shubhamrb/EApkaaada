@@ -3,7 +3,6 @@ package com.dbcorp.apkaaada.ui.auth.fragments.order;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -34,19 +33,16 @@ import com.dbcorp.apkaaada.R;
 import com.dbcorp.apkaaada.database.SqliteDatabase;
 import com.dbcorp.apkaaada.database.UserSharedPreference;
 import com.dbcorp.apkaaada.helper.Util;
-import com.dbcorp.apkaaada.model.DroupDownModel;
 import com.dbcorp.apkaaada.model.UserDetails;
 import com.dbcorp.apkaaada.model.card.CardProduct;
 import com.dbcorp.apkaaada.model.card.Coupon;
 import com.dbcorp.apkaaada.model.card.UserAddress;
 import com.dbcorp.apkaaada.model.shopview.Product;
-import com.dbcorp.apkaaada.model.shopview.SubToSubCategory;
 import com.dbcorp.apkaaada.network.ApiService;
 import com.dbcorp.apkaaada.network.InternetConnection;
 import com.dbcorp.apkaaada.network.RestClient;
 import com.dbcorp.apkaaada.ui.auth.fragments.SetAddressActivity;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -65,7 +61,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InvoiceActivityOrder extends AppCompatActivity implements UserAddressAdapter.OnClickListener, CouponAdapter.OnClickListener,UserCardAdapter.OnClickListener {
+public class InvoiceActivityOrder extends AppCompatActivity implements UserAddressAdapter.OnClickListener, CouponAdapter.OnClickListener, UserCardAdapter.OnClickListener {
 
     Context mContext;
     UserDetails userDetails;
@@ -77,30 +73,32 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
     UserCardAdapter userCardAdapter;
     private ArrayList<CardProduct> cardProducts;
     private ArrayList<CardProduct> oldCardProducts;
-    private  String vendorIdsList;
+    private String vendorIdsList;
     OrderPriceAdapter orderPriceAdapter;
     private Toolbar toolbar;
-    MaterialTextView tvChange, edit_coupon_code,tv_totalPrice, tvItemCount, tvTotalPrice;
+    MaterialTextView tvChange, edit_coupon_code, tv_totalPrice, tvItemCount, tvTotalPrice;
 
-    String itemCount,totalPrice,totalPriceAfterCoupon;
+    String itemCount;
+    int totalPrice= 0;
+    int currentCouponPrice = 0, totalPriceAfterCoupon = 0;
     CouponAdapter couponAdapter;
 
     ArrayList<Coupon> listCoupon;
     MaterialTextView tvApplyCoupon;
     RecyclerView listProductOrder;
-    String currentCouponVendorId="";
-    String currentCouponPrice="";
+    String currentCouponVendorId = "";
     PopupWindow popupWindow;
     UserAddressAdapter userAddressAdapter;
 
     ArrayList<UserAddress> userAddressesList;
-    MaterialTextView locationTv,tvTotalChargePrice, tvAddTotalChargePrice,tvMultiVenCharge,tvDeliveryCharge, tvCouponPrice,tvAddType,tvAddress,tvChoose;
+    MaterialTextView locationTv, tvTotalChargePrice, tvAddTotalChargePrice, tvMultiVenCharge, tvDeliveryCharge, tvCouponPrice, tvAddType, tvAddress, tvChoose;
 
     MaterialTextView btnProceed;
     ArrayList<String> tokens;
     HashMap<String, String> address;
-    MaterialTextView itemCountTv,tvPrice;
+    MaterialTextView itemCountTv, tvPrice;
     MaterialButton submit_btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,14 +107,14 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
         toolbar.setTitle("Order Details");
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        listner=this;
+        listner = this;
         userDetails = new SqliteDatabase(this).getLogin();
         this.mContext = this;
-        userSharedPreference=new UserSharedPreference(mContext);
-        address=userSharedPreference.getAddress();
+        userSharedPreference = new UserSharedPreference(mContext);
+        address = userSharedPreference.getAddress();
         init();
 
-      // 23.2048039,77.4011025//     double kmDist=Util.distance(23.2232526,77.4313811,23.2048039,77.4011025,"k");
+        // 23.2048039,77.4011025//     double kmDist=Util.distance(23.2232526,77.4313811,23.2048039,77.4011025,"k");
 //        locationTv.setText(String.format("%s km",kmDist));
     }
 
@@ -126,56 +124,56 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
     }
 
     private void init() {
-        userAddressesList=new ArrayList<>();
+        userAddressesList = new ArrayList<>();
 
         orderDetails();
         getCardCount();
-        submit_btn=findViewById(R.id.submit_btn);
-        locationTv=findViewById(R.id.locationTv);
-        itemCountTv=findViewById(R.id.itemCount);
+        submit_btn = findViewById(R.id.submit_btn);
+        locationTv = findViewById(R.id.locationTv);
+        itemCountTv = findViewById(R.id.itemCount);
         tvPrice = findViewById(R.id.tvPrice);
-        listProductOrder =  findViewById(R.id.listProductOrder);
-        tvChange=findViewById(R.id.tvChange);
-        tvChoose=findViewById(R.id.tvChoose);
-        btnProceed=findViewById(R.id.btnProceed);
-        edit_coupon_code=findViewById(R.id.edit_coupon_code);
-        tvItemCount=findViewById(R.id.tvItemCount);
-        tvAddType=findViewById(R.id.tvAddType);
-        tvAddress=findViewById(R.id.tvAddress);
-        tvCouponPrice=findViewById(R.id.tvCouponPrice);
-        tv_totalPrice=findViewById(R.id.tv_totalPrice);
-        tvTotalPrice=findViewById(R.id.tvTotalPrice);
-        tvApplyCoupon=findViewById(R.id.tvApplyCoupon);
+        listProductOrder = findViewById(R.id.listProductOrder);
+        tvChange = findViewById(R.id.tvChange);
+        tvChoose = findViewById(R.id.tvChoose);
+        btnProceed = findViewById(R.id.btnProceed);
+        edit_coupon_code = findViewById(R.id.edit_coupon_code);
+        tvItemCount = findViewById(R.id.tvItemCount);
+        tvAddType = findViewById(R.id.tvAddType);
+        tvAddress = findViewById(R.id.tvAddress);
+        tvCouponPrice = findViewById(R.id.tvCouponPrice);
+        tv_totalPrice = findViewById(R.id.tv_totalPrice);
+        tvTotalPrice = findViewById(R.id.tvTotalPrice);
+        tvApplyCoupon = findViewById(R.id.tvApplyCoupon);
         listProductOrder.setHasFixedSize(true);
         //listItem.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         listProductOrder.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        edit_coupon_code.setOnClickListener(v->{
+        edit_coupon_code.setOnClickListener(v -> {
             openCoupon();
         });
-        tvChange.setOnClickListener(v->{
-            Intent mv=new Intent(InvoiceActivityOrder.this, SetAddressActivity.class);
-            mv.putExtra("type","deliver");
+        tvChange.setOnClickListener(v -> {
+            Intent mv = new Intent(InvoiceActivityOrder.this, SetAddressActivity.class);
+            mv.putExtra("type", "deliver");
             startActivity(mv);
         });
-        tvChoose.setOnClickListener(v->{
+        tvChoose.setOnClickListener(v -> {
             openAddress();
         });
 
-        btnProceed.setOnClickListener(v->{
+        btnProceed.setOnClickListener(v -> {
 
             getCharge();
 
 
         });
 
-        submit_btn.setOnClickListener(v->{
-                applyCoupon(currentCouponVendorId,currentCouponPrice);
+        submit_btn.setOnClickListener(v -> {
+            applyCoupon(currentCouponVendorId, currentCouponPrice);
         });
         getAddress();
     }
 
 
-    public void chargeDialog(String delivery_charge,String multi_vendor_charge){
+    public void chargeDialog(String delivery_charge, String multi_vendor_charge) {
         AlertDialog alertDialog;
 
         AlertDialog.Builder builder2 = new AlertDialog.Builder(mContext);
@@ -184,90 +182,93 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
 
         tvTotalChargePrice = dialog.findViewById(R.id.tvTotalChargePrice);
         tvMultiVenCharge = dialog.findViewById(R.id.tvMultiVenCharge);
-        tvAddTotalChargePrice= dialog.findViewById(R.id.tvAddTotalChargePrice);
+        tvAddTotalChargePrice = dialog.findViewById(R.id.tvAddTotalChargePrice);
         tvDeliveryCharge = dialog.findViewById(R.id.tvDeliveryCharge);
-        AppCompatImageView tvClose=dialog.findViewById(R.id.tvClose);
-       MaterialTextView  btnProceedBtn=dialog.findViewById(R.id.btnProceedBtn);
+        AppCompatImageView tvClose = dialog.findViewById(R.id.tvClose);
+        MaterialTextView btnProceedBtn = dialog.findViewById(R.id.btnProceedBtn);
         builder2.setView(dialog);
 
-        int multiCharge=0;
-        if(cardProducts.size()>1){
-            multiCharge= Integer.parseInt(multi_vendor_charge);
+        int multiCharge = 0;
+        if (cardProducts.size() > 1) {
+            multiCharge = Integer.parseInt(multi_vendor_charge);
 
-        }else{
-            multiCharge= 0;
+        } else {
+            multiCharge = 0;
 
         }
-        int deliveryCharge= Integer.parseInt(delivery_charge);
-        int addChargePrice=multiCharge+deliveryCharge+Integer.parseInt(totalPrice);
+        int deliveryCharge = Integer.parseInt(delivery_charge);
+        int addChargePrice = multiCharge + deliveryCharge + totalPrice;
 
         tvMultiVenCharge.setText(String.valueOf(multiCharge));
         tvDeliveryCharge.setText(delivery_charge);
         tvAddTotalChargePrice.setText(String.valueOf(addChargePrice));
-        int t=Integer.parseInt(totalPriceAfterCoupon)- Integer.parseInt(currentCouponPrice);
+        int t = totalPriceAfterCoupon - currentCouponPrice;
         tvTotalChargePrice.setText(String.valueOf(t));
 
 
         alertDialog = builder2.create();
         alertDialog.show();
-        tvClose.setOnClickListener(v->{
+        tvClose.setOnClickListener(v -> {
             alertDialog.dismiss();
             alertDialog.cancel();
         });
         alertDialog.setCancelable(false);
         alertDialog.show();
-        btnProceedBtn.setOnClickListener(v->{
-            Intent mv=new Intent(InvoiceActivityOrder.this, PaymentMode.class);
-            mv.putStringArrayListExtra("tokens",tokens);
+        btnProceedBtn.setOnClickListener(v -> {
+            Intent mv = new Intent(InvoiceActivityOrder.this, PaymentMode.class);
+            mv.putStringArrayListExtra("tokens", tokens);
             startActivity(mv);
         });
 
     }
- private void  getCharge(){
-     if (InternetConnection.checkConnection(mContext)) {
-         Map<String, String> params = new HashMap<>();
-         params.put("userId", userDetails.getUserId());
-         Log.e("param", params.toString());
-         Util.showDialog("Please wait fetching your charge",mContext);
-         RestClient.post().getCharge(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
-             @RequiresApi(api = Build.VERSION_CODES.N)
-             @Override
-             public void onResponse(@NotNull Call<String> call, Response<String> response) {
-                 try {
-                     Gson gson = new Gson();
-                     JSONObject strObj = new JSONObject(Objects.requireNonNull(response.body()));
-                     if (strObj.getBoolean("status")) {
 
-                         chargeDialog(strObj.getString("multi_vendor_charge"),strObj.getString("multi_vendor_charge"));
+    private void getCharge() {
+        if (InternetConnection.checkConnection(mContext)) {
+            Map<String, String> params = new HashMap<>();
+            params.put("userId", userDetails.getUserId());
+            Log.e("param", params.toString());
+            Util.showDialog("Please wait fetching your charge", mContext);
+            RestClient.post().getCharge(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void onResponse(@NotNull Call<String> call, Response<String> response) {
+                    try {
+                        Gson gson = new Gson();
+                        JSONObject strObj = new JSONObject(Objects.requireNonNull(response.body()));
+                        if (strObj.getBoolean("status")) {
 
-                     }
-                     Util.hideDialog();
+                            chargeDialog(strObj.getString("multi_vendor_charge"), strObj.getString("multi_vendor_charge"));
 
-                 } catch (Exception e) {
-                     Util.hideDialog();
-                     Util.show(mContext, e.getMessage());
-                 }
-             }
+                        }
+                        Util.hideDialog();
 
-             @Override
-             public void onFailure(@NotNull Call<String> call, @NotNull Throwable t) {
-                 Util.hideDialog();
+                    } catch (Exception e) {
+                        Util.hideDialog();
+                        Log.e("Exception : ", e.getMessage());
+                        Util.show(mContext, e.getMessage());
+                    }
+                }
 
-                 try {
-                     t.printStackTrace();
-                 } catch (Exception e) {
-                     e.printStackTrace();
-                 }
+                @Override
+                public void onFailure(@NotNull Call<String> call, @NotNull Throwable t) {
+                    Util.hideDialog();
 
-             }
-         });
+                    try {
+                        t.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-     }
- }
+                }
+            });
+
+        }
+    }
+
     private void orderDetails() {
         cardProducts = new ArrayList<>();
-        oldCardProducts=new ArrayList<>();
-        listCoupon=new ArrayList<>();
+        oldCardProducts = new ArrayList<>();
+        listCoupon = new ArrayList<>();
         if (InternetConnection.checkConnection(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("userId", userDetails.getUserId());
@@ -283,12 +284,12 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
                             JSONArray arrayData = strObj.getJSONArray("productDetails");
                             Type notiType = new TypeToken<ArrayList<String>>() {
                             }.getType();
-                            tokens=gson.fromJson(strObj.getJSONArray("notification_token").toString(), notiType);
+                            tokens = gson.fromJson(strObj.getJSONArray("notification_token").toString(), notiType);
 
 
-                            vendorIdsList=strObj.getString("vendorIdes") ;
+                            vendorIdsList = strObj.getString("vendorIdes");
 
-                            Log.e("notification_token",tokens.toString());
+                            Log.e("notification_token", tokens.toString());
 
                             for (int i = 0; i < arrayData.length(); i++) {
 
@@ -319,10 +320,10 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
                             oldCardProducts.addAll(cardProducts);
                             Type couponType = new TypeToken<ArrayList<Coupon>>() {
                             }.getType();
-                            listCoupon=gson.fromJson(strObj.getJSONArray("couponList").toString(), couponType);
+                            listCoupon = gson.fromJson(strObj.getJSONArray("couponList").toString(), couponType);
                             Type tokensType = new TypeToken<ArrayList<String>>() {
                             }.getType();
-                            orderPriceAdapter=new OrderPriceAdapter(Double.parseDouble(address.get(UserSharedPreference.CurrentLatitude)),Double.parseDouble(address.get(UserSharedPreference.CurrentLongitude)),cardProducts,mContext);
+                            orderPriceAdapter = new OrderPriceAdapter(Double.parseDouble(address.get(UserSharedPreference.CurrentLatitude)), Double.parseDouble(address.get(UserSharedPreference.CurrentLongitude)), cardProducts, mContext);
                             listProductOrder.setAdapter(orderPriceAdapter);
 
                         }
@@ -366,10 +367,10 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
                             tvAddType.setText(object.getJSONObject("userAddress").getString("address_type").equalsIgnoreCase("1") ? "Home" : "Work");
                             Type productType = new TypeToken<ArrayList<UserAddress>>() {
                             }.getType();
-                            userAddressesList=gson.fromJson(object.getJSONArray("location").toString(), productType);
+                            userAddressesList = gson.fromJson(object.getJSONArray("location").toString(), productType);
 
-                        }else{
-                            Util.show(mContext,object.getString("message"));
+                        } else {
+                            Util.show(mContext, object.getString("message"));
                         }
                     } catch (Exception ignored) {
 
@@ -410,14 +411,14 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
                         if (object.getBoolean("status")) {
 
 
-                            tvPrice.setText("₹ "+object.getJSONObject("totalAmount").getString("price"));
+                            tvPrice.setText("₹ " + object.getJSONObject("totalAmount").getString("price"));
                             itemCountTv.setText(object.getJSONObject("cardCount").getString("cardCount"));
 
-                            tvTotalPrice.setText("₹ "+object.getJSONObject("totalAmount").getString("price"));
-                            itemCount=object.getJSONObject("cardCount").getString("cardCount");
-                            totalPrice=object.getJSONObject("totalAmount").getString("price");
-                            totalPriceAfterCoupon=object.getJSONObject("totalAmount").getString("price");
-                        }else{
+                            tvTotalPrice.setText("₹ " + object.getJSONObject("totalAmount").getString("price"));
+                            itemCount = object.getJSONObject("cardCount").getString("cardCount");
+                            totalPrice = Integer.parseInt(object.getJSONObject("totalAmount").getString("price"));
+                            totalPriceAfterCoupon = Integer.parseInt(object.getJSONObject("totalAmount").getString("price"));
+                        } else {
 
                         }
                     } catch (Exception ignored) {
@@ -465,14 +466,14 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
         popupWindow = new PopupWindow(popupView, width, height, focusable);
         popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.white_gredient_bg));
         popupWindow.showAtLocation(popupView, Gravity.TOP, 0, 0);
-        ImageView closeImg=popupView.findViewById(R.id.closeImg);
-        AppCompatImageView tvClose=popupView.findViewById(R.id.tvClose);
-        EditText search=popupView.findViewById(R.id.search);
+        ImageView closeImg = popupView.findViewById(R.id.closeImg);
+        AppCompatImageView tvClose = popupView.findViewById(R.id.tvClose);
+        EditText search = popupView.findViewById(R.id.search);
 
         search.setVisibility(View.GONE);
 
-        TextView tittleName=popupView.findViewById(R.id.tittleName);
-        EditText inputSearch=popupView.findViewById(R.id.search);
+        TextView tittleName = popupView.findViewById(R.id.tittleName);
+        EditText inputSearch = popupView.findViewById(R.id.search);
         tittleName.setVisibility(View.VISIBLE);
         tittleName.setText("Select Coupon");
         RecyclerView listCountryData2 = popupView.findViewById(R.id.listView);
@@ -485,47 +486,49 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
             popupWindow.dismiss();
 
         });
-        if(listCoupon.size()<=0){
-            Util.showDialogAlert("","No Coupon result found",mContext);
+        if (listCoupon.size() <= 0) {
+            Util.showDialogAlert("", "No Coupon result found", mContext);
         }
 
-        tvClose.setOnClickListener(v->{
+        tvClose.setOnClickListener(v -> {
             popupWindow.dismiss();
         });
 
-        couponAdapter=new CouponAdapter(listCoupon,listner,mContext);
+        couponAdapter = new CouponAdapter(listCoupon, listner, mContext);
         listCountryData2.setAdapter(couponAdapter);
 
     }
 
 
-    public  void applyCoupon(String vendorId,String price){
-        int VenOrderPrice=0;
-        int couponPrice=0;
-        int updatePrice=0;
-        String p=price.equalsIgnoreCase("")?"0":price;
-        int getPrice= Integer.parseInt(p);
-        totalPriceAfterCoupon=totalPrice;
-        for(int i=0;i<cardProducts.size();i++){
+    public void applyCoupon(String vendorId, int price) {
+        int VenOrderPrice = 0;
+        int couponPrice = 0;
+        int updatePrice = 0;
+        int getPrice = 0;
+        if(price != 0){
+            getPrice = price;
+        }
+        totalPriceAfterCoupon = totalPrice;
+        for (int i = 0; i < cardProducts.size(); i++) {
 
             if (cardProducts.get(i).getVendorId().equals(vendorId)) {
-                VenOrderPrice= Integer.parseInt(cardProducts.get(i).getTotalProductPrice());
+                VenOrderPrice = Integer.parseInt(cardProducts.get(i).getTotalProductPrice());
 
-if(getPrice>VenOrderPrice){
-     Util.show(mContext,"Please change coupon code");
-     break;
-}else{
+                if (getPrice > VenOrderPrice) {
+                    Util.show(mContext, "Please change coupon code");
+                    break;
+                } else {
 
-    couponPrice= Integer.parseInt(price);
-    updatePrice=VenOrderPrice-couponPrice;
-    Log.e("topvendor", String.valueOf(VenOrderPrice));
-    cardProducts.get(i).setDiscountPrice(String.valueOf(updatePrice));
-    orderPriceAdapter.notifyDataSetChanged();
-    int totalCardPrice=Integer.parseInt(totalPrice)-updatePrice;
-    int tp=totalCardPrice-updatePrice;
-    totalPriceAfterCoupon=String.valueOf(tp);
-    break;
-}
+                    couponPrice = price;
+                    updatePrice = VenOrderPrice - couponPrice;
+                    Log.e("topvendor", String.valueOf(VenOrderPrice));
+                    cardProducts.get(i).setDiscountPrice(String.valueOf(updatePrice));
+                    orderPriceAdapter.notifyDataSetChanged();
+                    int totalCardPrice = totalPrice - updatePrice;
+                    int tp = totalCardPrice - updatePrice;
+                    totalPriceAfterCoupon = tp;
+                    break;
+                }
 
             }
         }
@@ -550,11 +553,11 @@ if(getPrice>VenOrderPrice){
         popupWindow = new PopupWindow(popupView, width, height, focusable);
         popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.white_gredient_bg));
         popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
-        ImageView closeImg=popupView.findViewById(R.id.closeImg);
-        EditText search=popupView.findViewById(R.id.search);
+        ImageView closeImg = popupView.findViewById(R.id.closeImg);
+        EditText search = popupView.findViewById(R.id.search);
         search.setVisibility(View.GONE);
-        TextView tittleName=popupView.findViewById(R.id.tittleName);
-        EditText inputSearch=popupView.findViewById(R.id.search);
+        TextView tittleName = popupView.findViewById(R.id.tittleName);
+        EditText inputSearch = popupView.findViewById(R.id.search);
         tittleName.setVisibility(View.VISIBLE);
         tittleName.setText("Select Address");
         RecyclerView listCountryData2 = popupView.findViewById(R.id.listView);
@@ -567,7 +570,7 @@ if(getPrice>VenOrderPrice){
             popupWindow.dismiss();
 
         });
-        userAddressAdapter=new UserAddressAdapter(userAddressesList,listner,mContext);
+        userAddressAdapter = new UserAddressAdapter(userAddressesList, listner, mContext);
         listCountryData2.setAdapter(userAddressAdapter);
 
     }
@@ -594,17 +597,16 @@ if(getPrice>VenOrderPrice){
 
         popupWindow.dismiss();
         tvApplyCoupon.setText(data.getCouponCode());
-        currentCouponVendorId=data.getVendorId();
-        currentCouponPrice=data.getPrice();
-        int t=Integer.parseInt(totalPrice)-Integer.parseInt(data.getPrice());
-        tvTotalPrice.setText("₹ "+String.valueOf(t));
+        currentCouponVendorId = data.getVendorId();
+        currentCouponPrice = Integer.parseInt(data.getPrice());
+        int t = totalPrice - Integer.parseInt(data.getPrice());
+        tvTotalPrice.setText("₹ " + String.valueOf(t));
         tvCouponPrice.setText(data.getPrice());
-        cardProducts=new ArrayList<>();
+        cardProducts = new ArrayList<>();
         //oldCardProducts
         cardProducts.addAll(oldCardProducts);
         orderPriceAdapter.notifyDataSetChanged();
     }
-
 
     @Override
     public void clickOnAddress(UserAddress data, int pos, String type) {
@@ -627,10 +629,11 @@ if(getPrice>VenOrderPrice){
 
 
                         if (object.getBoolean("status")) {
-                            Util.show(mContext,object.getString("message"));
-                            getAddress();;
-                        }else{
-                            Util.show(mContext,object.getString("message"));
+                            Util.show(mContext, object.getString("message"));
+                            getAddress();
+                            ;
+                        } else {
+                            Util.show(mContext, object.getString("message"));
                         }
                     } catch (Exception ignored) {
 

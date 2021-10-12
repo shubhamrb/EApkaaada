@@ -82,6 +82,8 @@ holder.img.setBackgroundResource(R.drawable.homeicon);
             holder.img.setBackgroundResource(R.drawable.termsicon);
         }else if(position==10){
             holder.img.setBackgroundResource(R.drawable.privancypolicy);
+        }else if(position==11){
+            holder.img.setBackgroundResource(R.drawable.privancypolicy);
         }
 //if(select==position){
 //    holder.viewBorder.setVisibility(View.VISIBLE);

@@ -1,6 +1,7 @@
 package com.dbcorp.apkaaada.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -51,11 +52,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = null;
 
-
             itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_product, parent, false);
-
-
-
 
         return new MyViewHolder(itemView);
     }
@@ -64,28 +61,20 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         SearchByProduct data=listData.get(position);
 
-
         int cartQuantity= Integer.parseInt(data.getCartQuantity());
         int productPrice= Integer.parseInt(data.getPrice());
         int totalPrice=cartQuantity*productPrice;
         holder.tvName.setText(data.getName());
-
         holder.tvVendorName.setText(data.getShopName());
-
         holder.tvVariantValue.setText(data.getValueName().equalsIgnoreCase("N/A") ? "": data.getValueName());
-
-
         holder.tvPrice.setText(data.getCartQuantity()+"X"+data.getPrice()+" : "+String.format(" ₹ %d", totalPrice));
-
         holder.tvDescription.setText(data.getDescription());
-
         holder.catName.setText(data.getCategoryName());
         holder.subCat.setText(data.getSubCategoryName());
         holder.subtosubCat.setText(data.getSubSubCategoryName());
-
-
+        Log.e("photo", ApiService.PRODUCT_IMG_URL+data.getPhoto());
         Glide.with(mContext)
-                .load(ApiService.PRODUCT_IMG_URL+data.getPhoto())
+                .load(ApiService.PRODUCT_IMG_URL+data.getPhoto()).placeholder(R.drawable.logo)
                 .into(holder.img);
         //  holder.tv_quantity.setText("787");
 
@@ -105,9 +94,6 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
 //           // holder.tvLayout.setVisibility(View.VISIBLE);
 //
 //        }
-
-
-
 
         holder.button_add.setOnClickListener(v->{
             quantity= Integer.parseInt(listData.get(position).getCartQuantity());
@@ -145,8 +131,6 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
 //                onMenuListClicklistener.productClick(data,position);
 //            });
 //        }
-
-
         if(cartQuantity>0 && listData.get(position).getVariantStatus().equalsIgnoreCase("Add Card")){
             holder.addBtn.setVisibility(View.VISIBLE);
             holder.addCartProduct.setVisibility(View.GONE);
@@ -185,19 +169,10 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
             });
         }else {
             holder.showProduct.setOnClickListener(view -> {
-                // onMenuListClicklistener.productClick(data,position);
+                Log.e("showProduct", "tapped");
             });
         }
-
         holder.tv_quantity.setText(data.getCartQuantity());
-
-
-
-
-
-
-
-
       }
 
     @Override
@@ -208,7 +183,6 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
     class MyViewHolder extends RecyclerView.ViewHolder {
         MaterialCardView showProduct;
         LinearLayoutCompat tvLayout,addBtn;
-
         MaterialTextView tvVendorName,tvVariantValue,addCartProduct,catName,subCat,subtosubCat,tvName,tv_quantity,tvPrice,tvDescription,addCart;
         ShapeableImageView img;
         AppCompatImageView button_add,button_subtract,TvRemove;
