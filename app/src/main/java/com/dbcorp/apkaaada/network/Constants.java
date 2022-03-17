@@ -80,6 +80,10 @@ public class Constants {
     static final String ADD_SERVICE_DATA = "user-service-request";
     static final String SEARCH_AUTO_DATA = "get-auto-sugesstion";
 
+    static final String DELETE_INVOICE_PRODUCT_DATA = "delete-invoice-order";
+
+    static final String ADD_USER_PAYMENT = "get-user-payment";
+
 }
 
 

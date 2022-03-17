@@ -1,25 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/activity_home.xml" value="0.20833333333333334" />
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/activity_privacy_policy.xml" value="0.20833333333333334" />
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/activity_terms_condition2.xml" value="0.20833333333333334" />
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/activity_user_search.xml" value="0.20833333333333334" />
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/final_order_item_cat_layout.xml" value="0.18" />
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/fragment_layout.xml" value="0.20833333333333334" />
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/homemenu.xml" value="0.20833333333333334" />
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/item_final_oder.xml" value="0.20833333333333334" />
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/item_final_oder_product_varriant.xml" value="0.20833333333333334" />
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/item_search_product.xml" value="0.20833333333333334" />
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/item_slider.xml" value="0.20833333333333334" />
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/item_vendor.xml" value="0.1" />
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/otp_layout.xml" value="0.20833333333333334" />
-        <entry key="..\:/pallavi/BHS Pro/Apkaaadauser/app/src/main/res/layout/searchviewlayout.xml" value="0.20833333333333334" />
-      </map>
-    </option>
-  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

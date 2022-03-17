@@ -27,15 +27,34 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
-        <com.google.android.material.textview.MaterialTextView
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:id="@+id/tvVendorName"
-            android:text="@string/vendor_name"
-            android:fontFamily="@font/montserrat_b"
-            android:textColor="@color/black"
-            android:padding="2sp"
-            android:textSize="@dimen/text_size_edit"
-            android:layout_height="wrap_content"/>
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:id="@+id/tvVendorName"
+                android:text="@string/vendor_name"
+                android:fontFamily="@font/montserrat_b"
+                android:textColor="@color/black"
+                android:padding="2sp"
+                android:layout_weight="0.5"
+                android:textSize="@dimen/text_size_edit"
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_weight="3.5"
+                android:layout_gravity="end"
+                android:id="@+id/imgDelete"
+                android:visibility="gone"
+                app:tint="@color/colorPrimary"
+
+                android:src="@drawable/ic_baseline_delete_forever_24"
+                android:layout_height="wrap_content"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"

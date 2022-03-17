@@ -25,6 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.balooouser.com.utils.Utils;
 import com.dbcorp.apkaaada.Adapter.usercard.CouponAdapter;
 import com.dbcorp.apkaaada.Adapter.usercard.OrderPriceAdapter;
 import com.dbcorp.apkaaada.Adapter.usercard.UserAddressAdapter;
@@ -61,7 +62,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InvoiceActivityOrder extends AppCompatActivity implements UserAddressAdapter.OnClickListener, CouponAdapter.OnClickListener, UserCardAdapter.OnClickListener {
+public class InvoiceActivityOrder extends AppCompatActivity implements UserAddressAdapter.OnClickListener, CouponAdapter.OnClickListener, UserCardAdapter.OnClickListener, OrderPriceAdapter.OnDeleteVendor{
 
     Context mContext;
     UserDetails userDetails;
@@ -91,14 +92,26 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
     UserAddressAdapter userAddressAdapter;
 
     ArrayList<UserAddress> userAddressesList;
-    MaterialTextView locationTv, tvTotalChargePrice, tvAddTotalChargePrice, tvMultiVenCharge, tvDeliveryCharge, tvCouponPrice, tvAddType, tvAddress, tvChoose;
+    MaterialTextView locationTv,nightCharge, tvTotalChargePrice, tvAddTotalChargePrice, tvMultiVenCharge, tvDeliveryCharge, tvCouponPrice, tvAddType, tvAddress, tvChoose;
 
     MaterialTextView btnProceed;
     ArrayList<String> tokens;
+    String currentLatitude="",currentLongitude="",address_id="";
+    String cityLatitude="",cityLongitude="";
+    String delivery_charge_per_km="";
+
+    double getDistance=0.0;
+
     HashMap<String, String> address;
+    String cityName="";
     MaterialTextView itemCountTv, tvPrice;
     MaterialButton submit_btn;
 
+    boolean checkVendorsDistance=false;
+    ArrayList<CardProduct> userCardList;
+    String orderListJson="";
+
+    String totalDeliveryCharge="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,7 +174,22 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
 
         btnProceed.setOnClickListener(v -> {
 
-            getCharge();
+            if(tvAddress.getText().length()>3){
+                if(cardProducts.size()>0){
+                    orderPriceAdapter.getOrderList();
+                }
+
+                if(checkVendorsDistance){
+                    Util.show(mContext,"Please check vendor distance its out of range ");
+                }else {
+                    getCharge();
+                }
+
+
+            }else{
+                Util.show(mContext,"Please Select Address First");
+            }
+
 
 
         });
@@ -169,11 +197,13 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
         submit_btn.setOnClickListener(v -> {
             applyCoupon(currentCouponVendorId, currentCouponPrice);
         });
-        getAddress();
+
+
+
     }
 
 
-    public void chargeDialog(String delivery_charge, String multi_vendor_charge) {
+    public void chargeDialog(String nightChargeStr,String delivery_charge, String multi_vendor_charge) {
         AlertDialog alertDialog;
 
         AlertDialog.Builder builder2 = new AlertDialog.Builder(mContext);
@@ -183,6 +213,7 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
         tvTotalChargePrice = dialog.findViewById(R.id.tvTotalChargePrice);
         tvMultiVenCharge = dialog.findViewById(R.id.tvMultiVenCharge);
         tvAddTotalChargePrice = dialog.findViewById(R.id.tvAddTotalChargePrice);
+        nightCharge = dialog.findViewById(R.id.nightCharge);
         tvDeliveryCharge = dialog.findViewById(R.id.tvDeliveryCharge);
         AppCompatImageView tvClose = dialog.findViewById(R.id.tvClose);
         MaterialTextView btnProceedBtn = dialog.findViewById(R.id.btnProceedBtn);
@@ -197,11 +228,13 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
 
         }
         int deliveryCharge = Integer.parseInt(delivery_charge);
-        int addChargePrice = multiCharge + deliveryCharge + totalPrice;
-
+        int nightChargePrice = Integer.parseInt(nightChargeStr);
+        int addChargePrice = nightChargePrice+multiCharge + Integer.parseInt(totalDeliveryCharge) + totalPrice;
+        nightCharge.setText(nightChargeStr);
         tvMultiVenCharge.setText(String.valueOf(multiCharge));
-        tvDeliveryCharge.setText(delivery_charge);
+        tvDeliveryCharge.setText(totalDeliveryCharge);
         tvAddTotalChargePrice.setText(String.valueOf(addChargePrice));
+
         int t = totalPriceAfterCoupon - currentCouponPrice;
         tvTotalChargePrice.setText(String.valueOf(t));
 
@@ -217,6 +250,11 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
         btnProceedBtn.setOnClickListener(v -> {
             Intent mv = new Intent(InvoiceActivityOrder.this, PaymentMode.class);
             mv.putStringArrayListExtra("tokens", tokens);
+            mv.putExtra("jsonData", orderListJson);
+            mv.putExtra("totalDeliveryCharge", totalDeliveryCharge);
+            mv.putExtra("multiVendorCharge", tvMultiVenCharge.getText().toString());
+            mv.putExtra("nightCharge", tvDeliveryCharge.getText().toString());
+            mv.putExtra("totalCharge", totalPrice);
             startActivity(mv);
         });
 
@@ -225,7 +263,7 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
     private void getCharge() {
         if (InternetConnection.checkConnection(mContext)) {
             Map<String, String> params = new HashMap<>();
-            params.put("userId", userDetails.getUserId());
+            params.put("cityName", cityName);
             Log.e("param", params.toString());
             Util.showDialog("Please wait fetching your charge", mContext);
             RestClient.post().getCharge(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
@@ -237,7 +275,7 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
                         JSONObject strObj = new JSONObject(Objects.requireNonNull(response.body()));
                         if (strObj.getBoolean("status")) {
 
-                            chargeDialog(strObj.getString("multi_vendor_charge"), strObj.getString("multi_vendor_charge"));
+                            chargeDialog(strObj.getString("nightCharge"),strObj.getString("multi_vendor_charge"), strObj.getString("multi_vendor_charge"));
 
                         }
                         Util.hideDialog();
@@ -291,6 +329,7 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
 
                             Log.e("notification_token", tokens.toString());
 
+
                             for (int i = 0; i < arrayData.length(); i++) {
 
 
@@ -299,13 +338,18 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
                                 obj.setVendorName(str.getString("vendor_name"));
                                 obj.setProductCount(str.getInt("productCount"));
                                 obj.setShop_name(str.getString("shop_name"));
-
+                                obj.setProductIdes(str.getString("productIdes"));
                                 obj.setCityName(str.getString("cityName"));
+
+                                obj.setShop_distance(str.getString("shop_distance"));
+                                obj.setShop_distance_delivery_charge(str.getString("shop_distance_delivery_charge"));
+                                cityName=str.getString("cityName");
                                 obj.setDelivery_charge_per_km(str.getString("delivery_charge_per_km"));
                                 obj.setDelivery_charge_type(str.getString("delivery_charge_type"));
                                 obj.setOrder_range_limit(str.getString("order_range_limit"));
                                 obj.setLat(str.getString("lat"));
                                 obj.setLng(str.getString("lng"));
+                                obj.setDelivery_charge(str.getString("delivery_charge"));
                                 obj.setVendorId(str.getString("vendor_id"));
                                 obj.setDiscountPrice(str.getString("discountPrice"));
 
@@ -323,8 +367,10 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
                             listCoupon = gson.fromJson(strObj.getJSONArray("couponList").toString(), couponType);
                             Type tokensType = new TypeToken<ArrayList<String>>() {
                             }.getType();
-                            orderPriceAdapter = new OrderPriceAdapter(Double.parseDouble(address.get(UserSharedPreference.CurrentLatitude)), Double.parseDouble(address.get(UserSharedPreference.CurrentLongitude)), cardProducts, mContext);
+                            orderPriceAdapter = new OrderPriceAdapter(listner,Double.parseDouble(address.get(UserSharedPreference.CurrentLatitude)), Double.parseDouble(address.get(UserSharedPreference.CurrentLongitude)), cardProducts, mContext);
                             listProductOrder.setAdapter(orderPriceAdapter);
+                            orderPriceAdapter.notifyDataSetChanged();
+                            getAddress(cardProducts);
 
                         }
                     } catch (Exception e) {
@@ -349,7 +395,7 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
     }
 
 
-    private void getAddress() {
+    private void getAddress(ArrayList<CardProduct> cardProductsNew) {
         if (InternetConnection.checkConnection(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("user_id", userDetails.getUserId());
@@ -363,11 +409,17 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
                         Gson gson = new Gson();
                         if (object.getBoolean("status")) {
 
+                            currentLatitude=object.getJSONObject("userAddress").getString("lat");
+                            address_id=object.getJSONObject("userAddress").getString("address_id");
+                            currentLongitude=object.getJSONObject("userAddress").getString("lng");
                             tvAddress.setText(object.getJSONObject("userAddress").getString("address"));
                             tvAddType.setText(object.getJSONObject("userAddress").getString("address_type").equalsIgnoreCase("1") ? "Home" : "Work");
                             Type productType = new TypeToken<ArrayList<UserAddress>>() {
                             }.getType();
                             userAddressesList = gson.fromJson(object.getJSONArray("location").toString(), productType);
+                            orderPriceAdapter = new OrderPriceAdapter(listner,Double.parseDouble(currentLatitude), Double.parseDouble(currentLongitude), cardProductsNew, mContext);
+                            listProductOrder.setAdapter(orderPriceAdapter);
+                            orderPriceAdapter.notifyDataSetChanged();
 
                         } else {
                             Util.show(mContext, object.getString("message"));
@@ -611,6 +663,9 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
     @Override
     public void clickOnAddress(UserAddress data, int pos, String type) {
         popupWindow.dismiss();
+        currentLatitude=data.getLat();
+        currentLongitude=data.getLng();
+
         updateAddress(data.getAddressId());
     }
 
@@ -630,8 +685,8 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
 
                         if (object.getBoolean("status")) {
                             Util.show(mContext, object.getString("message"));
-                            getAddress();
-                            ;
+                            getAddress(cardProducts);
+
                         } else {
                             Util.show(mContext, object.getString("message"));
                         }
@@ -656,6 +711,22 @@ public class InvoiceActivityOrder extends AppCompatActivity implements UserAddre
             });
 
         }
+
+    }
+
+
+    @Override
+    public void deleteVendor(boolean distance) {
+        checkVendorsDistance=distance;
+    }
+
+    @Override
+    public void invoiceOrderList(ArrayList<CardProduct> cardProducts,int totalDeliveryChargeStr) {
+        userCardList=new ArrayList<>();
+        userCardList.addAll(cardProducts);
+        orderListJson = new Gson().toJson(userCardList);
+        totalDeliveryCharge=String.valueOf(totalDeliveryChargeStr);
+        Log.e("totalDeliveryCharge", String.valueOf(totalDeliveryCharge));
 
     }
 }

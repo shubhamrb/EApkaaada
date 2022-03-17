@@ -5,6 +5,7 @@ package com.dbcorp.apkaaada.Adapter;
  */
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,9 @@ public class ShopProduct extends RecyclerView.Adapter<ShopProduct.MyViewHolder> 
         holder.tvVariantValue.setText(data.getValueName().equalsIgnoreCase("N/A") ? "": data.getValueName());
 
 
+        holder.tvMrp.setText("₹ "+data.getMrp());
+        holder.tvMrp.setPaintFlags(holder.tvMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.tvSalePrice.setText("/ ₹ "+data.getPrice());
         holder.tvPrice.setText(data.getCartQuantity()+"X"+data.getPrice()+" : "+String.format(" ₹ %d", totalPrice));
 
         holder.tvDescription.setText(data.getDescription());
@@ -236,13 +240,15 @@ holder.tv_quantity.setText(data.getCartQuantity());
         MaterialCardView showProduct;
         LinearLayoutCompat tvLayout,addBtn;
 
-        MaterialTextView tvVariantValue,addCartProduct,catName,subCat,subtosubCat,tvName,tv_quantity,tvPrice,tvDescription,addCart;
+        MaterialTextView tvMrp,tvSalePrice, tvVariantValue,addCartProduct,catName,subCat,subtosubCat,tvName,tv_quantity,tvPrice,tvDescription,addCart;
         ShapeableImageView img;
         AppCompatImageView button_add,button_subtract;
         MyViewHolder(View view) {
             super(view);
             showProduct = view.findViewById(R.id.showProduct);
             img=view.findViewById(R.id.img);
+            tvSalePrice=view.findViewById(R.id.tvSalePrice);
+            tvMrp=view.findViewById(R.id.tvMrp);
             tvName=view.findViewById(R.id.tvName);
             catName=view.findViewById(R.id.catName);
             addCartProduct=view.findViewById(R.id.addCartProduct);

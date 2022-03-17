@@ -411,7 +411,7 @@ public class ShopDetails extends AppCompatActivity implements SubToSubCatAdapter
             params.put("vendorId", vendorDetails.getUserId());
             params.put("userId", userDetails.getUserId());
             Log.e("userDetails", userDetails.toString());
-            Log.e("param", params.toString());
+            Log.e("mks", params.toString());
             RestClient.post().getProductDetails(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NotNull Call<String> call, Response<String> response) {
@@ -654,10 +654,9 @@ public class ShopDetails extends AppCompatActivity implements SubToSubCatAdapter
     @Override
     public void productClick(Product listData, int pos) {
         Log.e("mks", "mks");
-        if (listData.getVariantStatus().equalsIgnoreCase("View More")) {
+        if (listData.getVariantCount()>0) {
             getVariant(listData);
             viewVariant("");
-
 
         } else {
             Intent mv = new Intent(mContext, VarriantActivity.class);
@@ -744,12 +743,13 @@ public class ShopDetails extends AppCompatActivity implements SubToSubCatAdapter
 
         for (VariantArrayAttributeValue d : varriantList) {
             String strd = d.getProductList().getValueName();
-            if (strd.equals(valueName)) {
 
+             if (strd.equals(valueName)) {
+                 Log.e("bhsbhs",strd);
                 currentVariantData = d.getProductList();
-            }
+             }
         }
-        setData(currentVariantData,valueName);
+         setData(currentVariantData,valueName);
     }
 
     private class SliderTimer extends TimerTask {

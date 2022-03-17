@@ -55,10 +55,12 @@ public class PaymentMode extends AppCompatActivity implements InstructionAdapter
     ArrayList<String> instructionList;
     LinearLayoutCompat tvCod, tvPod, online, tvCase;
     MaterialTextView proceedToPay;
-String payMode="5";
+    String payMode="5",multiVendorCharge="",totalDeliveryCharge="",nightCharge="",totalCharge="",jsonData="",addressId="";
 
-AppCompatImageView tvBack;
+    AppCompatImageView tvBack;
     ArrayList<String>  tokensList;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,11 @@ AppCompatImageView tvBack;
             finish();
         });
         tokensList=getIntent().getStringArrayListExtra("tokens");
+        multiVendorCharge=getIntent().getStringExtra("multiVendorCharge");
+        nightCharge=getIntent().getStringExtra("nightCharge");
+        jsonData=getIntent().getStringExtra("jsonData");
+        totalDeliveryCharge=getIntent().getStringExtra("totalDeliveryCharge");
+        totalCharge=getIntent().getStringExtra("totalCharge");
         userDetails = new SqliteDatabase(this).getLogin();
         mContext = this;
         listner = this;
@@ -172,11 +179,16 @@ AppCompatImageView tvBack;
 
             params.put("u__id", userDetails.getUserId());
             params.put("pm__id", payMode);
-            params.put("tokens", "1,5");
+            params.put("tokens", tokensList.toString());
+            params.put("multiVendorCharge", multiVendorCharge);
+            params.put("nightCharge", nightCharge);
+            params.put("totalCharge", totalCharge);
+            params.put("jsonData", jsonData);
+            params.put("totalDeliveryCharge", totalDeliveryCharge);
             params.put("i__ids", instructionList.toString().replace("[", "").replace("]", "").replace(" ",""));
             Log.e("message", params.toString());
 
-            RestClient.post().proceedOrder(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
+            RestClient.post().proceedOrderNew(userDetails.getSk(), ApiService.APP_DEVICE_ID, params).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NotNull Call<String> call, Response<String> response) {
                     try {

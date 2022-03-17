@@ -9,8 +9,18 @@ import java.util.List;
 
 public class CardProduct implements Serializable {
 
-
-
+    @SerializedName("shop_distance")
+    @Expose
+    private String shop_distance;
+    @SerializedName("shop_distance_delivery_charge")
+    @Expose
+    private String shop_distance_delivery_charge;
+    @SerializedName("productIdes")
+    @Expose
+    private String productIdes;
+    @SerializedName("delivery_charge")
+    @Expose
+    private String delivery_charge;
     @SerializedName("shop_name")
     @Expose
     private String shop_name;
@@ -50,6 +60,38 @@ public class CardProduct implements Serializable {
     @SerializedName("vendorName")
     @Expose
     private String vendorName;
+
+    public String getShop_distance() {
+        return shop_distance;
+    }
+
+    public void setShop_distance(String shop_distance) {
+        this.shop_distance = shop_distance;
+    }
+
+    public String getShop_distance_delivery_charge() {
+        return shop_distance_delivery_charge;
+    }
+
+    public void setShop_distance_delivery_charge(String shop_distance_delivery_charge) {
+        this.shop_distance_delivery_charge = shop_distance_delivery_charge;
+    }
+
+    public String getDelivery_charge() {
+        return delivery_charge;
+    }
+
+    public void setDelivery_charge(String delivery_charge) {
+        this.delivery_charge = delivery_charge;
+    }
+
+    public String getProductIdes() {
+        return productIdes;
+    }
+
+    public void setProductIdes(String productIdes) {
+        this.productIdes = productIdes;
+    }
 
     public String getVendorId() {
         return vendorId;

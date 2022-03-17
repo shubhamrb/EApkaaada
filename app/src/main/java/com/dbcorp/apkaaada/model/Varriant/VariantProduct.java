@@ -11,6 +11,9 @@ import java.util.List;
  */
 public class VariantProduct implements Serializable {
 
+    @SerializedName("mrp")
+    @Expose
+    private String mrp;
     @SerializedName("imagesGallery")
     @Expose
     private List<String> imagesGallery = null;
@@ -77,6 +80,14 @@ public class VariantProduct implements Serializable {
     @SerializedName("category_name")
     @Expose
     private String categoryName;
+
+    public String getMrp() {
+        return mrp;
+    }
+
+    public void setMrp(String mrp) {
+        this.mrp = mrp;
+    }
 
     public List<String> getImagesGallery() {
         return imagesGallery;

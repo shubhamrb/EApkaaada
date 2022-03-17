@@ -307,6 +307,30 @@ android:visibility="gone"
     android:layout_height="35sp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+           android:orientation="horizontal"
+            android:layout_gravity="end"
+            android:textSize="@dimen/Margin15dp"
+
+            android:layout_height="wrap_content">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:text=""
+               android:id="@+id/tvMrp"
+                android:padding="@dimen/Margin5dp"
+                android:layout_height="wrap_content"/>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:text=""
+
+                android:textSize="@dimen/Margin15dp"
+                android:id="@+id/tvSalePrice"
+                android:layout_height="wrap_content"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 

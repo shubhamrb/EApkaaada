@@ -53,7 +53,7 @@ import com.dbcorp.apkaaada.network.InternetConnection;
 import com.dbcorp.apkaaada.network.RestClient;
 import com.dbcorp.apkaaada.ui.auth.Login;
 import com.dbcorp.apkaaada.ui.auth.Offer.ViewOffer;
-import com.dbcorp.apkaaada.ui.auth.WebUi.AboutUs;
+//import com.dbcorp.apkaaada.ui.auth.WebUi.AboutUs;
 import com.dbcorp.apkaaada.ui.auth.WebUi.PrivacyPolicy;
 import com.dbcorp.apkaaada.ui.auth.WebUi.TermsCondition;
 import com.dbcorp.apkaaada.ui.auth.fragments.Home;
@@ -295,6 +295,7 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
                 case R.id.myorder:
                     Intent mv2 = new Intent(HomeActivity.this, MyOrder.class);
                     startActivity(mv2);
+
                     break;
 
                 case R.id.account:
@@ -542,9 +543,9 @@ public class HomeActivity extends AppCompatActivity implements MenuListAdapter.O
                 startActivity(intent);
                 break;
             case 11:
-                Intent intentAbout = new Intent(mContext, AboutUs.class);
-                intentAbout.putExtra("pageType", "1");
-                startActivity(intentAbout);
+//                Intent intentAbout = new Intent(mContext, AboutUs.class);
+//                intentAbout.putExtra("pageType", "1");
+//                startActivity(intentAbout);
                 break;
             case 2:
                 drawer.closeDrawers();

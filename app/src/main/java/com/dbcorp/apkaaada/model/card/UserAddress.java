@@ -9,6 +9,16 @@ import java.io.Serializable;
  * Created by Bhupesh Sen on 16-03-2021.
  */
 public class UserAddress implements Serializable {
+
+
+    @SerializedName("lng")
+    @Expose
+    private String lng;
+
+    @SerializedName("lat")
+    @Expose
+    private String lat;
+
     @SerializedName("address_id")
     @Expose
     private String addressId;
@@ -18,6 +28,22 @@ public class UserAddress implements Serializable {
     @SerializedName("address_type")
     @Expose
     private String addressType;
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
 
     public String getAddressId() {
         return addressId;

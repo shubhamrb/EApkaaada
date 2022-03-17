@@ -19,14 +19,14 @@ public interface ApiService {
     //   String BASE_URL = "http://cashsaledev.groupbhaskar.in/";   static String AppType="( TEST )";
 
     //test server start
-   // String MAIN_BASE_URL = "http://192.168.29.56/";
-    //String MAIN_IMAGE_BASE_URL = "http://192.168.29.56/top10/";
-    //String BASE_URL = MAIN_BASE_URL + "top10/api/v1/user-api/";
+     //String MAIN_BASE_URL = "http://192.168.43.56/";
+     //String MAIN_IMAGE_BASE_URL = "http://192.168.43.56/top10/";
+     //String BASE_URL = MAIN_BASE_URL + "top10/api/v1/user-api/";
     //test server en
 
     //live server start
-    String MAIN_BASE_URL ="http://top10india.in/";
-    String MAIN_IMAGE_BASE_URL ="http://top10india.in/";
+   String MAIN_BASE_URL ="https://visionotrans.com/backend/";
+    String MAIN_IMAGE_BASE_URL ="https://visionotrans.com/backend/";
     String BASE_URL = MAIN_BASE_URL+"api/v1/user-api/";
     //live server end
 
@@ -187,6 +187,9 @@ public interface ApiService {
     @POST(Constants.ADD_USER_ORDER)
     Call<String> proceedOrder(@Header("SK") String sk, @Header("DID") String did, @FieldMap Map<String, String> uData);
 
+    @FormUrlEncoded
+    @POST(Constants.ADD_USER_PAYMENT)
+    Call<String> proceedOrderNew(@Header("SK") String sk, @Header("DID") String did, @FieldMap Map<String, String> uData);
 
     @FormUrlEncoded
     @POST(Constants.ADD_SERVICE_USER)
@@ -324,6 +327,9 @@ public interface ApiService {
     @POST(Constants.GET_DELETE_PRODUCT)
     Call<String> deleteCart(@Header("SK") String sk, @Header("DID") String did, @FieldMap Map<String, String> uData);
 
+   @FormUrlEncoded
+   @POST(Constants.DELETE_INVOICE_PRODUCT_DATA)
+   Call<String> deleteInvoiceData(@Header("SK") String sk, @Header("DID") String did, @FieldMap Map<String, String> uData);
 
     @FormUrlEncoded
     @POST(Constants.GET_ADDRESS)

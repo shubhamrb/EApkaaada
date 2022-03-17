@@ -16,6 +16,42 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/Margin5dp"
+        android:id="@+id/nightChargeLayout"
+        android:padding="@dimen/Margin5dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvCoupon"
+        android:weightSum="5"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+
+            android:text="Night Charge"
+
+
+            android:fontFamily="@font/montserrat"
+            android:textSize="@dimen/text_size_edit"
+            android:layout_marginStart="@dimen/Margin10dp"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:id="@+id/nightCharge"
+            android:text=""
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:layout_marginEnd="@dimen/Margin10dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_edit"
+
+            android:layout_weight="4"
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/Margin5dp"
         android:id="@+id/multiVenCharge"
         android:padding="@dimen/Margin5dp"
         app:layout_constraintTop_toBottomOf="@+id/tvCoupon"
@@ -37,7 +73,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
 android:id="@+id/tvMultiVenCharge"
-            android:text="100"
+            android:text=" "
             android:layout_gravity="right"
             android:gravity="right"
             android:layout_marginEnd="@dimen/Margin10dp"
@@ -73,7 +109,7 @@ android:id="@+id/tvMultiVenCharge"
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
 android:id="@+id/tvDeliveryCharge"
-            android:text="100"
+            android:text=" "
             android:layout_gravity="right"
             android:gravity="right"
             android:layout_marginEnd="@dimen/Margin10dp"
@@ -108,7 +144,7 @@ android:id="@+id/tvDeliveryCharge"
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:id="@+id/tvTotalChargePrice"
-            android:text="100"
+            android:text=" "
             android:layout_gravity="right"
             android:gravity="right"
             app:fontFamily="@font/montserrat"
@@ -125,6 +161,7 @@ android:id="@+id/tvDeliveryCharge"
         android:layout_marginTop="@dimen/Margin5dp"
 
         android:padding="@dimen/Margin5dp"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/tvCoupon"
         android:weightSum="5"
         android:layout_height="wrap_content">
@@ -168,7 +205,7 @@ android:id="@+id/tvDeliveryCharge"
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:id="@+id/tvAddTotalChargePrice"
-            android:text="100"
+            android:text=" "
             android:layout_gravity="right"
             android:gravity="right"
             app:fontFamily="@font/montserrat_b"

@@ -59,6 +59,7 @@ public class ProductVariantAdapter extends RecyclerView.Adapter<ProductVariantAd
         return list.size();
     }
 
+//
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
